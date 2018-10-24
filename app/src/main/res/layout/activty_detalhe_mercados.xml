@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Mercado.Detalhe_Mercado"
+   >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/branco">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/branco"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleGravity="center|bottom"
+            app:expandedTitleTextAppearance
+                ="@style/TextAppearance.AppCompat.Headline">
+            <RelativeLayout
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carousel_foto_mercado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeColor="#ffffff"
+                app:strokeWidth="1dp"
+                android:fitsSystemWindows="true"/>
+
+            <View
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradientefundobranco" />
+            <!-- Back button -->
+
+
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/mercado_detalhe_rating"
+                style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:mrb_progressTint="@color/amareloclaro"
+                app:mrb_secondaryProgressTint="@color/amareloclaro" />
+
+            <TextView
+                android:id="@+id/mercado_num_ratings"
+                style="@style/AppTheme.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/mercado_detalhe_rating"
+                android:layout_alignTop="@+id/mercado_detalhe_rating"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/mercado_detalhe_rating"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:text="(0)" />
+
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"/>
+                <LinearLayout
+                    android:id="@+id/mercado_button_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/ic_back" />
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_entrar_em_contato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/collapseLayout"
+        android:layout_margin="16dp"
+        app:layout_anchorGravity="bottom|end"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_chat_topico"
+        android:clickable="true"
+        tools:ignore="VectorDrawableCompat" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+        android:background="@color/background"
+  >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+        <TextView
+        android:id="@+id/detalhe_mercado_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:textSize="20sp"
+            android:textColor="@color/pretoescrita"
+        android:text="@string/comercio"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+            android:layout_alignParentLeft="true"
+        />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/detalhe_mercado_legenda"
+        android:visibility="gone"
+        style="@style/AppTheme.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detalhe_mercado_titulo"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/cinzadisabilitado"
+        tools:text="Italian"
+        android:textStyle="italic"/>
+
+<TextView
+    android:id="@+id/detalhe_mercado_valor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="R$:450,00"
+   android:visibility="gone"
+    android:textSize="18sp"
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="8dp"
+    android:textColor="@color/pretoescrita"/>
+
+    <LinearLayout
+        android:id="@+id/liner"
+        android:layout_below="@+id/detalhe_mercado_legenda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@drawable/line_divider"
+            android:fitsSystemWindows="true" />
+        <TextView
+            android:id="@+id/detalhe_mercado_descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descricao"
+            android:paddingBottom="10dp"
+            android:paddingTop="8dp"
+            android:textAllCaps="false"
+            android:textColor="@color/pretoescrita"
+            android:textSize="14sp"
+            app:fontFamily="sans-serif" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@drawable/line_divider"
+            android:fitsSystemWindows="true" />
+        <TextView
+            android:id="@+id/detalhe_mercado_endereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/pretoescrita"
+            android:drawableLeft="@drawable/ic_location"
+            android:hint="endereco"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@drawable/line_divider"
+            android:fitsSystemWindows="true" />
+        <RelativeLayout
+            android:id="@+id/click_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/icone_author_mercado"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/fundo_user"
+                />
+
+            <TextView
+              android:layout_toRightOf="@id/icone_author_mercado"
+                android:id="@+id/detalhe_mercado_criador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/primary_dark"
+                android:hint="asasas "
+                />
+
+            <TextView
+                android:layout_toLeftOf="@+id/txtvisualizacao"
+                android:text="0"
+                android:id="@+id/quantvisualizacao_comercio"
+                android:textColor="@color/pretoescrita"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="2dp"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/txtvisualizacao"
+                android:layout_alignParentRight="true"
+                android:text="Visualizações"
+                android:textColor="@color/pretoescrita"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content"
+                />
+
+        </RelativeLayout>
+
+ <include
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     layout="@layout/dialog_avaliar_rating"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

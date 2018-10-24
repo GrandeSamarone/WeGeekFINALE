@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:gravity="center"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="60dp">
+        <ImageButton
+
+            android:id="@+id/botaocamera"
+            android:layout_width="80sp"
+            android:layout_height="80sp"
+            android:background="@drawable/ic_camera"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/camera_tela_op_evento"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp">
+        <ImageButton
+
+            android:id="@+id/botaogaleria"
+            android:layout_width="80sp"
+            android:layout_height="80sp"
+            android:background="@drawable/ic_galeria"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/galeria_op_evento"/>
+    </LinearLayout>
+
+</LinearLayout>

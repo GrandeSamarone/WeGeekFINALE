@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/chat"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
+
+    <LinearLayout
+        android:id="@+id/lineardamsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+       >
+
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/imageViewFotoConversa"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+   android:background="@drawable/fundo_user"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+       >
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/textNomeConversa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nome"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+
+        <com.vanniktech.emoji.EmojiTextView
+            android:text="Mensagem"
+
+            android:layout_marginLeft="8dp"
+            android:id="@+id/UltimaMsgConversa"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            app:emojiSize="@dimen/emoji_size_default"/>
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_below="@+id/lineardamsg"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginLeft="55dp"/>
+</RelativeLayout>

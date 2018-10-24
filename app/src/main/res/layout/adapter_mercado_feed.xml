@@ -1,0 +1,127 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:layout_marginBottom="4dp"
+    android:elevation="4dp"
+    cardview:cardCornerRadius="4dp"
+    android:clickable="true"
+    android:backgroundTint="@color/background"
+    android:foreground="?android:attr/selectableItemBackground">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginLeft="16dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/feed_user"
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/fundo_user"/>
+        <TextView
+            android:id="@+id/feed_nome"
+            android:text="Marlos"
+            android:textColor="@color/pretoescrita"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+
+            android:id="@+id/feed_capamercado"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+       android:background="@drawable/carregandoicone"/>
+
+            <TextView
+                android:id="@+id/feed_texttitulo"
+                style="@style/AppTheme.Subheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/feed_capamercado"
+                android:text="titulo"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="-2dp"
+                android:layout_toLeftOf="@+id/feed_textcategoria"
+                android:layout_toRightOf="@+id/feed_capamercado"
+                android:ellipsize="end"
+                android:maxLines="1" />
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/feed_rating_mercado"
+            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/feed_texttitulo"
+            android:layout_below="@+id/feed_texttitulo"
+            android:layout_marginBottom="4dp"
+            android:numStars="5"
+            android:stepSize="0.5"
+
+            app:mrb_progressTint="@color/amareloclaro"
+            app:mrb_secondaryProgressTint="@color/amareloclaro" />
+
+        <TextView
+            android:id="@+id/feed_comercio_item_num_ratings"
+            style="@style/AppTheme.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/feed_rating_mercado"
+            android:layout_alignTop="@+id/feed_rating_mercado"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/feed_rating_mercado"
+            android:gravity="center_vertical"
+            android:textColor="@color/cinzadisabilitado"
+            tools:text="(10)" />
+            <TextView
+                android:text="UM BELO DIA"
+                android:id="@+id/feed_textlegenda"
+                style="@style/AppTheme.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/feed_rating_mercado"
+                android:layout_below="@+id/feed_rating_mercado"
+                android:textColor="@color/cinzasecunradrio" />
+
+            <TextView
+                android:id="@+id/feed_textcategoria"
+                style="@style/AppTheme.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/cinzadisabilitado"
+                />
+
+        <TextView
+
+            android:text="AM"
+            android:id="@+id/feed_textestado"
+            style="@style/AppTheme.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/textlegenda"
+            android:layout_alignParentRight="true"
+           android:layout_below="@+id/feed_comercio_item_num_ratings"
+            android:textColor="@color/cinzadisabilitado"
+            />
+
+    </RelativeLayout>
+  </LinearLayout>
+</android.support.v7.widget.CardView>

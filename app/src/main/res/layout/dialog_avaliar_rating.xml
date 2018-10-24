@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/oval">
+    <LinearLayout
+        android:id="@+id/layout_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+            <TextView
+                android:textColor="@color/pretoescrita"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qual o seu Nível de satisfação?"/>
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/rate_star"
+                        style="@style/Widget.MaterialRatingBar.RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:isIndicator="false"
+                        android:maxHeight="80dp"
+                        android:minHeight="40dp"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        app:mrb_progressBackgroundTint="@color/amareloclaro"
+                        app:mrb_progressTint="@color/amareloclaro"
+                        app:mrb_secondaryProgressTint="@color/amareloclaro" />
+
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/botaosalvarrating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ENVIAR"
+                        android:textColor="@color/primary_dark"
+                        android:background="@drawable/gradiente_transparente"/>
+        </LinearLayout>
+    </LinearLayout>
+            </LinearLayout>

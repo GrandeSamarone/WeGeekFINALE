@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "234664656893",
+    "firebase_url": "https://geeksgibi.firebaseio.com",
+    "project_id": "geeksgibi",
+    "storage_bucket": "geeksgibi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234664656893:android:09b75afc502672ac",
+        "android_client_info": {
+          "package_name": "com.marlostrinidad.wegeek.nerdzone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234664656893-9eis9sjrb40djv6mh17fi76uas1f68on.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marlostrinidad.wegeek.nerdzone",
+            "certificate_hash": "dfe19fbc8be694b5f319ee604b0b320244403870"
+          }
+        },
+        {
+          "client_id": "234664656893-boompl9phu6rv8r2k4f2q752a40a5mq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh8855-QHUOpuVweNVGQffq53jtrQxkpw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234664656893-boompl9phu6rv8r2k4f2q752a40a5mq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

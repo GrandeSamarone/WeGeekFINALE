@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Abrir_Imagem.AbrirImagemComercio">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_imagem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/foto_button_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/nome_do_mercado_fotos"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+           android:layout_toRightOf="@+id/foto_button_back"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tantasfotos"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/white"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

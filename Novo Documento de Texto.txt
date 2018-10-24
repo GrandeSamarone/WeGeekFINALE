@@ -1,0 +1,3 @@
+keytool -exportcert -list -v -alias chave -keystore C:\Users\fulanoeciclano\AndroidStudioProjects\WeGeek\chavewegeek.jks
+
+C:\Program Files (x86)\Java\jdk1.8.0_131\bin

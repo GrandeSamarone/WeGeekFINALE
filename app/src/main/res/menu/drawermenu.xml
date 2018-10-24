@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menutop">
+        <item android:id="@+id/feed_menu"
+            android:title="Novas Feed"
+            android:icon="@drawable/ic_feed"/>
+
+        <item android:id="@+id/minhascolecoes_menu"
+            android:title="@string/drawer_colecoes_es"
+            android:icon="@drawable/ic_colecao"/>
+
+        <item android:id="@+id/minhaloja_menu"
+            android:title="Minhas Publicações"
+            android:icon="@drawable/ic_loja"/>
+
+        <item android:id="@+id/mensagens_menu"
+            android:title="@string/drawer_mensagens"
+            android:icon="@drawable/ic_chat"/>
+
+        <item android:id="@+id/minha_conta_menu"
+            android:title="@string/drawer_conta"
+            android:icon="@drawable/ic_conta"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menubotom">
+
+        <item android:id="@+id/evento_menu"
+            android:title="@string/drawer_eventos"
+            android:icon="@drawable/ic_evento"/>
+
+            <item android:id="@+id/comercio_menu"
+                android:title="@string/drawer_Criar_loja"
+                android:icon="@drawable/ic_comercio"/>
+<!--
+
+            <item android:id="@+id/compartilhar_menu"
+                android:title="@string/drawer_Promover"
+                android:icon="@drawable/ic_upgradee"/>
+  -->
+        <item android:id="@+id/conto_menu"
+            android:title="@string/drawer_contos"
+            android:icon="@drawable/ic_citacao"/>
+
+        <item android:id="@+id/livros_menu"
+            android:title="@string/drawer_historias"
+            android:icon="@drawable/ic_livros"/>
+
+        <item android:id="@+id/topico_menu"
+            android:title="@string/drawer_topico"
+            android:icon="@drawable/ic_topico"/>
+
+
+        <item android:id="@+id/desenhos_menu"
+            android:title="@string/drawer_galeria"
+            android:icon="@drawable/ic_galerias"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menubotom2">
+        <item android:id="@+id/minha_conta_dmenu"
+                android:title="@string/drawer_Suporte"
+                android:icon="@drawable/ic_support"/>
+        <item android:id="@+id/minha_privacidade_dmenu"
+            android:title="@string/politica_de_privacidade"
+            android:icon="@drawable/ic_privacidade"/>
+
+            <item android:id="@+id/menu_sair"
+                android:title="@string/drawer_Sair"
+                android:icon="@drawable/ic_sair"/>
+
+    </group>
+
+</menu>

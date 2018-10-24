@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout xmlns:fresco="http://schemas.android.com/tools"
+        android:id="@+id/teste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chat_img_usuario"
+
+        android:layout_toEndOf="@+id/chat_img_usuario"
+        android:layout_toRightOf="@+id/chat_img_usuario"
+        android:background="@drawable/in_message_bg"
+       >
+        <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/textMensagemtexto"
+            android:textColor="@color/brancochat"
+            android:text="oiii"
+            android:textSize="18sp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            app:emojiSize="@dimen/emoji_size_only_emojis" />
+
+              </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:id="@+id/tempodochat"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="00/00/000"
+        android:textColor="@color/branco"
+        android:textSize="10sp" />
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/borda_redonda"
+    >
+    <!--
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/filter_bar_container"
+        android:background="@drawable/line_divider" />
+-->
+    <ImageView
+    android:layout_marginTop="8dp"
+    android:id="@+id/gifimage"
+        android:background="@color/cinzaescuro"
+    android:layout_width="150dp"
+        android:scaleType="centerCrop"
+    android:layout_height="130dp"
+    android:layout_gravity="center"
+   />
+        <TextView
+            style="@style/AppTheme.Title"
+            android:textColor="@color/cinzaescuro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Por favor,Aguarde."
+            android:textSize="18sp"
+            android:textAlignment="center"/>
+
+</LinearLayout>

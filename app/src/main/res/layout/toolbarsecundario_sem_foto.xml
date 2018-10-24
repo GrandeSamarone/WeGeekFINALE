@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarsecundario_sem_foto"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/gradiente_toolbar"
+        android:theme="@style/Theme.AppCompat">
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.miguelcatalan.materialsearchview.MaterialSearchView
+        android:id="@+id/materialSeach_toolbar_sem_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        />
+    </RelativeLayout>
+
+    <FrameLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarsecundario">
+        <View android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/toolbar_sombra"/>
+    </FrameLayout>
+</RelativeLayout>
+</FrameLayout>

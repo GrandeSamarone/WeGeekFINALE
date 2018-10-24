@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:backgroundTint="@color/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+
+
+        <LinearLayout
+            android:id="@+id/tituloline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/ico">
+            <TextView
+                android:id="@+id/meus_topico_titulo"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textSize="18sp"
+                android:textColor="@color/preto"
+                tools:text="Titulo" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/star_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentRight="true"
+
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+<ImageView
+    android:id="@+id/img_comentario"
+    android:layout_width="24sp"
+    android:layout_height="24sp"
+    android:background="@drawable/ic_comentario_evento"/>
+
+            <TextView
+                android:textSize="14sp"
+                android:id="@+id/meus_topico_num_Coment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                />
+            <ImageView
+                android:layout_below="@id/relaimg"
+                android:id="@+id/botaocurtirtopico"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+               android:background="@drawable/ic_like"
+                android:layout_marginBottom="8dp"
+               android:layout_margin="8dp"
+                android:layout_gravity="bottom"
+              />
+
+
+             <TextView
+                 android:textSize="14sp"
+            android:id="@+id/meus_topico_num_curit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+             />
+
+        </LinearLayout>
+        <TextView
+            android:layout_below="@+id/tituloline"
+            android:id="@+id/editartopico"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:text="@string/editar_evento"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/Corrastag"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_below="@+id/editarmercado"
+            android:id="@+id/excluirtopico"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:paddingTop="8dp"
+            android:text="EXCLUIR"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/Corrastag"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

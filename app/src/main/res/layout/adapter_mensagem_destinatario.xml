@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/margenBalaoBottom"
+    android:layout_marginLeft="@dimen/margenLeftChat"
+    android:layout_marginStart="@dimen/margenLeftChat">
+
+    <RelativeLayout
+        android:layout_alignParentRight="true"
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/out_message_bg"
+
+        >
+
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/textMensagemtexto"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="18sp"
+                android:textColor="@color/brancochat"
+                android:text="oi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                app:emojiSize="@dimen/emoji_size_only_emojis"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tempodochat"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00/00/000"
+        android:textColor="@color/branco"
+        android:textSize="10sp"
+        android:layout_below="@+id/layout"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+
+        />
+</RelativeLayout>

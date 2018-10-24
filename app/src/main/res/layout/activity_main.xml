@@ -1,0 +1,49 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_ac_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    >
+<android.support.v4.widget.DrawerLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    android:id="@+id/drawer_layout"
+    android:scrollbars="vertical">
+
+
+
+        <LinearLayout
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+        <include layout="@layout/toolbarprincipal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+            <include
+                layout="@layout/content_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigat_id"
+        android:layout_width="270dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawermenu">
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

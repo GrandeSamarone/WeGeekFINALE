@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">WeGeek</string>
+    <string name="buscar_usuario">Ei %1$s, nemhum Usuario Foi encontrado.</string>
+    <string name="title_activity_cadastrar_icon_nome_">Cadastrar_icon_nome_Activity</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_descricao_gibi">DescricaoGibiActivity</string>
+    <!--<string name="facebook_app_id">187928898608771</string>-->
+    <string name="facebook_application_id" translatable="false">187928898608771</string>
+    <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
+    <string name="facebook_login_protocol_scheme" translatable="false">468d112bcbf329907ddd56a628b27342</string>
+    <string name="title_activity_page_icon1">PageIcon1</string>
+    <string name="title_activity_cabalo">Cabalo</string>
+    <string name="open">OPEN</string>
+    <string name="close">CLOSE</string>
+    <string name="title_activity_abrir_gibi_pdf">AbrirGibiPdf</string>
+    <string name="remote_pdf_example">carregaCarai</string>
+    <string name="title_activity_minha_conta">MinhaConta</string>
+
+
+    <string name="title_shop">Voltar</string>
+    <string name="title_gifts">Zoom</string>
+    <string name="title_cart">Anterior</string>
+    <string name="title_profile">Próximo</string>
+    <string name="text_icone_heroi">HERÓIS</string>
+    <string name="text_icon_galeria">GALERIA</string>
+    <string name="text_icon_camera">CÂMERA</string>
+    <string name="drawer_colecoes_es">Coleções</string>
+    <string name="drawer_loja">Loja</string>
+    <string name="drawer_Criar_loja">Comércios</string>
+    <string name="drawer_Promover">Promover</string>
+    <string name="drawer_Suporte">Suporte</string>
+    <string name="drawer_Sair">Sair</string>
+    <string name="drawer_eventos">Eventos</string>
+    <string name="drawer_mensagens">Mensagens</string>
+    <string name="drawer_conta">Conta</string>
+    <string name="nome_do_evento">Nome do Evento</string>
+    <string name="camera_tela_op_evento">Câmera</string>
+    <string name="galeria_op_evento">Galeria</string>
+    <string name="comercio">Comércio</string>
+    <string name="title_activity_detalhe_evento">DetalheEvento</string>
+    <string name="analizando_informa_es_aguarde">Analisando informações,aguarde.</string>
+    <string name="carregando_informa_es">Carregando...</string>
+    <string name="mais_comercio">MAIS</string>
+    <string name="drawer_topico">Tópicos</string>
+    <string name="drawer_galeria">FanArts</string>
+    <string name="name_evento">Eventos</string>
+    <string name="novocomercio">Novo Comércio</string>
+    <string name="legenda_nvo_comercio">Legenda Ex: Games e muito mais..</string>
+    <string name="descricao">DESCRIÇÃO</string>
+    <string name="_0_n_perfil">0</string>
+    <string name="fans_perfil">Seguidores</string>
+    <string name="drawer_contos">Contos</string>
+    <string name="drawer_historias">Histórias</string>
+    <string name="editar_evento">EDITAR</string>
+    <string name="comercio_nome">COMÉRCIO</string>
+    <string name="evento_nome">EVENTO</string>
+    <string name="editar_comercio">Editar comércio</string>
+    <string name="erro_evento_busca_evento"> %1$s, Nemhum evento foi encontrado com a   palavra %2$s.</string>
+    <string name="erro_evento_busca_comercio"> %1$s, Nemhum comércio foi encontrado com a palavra %2$s.</string>
+    <string name="erro_busca_contato"> Contato não encontrado.</string>
+    <string name="text_opcional">(Opcional)</string>
+    <string name="botao_txt_seguir">Seguir</string>
+    <string name="botao_txt_seguindo">Seguindo</string>
+    <string name="txt_titulo">Titúlo</string>
+    <string name="adicionar_colecao">Adicionar á Coleção</string>
+    <string name="adicionado_colecao">Adicionado</string>
+    <string name="cadastra_icon_nome">Criar Perfil </string>
+    <string name="Meus_seguidores">Meus Seguidores</string>
+    <string name="Seguidores">Seguidores</string>
+    <string name="topico_name">TÓPICO</string>
+    <string name="conto_name">CONTO</string>
+    <string name="politica_de_privacidade">Política de Privacidade</string>
+    <string name="politicaa_privacidade">Política de privacidade</string>
+
+    <string-array name="estados">
+        <item>Estado</item>
+        <item>AC</item>
+        <item>AL</item>
+        <item>AM</item>
+        <item>AP</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
+        <item>MG</item>
+        <item>MS</item>
+        <item>MT</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PE</item>
+        <item>PI</item>
+        <item>PR</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RO</item>
+        <item>RR</item>
+        <item>RS</item>
+        <item>SC</item>
+        <item>SE</item>
+        <item>SP</item>
+        <item>TO</item>
+    </string-array>
+
+    <string-array name="loja">
+        <item>Categoria</item>
+        <item>Roupas</item>
+        <item>HQ</item>
+        <item>Games</item>
+        <item>Papelaria</item>
+        <item>Decoração</item>
+        <item>Cozinha</item>
+        <item>Action Figure</item>
+        <item>Livros</item>
+        <item>Cosplay</item>
+    </string-array>
+    <string-array name="eventos">
+        <item>Acontecendo</item>
+        <item>Passado</item>
+    </string-array>
+    <string-array name="artista">
+        <item>Categoria Artista</item>
+        <item>Automóveis</item>
+        <item>Imóveis</item>
+        <item>Eletronicos</item>
+        <item>Moda</item>
+        <item>Esportes</item>
+        <item>Música</item>
+        <item>Infantil</item>
+        <item>Agro</item>
+    </string-array>
+
+
+</resources>

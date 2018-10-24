@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+   android:background="@drawable/gradiente_toolbar">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        />
+    <ImageView
+        android:scaleType="center"
+        android:id="@+id/capadrawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <View
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradientefundopreto" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/Img_perfil_drawer"
+        android:layout_width="70dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+    <TextView
+        android:id="@+id/Nome_usuario_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Nome"
+        android:textColor="@color/branco"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/Email_usuario_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:text="nome@gmail.com"
+        android:textColor="@color/brancofraco"
+        />
+</LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

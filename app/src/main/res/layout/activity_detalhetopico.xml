@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root_view_topico"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".Topico.Detalhe_topico"
+    android:background="@color/background">
+
+            <RelativeLayout
+                android:id="@+id/cabecalho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbartopico"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@drawable/gradiente_toolbar"
+                    android:theme="@style/Theme.AppCompat">
+
+                </android.support.v7.widget.Toolbar>
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/icone_user_toolbar"
+                        android:background="@drawable/fundo_user"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
+
+                <FrameLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbarsecundario">
+                    <View android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/toolbar_sombra"/>
+                </FrameLayout>
+            </RelativeLayout>
+    <ScrollView
+        android:layout_below="@+id/cabecalho"
+        android:layout_above="@+id/digitar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/conteudo"
+                android:layout_below="@+id/cabecalho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+
+                    android:id="@+id/detalhe_topico_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textColor="@color/pretoescrita"
+                    android:textSize="18sp"
+                    tools:text="Titulo" />
+
+                <TextView
+                    android:layout_margin="8dp"
+                    android:id="@+id/detalhe_topico_mensagem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pretoescrita"
+                    android:textSize="16sp"
+                    app:fontFamily="sans-serif-condensed"
+                    tools:text="topico" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_marginLeft="8dp"
+                    android:id="@+id/foto_topico"
+                    android:visibility="gone"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp" />
+
+                <LinearLayout
+                    android:id="@+id/nome_foto_click"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/icon_topico_detalhe_author"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/fundo_user"/>
+                    <TextView
+                        android:id="@+id/nome_topico__detalhe_autor"
+
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="nome"
+                        android:textColor="@color/cinzaescuro"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_comentario_topico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:transcriptMode="alwaysScroll"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/conteudo"
+                tools:listitem="@layout/adapter_commentario" />
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/digitar"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:weightSum="1.0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+
+            android:background="@drawable/fundo_mensagem_chat">
+            <ImageView
+                android:id="@+id/botao_post_icone_topico"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_emotion_chat"/>
+            <com.vanniktech.emoji.EmojiEditText
+                android:id="@+id/caixa_de_texto_comentario_topico"
+                android:layout_marginLeft="5dp"
+                android:layout_width="250dp"
+                android:background="@android:color/white"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:hint="Deixe um comentário"/>
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/imageCamera"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_emotion_chat" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_postar_comentario_topico"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/icon_enviar" />
+    </LinearLayout>
+
+
+</RelativeLayout>

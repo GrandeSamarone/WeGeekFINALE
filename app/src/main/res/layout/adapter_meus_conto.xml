@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:backgroundTint="@color/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/meus_contos_mensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="10"
+            android:ellipsize="end"
+            android:textColor="@color/pretoescrita"
+            android:textSize="16sp"
+            tools:text="topico" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_below="@+id/meus_contos_mensagem"
+            android:id="@+id/ico"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+           android:layout_weight="1"
+           android:layout_alignParentLeft="true"
+            android:id="@+id/star_layout"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+
+
+            <ImageView
+                android:layout_below="@id/relaimg"
+                android:id="@+id/botaocurtirconto"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+              android:background="@drawable/ic_like"
+                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="bottom"
+                />
+
+
+            <TextView
+                android:id="@+id/meus_conto_num_curt"
+                android:text="0"
+                android:textSize="16sp"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+
+
+                />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/botao_add_a_colecao"
+                android:background="@drawable/add_a_colecao_verm"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toRightOf="@+id/star_layout"
+                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="bottom"
+               />
+                <TextView
+                    android:id="@+id/meus_conto_num_colecao"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

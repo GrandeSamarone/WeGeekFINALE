@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.marlostrinidad.wegeek.nerdzone.Mercado.Cadastrar_Novo_MercadoActivity">
+
+
+    <include layout="@layout/toolbarsecundario"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:scrollbars="vertical">
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="horizontal"
+        >
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageLojaCadastro1"
+            android:layout_width="100dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="100dp"
+           android:background="@drawable/fundoloja"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+           android:visibility="gone"
+            android:id="@+id/imageLojaCadastro2"
+            android:layout_marginRight="8dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fundoloja"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
+            android:id="@+id/imageLojaCadastro3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/fundoloja"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
+            android:id="@+id/imageLojaCadastro4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/fundoloja"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
+            android:id="@+id/imageLojaCadastro5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/fundoloja"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
+            android:id="@+id/imageLojaCadastro6"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/fundoloja"/>
+
+
+    </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        >
+
+        <Spinner
+            android:id="@+id/spinnerloja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Spinner
+            android:id="@+id/spinneralocal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtlayout_subtitulo"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          >
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/nome_mercado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titulo"
+            android:padding="10dp"
+            android:background="@drawable/bg_edit_text"
+            android:textAlignment="center"
+            android:inputType="textMultiLine"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+        >
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/fraserapida_mercado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/legenda_nvo_comercio"
+            android:padding="10dp"
+            android:maxLength="40"
+            android:background="@drawable/bg_edit_text"
+            android:textAlignment="center"
+            android:inputType="textMultiLine"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/txtlayout_descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="400"
+
+        >
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/desc_mercado"
+            android:maxLength="400"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:hint="@string/descricao"
+            android:background="@drawable/bg_edit_text"
+            android:textAlignment="center"
+            android:inputType="textMultiLine"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/text_opcional"
+    android:textColor="@color/cinzasecunradrio"/>
+    <com.blackcat.currencyedittext.CurrencyEditText
+        android:id="@+id/desc_valor"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/bg_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="R$ 20,50"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/txtlayout_endereco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/desc_endereco"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Endereço"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text"
+            android:textAlignment="center"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/botaosalvarmercado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CADASTRAR "
+        android:theme="@style/botaopadrao"/>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>
