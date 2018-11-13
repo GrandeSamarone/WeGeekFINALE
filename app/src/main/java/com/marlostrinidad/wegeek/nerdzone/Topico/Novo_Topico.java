@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,10 +68,11 @@ public class Novo_Topico extends AppCompatActivity {
     private ChildEventListener ChildEventListenerperfil;
     private EditText titulo_topico,mensagem_topico;
     private Topico topico = new Topico();
-    private  Usuario perfil;
+    private Usuario perfil;
     private StorageReference storageReference;
     private Dialog dialog;
     private   Uri url;
+    private ChildEventListener ChildEventListenerSeguidores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,7 @@ public class Novo_Topico extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        CarregarSeguidores();
         CarregarDados_do_Usuario();
         TrocarFundos_status_bar();
     }
@@ -138,7 +141,7 @@ public class Novo_Topico extends AppCompatActivity {
                         String icone = perfil.getFoto();
 
                         IconeUsuario(icone);
-                        CarregarSeguidores(perfil.getId());
+
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -155,15 +158,15 @@ public class Novo_Topico extends AppCompatActivity {
                 });
     }
 
-    private void CarregarSeguidores(String id){
-
+    private void CarregarSeguidores(){
+        String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
         //Recuperar Seguidores
-        DatabaseReference seguidoresref =SeguidoresRef.child(id);
-        seguidoresref.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference seguidoresref =SeguidoresRef.child(usuariologado);
+        seguidoresref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 seguidoresSnapshot=dataSnapshot;
-
+                Log.i("asdsds", String.valueOf(seguidoresSnapshot));
             }
 
             @Override

@@ -25,6 +25,7 @@ import com.marlostrinidad.wegeek.nerdzone.Model.TopicoLike;
 import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.R;
 import com.marlostrinidad.wegeek.nerdzone.Topico.Detalhe_topico;
+import com.vanniktech.emoji.EmojiTextView;
 import com.varunest.sparkbutton.SparkButton;
 import com.varunest.sparkbutton.SparkEventListener;
 
@@ -192,7 +193,8 @@ holder.click.setOnClickListener(new View.OnClickListener() {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titulo,mensagem,autor,num_curtida,total_comentario;
+        private TextView  titulo,mensagem,num_curtida,total_comentario;
+        private EmojiTextView autor;
         private CircleImageView foto_autor;
         private LinearLayout click;
         private RelativeLayout clicktambem;

@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:text="Seja o Primeiro anunciar, oque quiser!"/>
+                android:text="@string/text_nd_event"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linearinformacoeserro"

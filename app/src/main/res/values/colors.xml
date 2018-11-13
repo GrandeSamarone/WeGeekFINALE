@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#1565c0</color>
     <color name="branco">#FFFFFF</color>
     <color name="brancochat">#efeded</color>
-    <color name="background">#fafafa</color>
+    <color name="background">#fcfcfc</color>
+    <color name="transparente">#00000000</color>
+    <color name="background_cardview">#fafafa</color>
     <color name="colorAccent">#fa2c28</color>
     <color name="vermelho">#ff0500</color>
     <color name="brancofraco">#d2e1e0e0</color>
@@ -26,6 +28,7 @@
     <color name="balaoremetente">#dbf9c4</color>
     <color name="colorFloatingActionBarAccent">#4285F4</color>
     <color name="actionbar_opacity">#33000000</color>
+    <color name="azul_votacao">#e01565c0</color>
 
     <integer-array name="custom_tab_colors">
         <item>@color/branco</item>

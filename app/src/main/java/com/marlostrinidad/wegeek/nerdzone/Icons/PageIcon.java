@@ -24,7 +24,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity.setWindowFlag;
+import static com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes.setWindowFlag;
 
 public class PageIcon extends AppCompatActivity {
 
@@ -43,12 +43,12 @@ public class PageIcon extends AppCompatActivity {
         final FragmentPagerItemAdapter adapter= new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
-                        .add("COMIC", HeroiFragment.class )
+                        .add("COMIC",HeroiFragment.class )
                         // .add("Noticia",Noticia_Fragment.class)
                         .add("POP", AleatorioFragment.class)
-                        .add("FILME",FilmesFragment.class)
+                        .add("FILME", FilmesFragment.class)
                         .add("DESENHO",DesenhoFragment.class)
-                        .add("BLACK",PretoeBrancoFragment.class)
+                        .add("BLACK", PretoeBrancoFragment.class)
                         // .add("Tops", RankFragment.class)
                         .create()
         );

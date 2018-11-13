@@ -1,9 +1,9 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.firebase.database.DatabaseReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 
 /**
  * Created by fulanoeciclano on 16/06/2018.

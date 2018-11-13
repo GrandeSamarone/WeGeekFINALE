@@ -26,8 +26,7 @@
         android:layout_toRightOf="@+id/commentario_foto"
         android:id="@+id/linearLayout2">
 
-        <TextView
-
+        <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/commentario_author"
             android:textColor="@color/pretoescrita"
             android:layout_width="wrap_content"

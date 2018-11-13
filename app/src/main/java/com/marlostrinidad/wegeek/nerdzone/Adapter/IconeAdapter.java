@@ -75,7 +75,7 @@ public class IconeAdapter   extends RecyclerView.Adapter<IconeAdapter.MyViewHold
 
 
         }else{
-            holder.draweeView.setImageResource(R.drawable.carregando);
+            holder.draweeView.setImageResource(R.drawable.gradiente_icone);
         }
 
 

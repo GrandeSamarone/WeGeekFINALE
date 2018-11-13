@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:counterEnabled="true"
-        app:counterMaxLength="40"
+        app:counterMaxLength="100"
         >
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/nome_topico"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/txt_titulo"
             android:padding="10dp"
-            android:maxLength="40"
+            android:maxLength="100"
             android:background="@drawable/bg_edit_text"
             android:textAlignment="center"
             android:inputType="textMultiLine"

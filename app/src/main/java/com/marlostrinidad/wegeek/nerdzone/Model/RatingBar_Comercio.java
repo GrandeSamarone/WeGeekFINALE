@@ -1,7 +1,8 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+
 import com.google.firebase.database.DatabaseReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 
 import java.util.HashMap;
 

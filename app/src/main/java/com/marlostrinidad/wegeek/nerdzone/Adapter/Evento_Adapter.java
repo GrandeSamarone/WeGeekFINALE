@@ -111,7 +111,7 @@ public class Evento_Adapter extends RecyclerView.Adapter<Evento_Adapter.MyViewHo
                   EventoLike eventoLike = dataSnapshot.getValue(EventoLike.class);
                   QtdLikes = eventoLike.getQtdlikes();
               }
-           Log.i("sdsd",usuariologado.getId());
+
                //Verifica se já foi clicado
                if( dataSnapshot.hasChild( usuariologado.getId() ) ){
                    holder.botaocurtir.setChecked(true);

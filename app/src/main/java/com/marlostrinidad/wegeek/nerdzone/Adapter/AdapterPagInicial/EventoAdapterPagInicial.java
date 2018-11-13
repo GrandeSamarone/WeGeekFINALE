@@ -1,7 +1,6 @@
 package com.marlostrinidad.wegeek.nerdzone.Adapter.AdapterPagInicial;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +17,6 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.marlostrinidad.wegeek.nerdzone.Evento.DetalheEvento;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Model.Evento;
 import com.marlostrinidad.wegeek.nerdzone.R;
@@ -73,15 +71,7 @@ public class EventoAdapterPagInicial extends RecyclerView.Adapter<EventoAdapterP
                     .build();
             holder.eventocapa.setHierarchy(hierarchy);
         }
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(context, DetalheEvento.class);
-                it.putExtra("id_do_evento",ev.getUid());
-                it.putExtra("UR_do_evento",ev.getEstado());
-                context.startActivity(it);
-            }
-        });
+
     }
 
     @Override

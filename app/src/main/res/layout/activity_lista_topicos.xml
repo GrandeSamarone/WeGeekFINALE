@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/refreshtopico"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Mercado.MercadoActivity">
+    tools:context="com.example.fulanoeciclano.nerdzone.Mercado.MercadoActivity">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+            android:background="@color/background"
         android:fitsSystemWindows="true">
 
         <include android:id="@+id/toolbar"
@@ -32,24 +32,24 @@
                 android:scrollbars="vertical"
                 />
             <LinearLayout
-                android:id="@+id/linear_nada_cadastrado_topico"
-                android:visibility="gone"
+                android:id="@+id/linear_nada_cadastrado_lista_topico"
+                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
 
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/fundocomercioback"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/fundo_topico_nd_encontro"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textAlignment="center"
-                    android:text="Seja o Primeiro anunciar, oque quiser!"/>
+                    android:text="@string/text_nd_topico"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearinformacoeserro_topico"

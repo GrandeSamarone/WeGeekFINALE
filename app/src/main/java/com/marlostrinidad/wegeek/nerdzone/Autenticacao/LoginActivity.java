@@ -19,12 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity;
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
-import com.marlostrinidad.wegeek.nerdzone.Politica_Privacidade.Politica_PrivacidadeActivity;
-import com.marlostrinidad.wegeek.nerdzone.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -41,6 +35,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
+import com.marlostrinidad.wegeek.nerdzone.Politica_Privacidade.Politica_PrivacidadeActivity;
+import com.marlostrinidad.wegeek.nerdzone.R;
+import com.marlostrinidad.wegeek.nerdzone.Splash.TelaSplash;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class LoginActivity extends AppCompatActivity {
@@ -100,13 +101,12 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
-                    .requestProfile()
                     .build();
 
             mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
         }else{
-            Intent it = new Intent(LoginActivity.this,MainActivity.class);
+            Intent it = new Intent(LoginActivity.this,TelaSplash.class);
             startActivity(it);
             finish();
         }

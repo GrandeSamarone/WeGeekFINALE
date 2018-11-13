@@ -117,7 +117,7 @@ RecuperarMeus_Topicos();
     private void RecuperarMeus_Topicos() {
         //Progress
         linearLayout.setVisibility(View.VISIBLE);
-        refresh.setRefreshing(true);
+
         lista_Meus_Topicos.clear();
         childEventListenerMeus_Topico = meus_topicosref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -159,9 +159,6 @@ RecuperarMeus_Topicos();
     }
 
     private void RecuperarMeus_Conto() {
-        //Progress
-
-        refresh.setRefreshing(true);
         lista_meus_contos.clear();
         childEventListenerMeus_Conto = meus_contos_ref.addChildEventListener(new ChildEventListener() {
             @Override

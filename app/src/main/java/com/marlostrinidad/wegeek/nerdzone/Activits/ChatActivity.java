@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +39,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.vanniktech.emoji.EmojiEditText;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.EmojiPopup;
+import com.vanniktech.emoji.EmojiTextView;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupDismissListener;
@@ -59,7 +59,7 @@ import static com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity.setWindow
 
 public class ChatActivity extends AppCompatActivity  {
 
-    private TextView textViewNome;
+    private EmojiTextView textViewNome;
     private CircleImageView circleImageViewFoto;
     private Toolbar toolbarDialog;
     private Usuario usuariodestinatario;
@@ -111,7 +111,7 @@ public class ChatActivity extends AppCompatActivity  {
         viewPager = findViewById(R.id.viewpager);
         botao_icone = findViewById(R.id.button_chat_icone);
         chatField = findViewById(R.id.editMensagem);
-        databaseusuario=ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        databaseusuario= ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
            //emotion
         root_view=findViewById(R.id.layoutroot);
         chatField.setBackgroundColor(0);
@@ -188,7 +188,7 @@ public class ChatActivity extends AppCompatActivity  {
                         Intent it = new Intent(ChatActivity.this, Perfil.class);
                         it.putExtra("id",perfil.getId());
                         startActivity(it);
-                        finish();
+
                     }
                 });
                      textViewNome.setText(perfil.getNome());
@@ -199,29 +199,22 @@ public class ChatActivity extends AppCompatActivity  {
                              Intent it = new Intent(ChatActivity.this, Perfil.class);
                              it.putExtra("id",perfil.getId());
                              startActivity(it);
-                             finish();
+
                          }
                      });
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -245,7 +238,7 @@ public class ChatActivity extends AppCompatActivity  {
         return true;
     }
 
-///EMOTION
+      ///EMOTION
     private void setUpEmojiPopup() {
         emojiPopup = EmojiPopup.Builder.fromRootView(root_view)
 
@@ -380,10 +373,10 @@ public class ChatActivity extends AppCompatActivity  {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Mensagem mensagem = dataSnapshot.getValue( Mensagem.class );
+                int initialSize  = mensagens.size();
                 mensagens.add( mensagem );
                 recyclemensagens.scrollToPosition(mensagens.size()-1);
-                adapter.notifyItemInserted(mensagens.size()-1);
-
+                adapter.notifyItemRangeChanged(initialSize,mensagens.size()-1);
             }
 
             @Override

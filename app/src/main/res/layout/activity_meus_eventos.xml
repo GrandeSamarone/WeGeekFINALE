@@ -7,7 +7,7 @@
     android:id="@+id/atualizarmeuseventosrefresh"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes">
+    tools:context="com.example.fulanoeciclano.nerdzone.Activits.Minhas_Publicacoes">
 
 
     <include layout="@layout/toolbarsecundario"/>

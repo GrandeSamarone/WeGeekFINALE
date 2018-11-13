@@ -1,9 +1,9 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -64,6 +64,45 @@ public class Conto   implements Serializable {
 
         salvarContoPublico();
     }
+
+    public void remover(){
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("meusconto")
+                .child(identificadorUsuario)
+                .child(getUid());
+
+        anuncioref.removeValue();
+     removerContocolecao();
+     removerContoLike();
+        removerContoPublico();
+    }
+
+    public void removerContoPublico(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("conto")
+                .child(getUid());
+
+        anuncioref.removeValue();
+
+    }
+    public void removerContoLike(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("conto-likes")
+                .child(getUid());
+
+        anuncioref.removeValue();
+
+    }
+    public void removerContocolecao(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("conto-colecao")
+                .child(getUid());
+
+        anuncioref.removeValue();
+
+    }
+
     public String getUid() {
         return uid;
     }

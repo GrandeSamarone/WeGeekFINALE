@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/refreshMinhasColecoes"
     android:background="@color/background"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Mercado.MercadoActivity">
+    tools:context="com.example.fulanoeciclano.nerdzone.Mercado.MercadoActivity">
 
     <LinearLayout
         android:orientation="vertical"

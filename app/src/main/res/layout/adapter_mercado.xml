@@ -10,7 +10,7 @@
     android:elevation="4dp"
     cardview:cardCornerRadius="4dp"
     android:clickable="true"
-    android:backgroundTint="@color/background"
+    android:backgroundTint="@color/background_cardview"
     android:foreground="?android:attr/selectableItemBackground">
 
     <RelativeLayout
@@ -23,7 +23,7 @@
             android:id="@+id/capamercado"
             android:layout_width="60dp"
             android:layout_height="60dp"
-       android:background="@drawable/carregandoicone"/>
+      />
 
             <TextView
                 android:id="@+id/texttitulo"

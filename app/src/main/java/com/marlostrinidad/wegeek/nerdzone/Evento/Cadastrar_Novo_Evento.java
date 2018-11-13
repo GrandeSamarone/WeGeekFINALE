@@ -7,14 +7,15 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +41,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Date.DatePickFragment;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
@@ -57,7 +57,7 @@ import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity.setWindowFlag;
+import static com.marlostrinidad.wegeek.nerdzone.Evento.Evento_Lista.setWindowFlag;
 import static com.marlostrinidad.wegeek.nerdzone.Helper.App.getUid;
 
 public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
@@ -95,7 +95,8 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
     private AlertDialog dialog;
 
 
-    private FloatingActionButton botaoSalvar;
+    private Button botaoSalvar;
+    private ChildEventListener ChildEventListenerSeguidores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
         final Calendar calendar12 = Calendar.getInstance();
         Log.i("dataa", String.valueOf(calendar12.getTime()));
         //Configuraçoes
-        toolbar = findViewById(R.id.toolbarsecundario);
+        toolbar = findViewById(R.id.toolbarsecundario_sem_foto);
         toolbar.setTitle("Criar Evento");
         setSupportActionBar(toolbar);
 
@@ -134,7 +135,6 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
 
 
         TrocarFundos_status_bar();
-        IconeUsuario();
         CarregarDadosSpinner();
         CarregarSeguidores();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -213,16 +213,15 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
 
 
     }
-
     private void CarregarSeguidores(){
         String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
         //Recuperar Seguidores
         DatabaseReference seguidoresref =SeguidoresRef.child(usuariologado);
-        seguidoresref.addListenerForSingleValueEvent(new ValueEventListener() {
+        seguidoresref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 seguidoresSnapshot=dataSnapshot;
-
+                Log.i("asdsds", String.valueOf(seguidoresSnapshot));
             }
 
             @Override
@@ -247,7 +246,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
                     case SELECAO_CAMERA:
                         CropImage.ActivityResult resultCAMERA = CropImage.getActivityResult(data);
                         Uri resultUriCAMERA = resultCAMERA.getUri();
-                        urlimg = String.valueOf(resultUriCAMERA);
+                        imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUriCAMERA);
                         Glide.with(Cadastrar_Novo_Evento.this)
                                 .load(resultUriCAMERA)
                                 .into(imgevento);
@@ -255,12 +254,70 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
                     case SELECAO_GALERIA:
                         CropImage.ActivityResult resultGALERIA = CropImage.getActivityResult(data);
                         Uri resultUriGALERIA = resultGALERIA.getUri();
-                        urlimg = String.valueOf(resultUriGALERIA);
+                        imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUriGALERIA);
                         Glide.with(Cadastrar_Novo_Evento.this)
                                 .load(resultUriGALERIA)
                                 .into(imgevento);
 
                         break;
+                }
+                if(imagem!=null) {
+                    //Recuperar dados da imagem  para o  Firebase
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] dadosImagem = baos.toByteArray();
+
+                    StorageReference imagemRef = storageReference
+                            .child("imagens")
+                            .child("evento")
+                            .child(identificadorUsuario)
+                            .child(eventos.getUid());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setCancelable(false);
+                    LayoutInflater layoutInflater = LayoutInflater.from(Cadastrar_Novo_Evento.this);
+                    final View view = layoutInflater.inflate(R.layout.dialog_carregando_gif_analisando, null);
+                    ImageView imageViewgif = view.findViewById(R.id.gifimage);
+
+                    Glide.with(this)
+                            .asGif()
+                            .load(R.drawable.gif_analizando)
+                            .into(imageViewgif);
+                    builder.setView(view);
+
+                    dialog = builder.create();
+                    dialog.show();
+                    UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                    //caso de errado
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    dialog.dismiss();
+
+                                    // SalvarPost(url);
+                                    urlimg = uri.toString();
+
+                                    Toast toast = Toast.makeText(Cadastrar_Novo_Evento.this, "Imagem carregada com sucesso!", Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                                    toast.show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    dialog.dismiss();
+                                    Toast.makeText(Cadastrar_Novo_Evento.this, "Erro ao Criar Evento", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                        }
+
+                    });
+                }else{
+                    Toast toast = Toast.makeText(this, "Selecione uma foto.", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
 
 
                 }
@@ -285,6 +342,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
 
         eventos.setTitulo(tituloDoEvento);
         eventos.setCurtirCount(0);
+        eventos.setCapaevento(capaevento);
         eventos.setQuantVisualizacao(0);
         eventos.setIdUsuario(id);
         eventos.setSubtitulo(subtituloDoEvento);
@@ -316,66 +374,25 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
             return;
         }
         if ( (!eventos.getEstado().equals("Estado"))) {
+            if(eventos.getCapaevento()!=null){
 
-            imgevento.setDrawingCacheEnabled(true);
-            imgevento.buildDrawingCache();
-            final Bitmap bitmap = imgevento.getDrawingCache();
-            //Recuperar dados da imagem  para o  Firebase
-            ByteArrayOutputStream baos=new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
-            byte[] dadosImagem= baos.toByteArray();
+                eventos.salvar(seguidoresSnapshot);
+                Toast toast = Toast.makeText(this, "Evento criado com sucesso!", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show(); Intent it = new Intent(Cadastrar_Novo_Evento.this, Evento_Lista.class);
+                startActivity(it);
+                finish();
 
-            StorageReference imagemRef = storageReference
-                    .child("imagens")
-                    .child("evento")
-                    .child(identificadorUsuario)
-                    .child(eventos.getUid());
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCancelable(false);
-            LayoutInflater layoutInflater = LayoutInflater.from(Cadastrar_Novo_Evento.this);
-            final View view  = layoutInflater.inflate(R.layout.dialog_carregando_gif_analisando,null);
-            ImageView imageViewgif = view.findViewById(R.id.gifimage);
-
-            Glide.with(this)
-                    .asGif()
-                    .load(R.drawable.gif_analizando)
-                    .into(imageViewgif);
-            builder.setView(view);
-
-            dialog = builder.create();
-            dialog.show();
-            UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
-            //caso de errado
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            dialog.dismiss();
-                            eventos.setCapaevento(String.valueOf(uri));
-                            // SalvarPost(url);
-                            urlimg = uri.toString();
-                            eventos.salvar(seguidoresSnapshot);
-                            Toast.makeText(Cadastrar_Novo_Evento.this, "Evento Criado Com Sucesso!", Toast.LENGTH_SHORT).show();
-                            Intent it = new Intent( Cadastrar_Novo_Evento.this,Evento_Lista.class);
-                            startActivity(it);
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            dialog.dismiss();
-                            Toast.makeText(Cadastrar_Novo_Evento.this, "Erro ao Criar Evento", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                }
-            });
-
+            }else{
+                Toast toast = Toast.makeText(this, "Selecione uma imagem", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+            }
 
         }else{
-            Toast.makeText(this, "Selecione um Estado", Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(this, "Selecione uma estado", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
         }
         // [START single_value_read]
         final String userId = getUid();
@@ -415,23 +432,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
         }
     }
 
-    private void IconeUsuario() {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Cadastrar_Novo_Evento.this, MinhaConta.class);
-                startActivity(it);
-            }
-        });
-        FirebaseUser UsuarioAtual = UsuarioFirebase.getUsuarioAtual();
-        String mPhotoUrl = UsuarioAtual.getPhotoUrl().toString();
 
-        Glide.with(Cadastrar_Novo_Evento.this)
-                .load(mPhotoUrl)
-                .into(icone);
-    }
 
     //carregar spinner
     private void CarregarDadosSpinner() {
@@ -455,7 +456,4 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
 
     }
 }
-
-
-
 

@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Model.Conto;
@@ -35,7 +36,7 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
     private List<Conto> listaconto;
     private Context context;
     Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
-
+    String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
     public Adapter_Conto(List<Conto> conto,Context c){
         this.listaconto=conto;
         this.context=c;
@@ -54,8 +55,9 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
     @Override
     public void onBindViewHolder(@NonNull final MyviewHolder holder, int position) {
         final Conto conto = listaconto.get(position);
-        holder.conto.setText(conto.getMensagem());
 
+        holder.conto.setText(conto.getMensagem());
+        holder.nome_conto.setText(conto.getTitulo());
 
         DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
                 .child("usuarios")
@@ -66,14 +68,26 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
                 final Usuario  user = dataSnapshot.getValue(Usuario.class);
 
             holder.author.setText(user.getNome());
-            holder.author.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent it = new Intent(context, Perfil.class);
-                    it.putExtra("id", user.getId());
-                    context.startActivity(it);
+                if(!user.getId().equals(identificadorUsuario)) {
+
+                    holder.author.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent it = new Intent(context, Perfil.class);
+                            it.putExtra("id", user.getId());
+                            context.startActivity(it);
+                        }
+                    });
+                }else {
+                    holder.author.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent it = new Intent(context, MinhaConta.class);
+                            it.putExtra("id", user.getId());
+                            context.startActivity(it);
+                        }
+                    });
                 }
-            });
 
             /*Glide.with(context)
                         .load(user.getFoto())
@@ -98,6 +112,7 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
                     QtdLikes = contoLike.getQtdlikes();
                 }
                 //Verifica se já foi clicado
+                Log.i("asasas",usuariologado.getId());
                 if( dataSnapshot.hasChild( usuariologado.getId() ) ){
                     holder.botaocurtir.setChecked(true);
                 }else {
@@ -151,6 +166,7 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
                     QtdAdd = conto_colecao.getQtdadd();
                 }
                 //Verifica se já foi clicado
+                Log.i("asasas",usuariologado.getId());
                 if (dataSnapshot.hasChild(usuariologado.getId())) {
                     holder.botao_add_colecao.setChecked(true);
                    holder.txt_add_colecao.setText(R.string.adicionado_colecao);
@@ -204,7 +220,7 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
 
-        private TextView conto,nome,n_curtida,txt_add_colecao,author;
+        private TextView conto,nome_conto,n_curtida,txt_add_colecao,author;
         private CircleImageView imgperfil;
         private SparkButton botaocurtir,botao_add_colecao;
         public MyviewHolder(View itemView) {
@@ -213,7 +229,7 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
             conto = itemView.findViewById(R.id.conto_mensagem);
             txt_add_colecao = itemView.findViewById(R.id.txt_add_colecao);
             n_curtida = itemView.findViewById(R.id.conto_num_curit);
-           // nome = itemView.findViewById(R.id.conto_author);
+            nome_conto = itemView.findViewById(R.id.conto_titulo);
           //  imgperfil = itemView.findViewById(R.id.conto_foto_autor);
             botaocurtir = itemView.findViewById(R.id.botaocurtirconto);
             botao_add_colecao = itemView.findViewById(R.id.botao_add_a_colecao);

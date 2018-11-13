@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Politica_Privacidade.Politica_PrivacidadeActivity">
+    tools:context="com.example.fulanoeciclano.nerdzone.Politica_Privacidade.Politica_PrivacidadeActivity">
 
     <include layout="@layout/toolbarsecundario_sem_foto"/>
 

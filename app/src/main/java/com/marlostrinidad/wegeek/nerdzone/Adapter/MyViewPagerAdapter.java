@@ -48,7 +48,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
         final PhotoDraweeView imageViewPreview =  view.findViewById(R.id.image_view);
         Foto image = mExampleList.get(position);
         String imageUrl = image.getUrl();
-        String erro= String.valueOf((R.drawable.carregando));
+        String erro= String.valueOf((R.drawable.gradiente_icone));
 
        /* Glide.with(mContext).load(image.getUrl())
                 .thumbnail(0.5f)

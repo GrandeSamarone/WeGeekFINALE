@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -80,6 +82,7 @@ public class DetalheEvento extends AppCompatActivity {
     private EmojiPopup emojiPopup;
     private ChildEventListener ChildEventListeneruser;
     private String ids;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,9 +132,6 @@ public class DetalheEvento extends AppCompatActivity {
         recyclerViewcomentarios.setAdapter(adapter);
 
 
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.background));
-        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.branco));
-
         //emotion
         root_view=findViewById(R.id.root_view);
         emojiPopup = EmojiPopup.Builder.fromRootView(root_view).build(edit_chat_emoji);
@@ -147,11 +147,32 @@ public class DetalheEvento extends AppCompatActivity {
 
         CarregarDados_do_Evento();
         CarregarDados_Comentario_Evento();
+
+        GifCarregarDados();
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void CarregarDados_do_Evento(){
+    private void GifCarregarDados() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        LayoutInflater layoutInflater = LayoutInflater.from(DetalheEvento.this);
+        final View view = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop, null);
+        ImageView imageViewgif = view.findViewById(R.id.gifimage);
 
+        Glide.with(getApplicationContext())
+                .asGif()
+                .load(R.drawable.gif_self)
+                .into(imageViewgif);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void CarregarDados_do_Evento(){
          ids=getIntent().getStringExtra("id_do_evento");
         String estado= getIntent().getStringExtra("UR_do_evento");
         ChildEventListenerevento=database_evento    .child(estado).orderByChild("uid")
@@ -160,6 +181,13 @@ public class DetalheEvento extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 eventoselecionado = dataSnapshot.getValue(Evento.class );
                 assert eventoselecionado != null;
+
+
+
+                collapsingToolbarLayout.setTitle(eventoselecionado.getTitulo());
+                collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparente));
+                collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.background));
+
 
 
                 Uri uri = Uri.parse(eventoselecionado.getCapaevento());
@@ -172,6 +200,7 @@ public class DetalheEvento extends AppCompatActivity {
                 eventobanner.setController(controllerOne);
                 progressBar.setVisibility(View.GONE);
 
+                  dialog.dismiss();
 
                 eventobanner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -239,6 +268,8 @@ public class DetalheEvento extends AppCompatActivity {
                         Glide.with(DetalheEvento.this)
                                 .load(foto)
                                 .into(AuthorFoto_evento_View );
+
+                        dialog.dismiss();
 
                         Author_evento_View.setText(user.getNome());
                         if(!usuarioLogado.equals(user.getId())){
@@ -308,6 +339,8 @@ public class DetalheEvento extends AppCompatActivity {
 
                 recyclerViewcomentarios.scrollToPosition(listcomentario.size()-1);
                 adapter.notifyItemInserted(listcomentario.size()-1);
+
+                dialog.dismiss();
             }
 
             @Override
@@ -415,7 +448,9 @@ public class DetalheEvento extends AppCompatActivity {
 
             case android.R.id.home:
 
-                    finish();
+                   Intent it = new Intent(DetalheEvento.this,Evento_Lista.class);
+                   startActivity(it);
+                   finish();
 
 
                 break;

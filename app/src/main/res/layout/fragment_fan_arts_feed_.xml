@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.fragment_feed.FanArts_feed_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lista_fanarts_feed"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:scrollbars="vertical"
+        />
 </FrameLayout>

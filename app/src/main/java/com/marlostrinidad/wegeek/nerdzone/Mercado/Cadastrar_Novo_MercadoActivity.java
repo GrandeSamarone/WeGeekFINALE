@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +60,7 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity.setWindowFlag;
+import static com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes.setWindowFlag;
 
 public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -95,6 +97,7 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
     private String[] pegandoUrl;
     private FirebaseUser usuario;
     private ChildEventListener ChildEventListenerperfil;
+    private ChildEventListener ChildEventListenerSeguidores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,7 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
         TrocarFundos_status_bar();
 
         CarregarDados_do_Usuario();
+        CarregarSeguidores();
     }
 
 
@@ -233,7 +237,6 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
                 assert perfil != null;
 
                 id_do_usuario = perfil.getId();
-                CarregarSeguidores(id_do_usuario);
                 String icone = perfil.getFoto();
                 IconeUsuario(icone);
 
@@ -253,15 +256,15 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
         });
     }
 
-    private void CarregarSeguidores(String id){
-
+    private void CarregarSeguidores(){
+        String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
         //Recuperar Seguidores
-        DatabaseReference seguidoresref =SeguidoresRef.child(id);
-        seguidoresref.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference seguidoresref =SeguidoresRef.child(usuariologado);
+        seguidoresref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 seguidoresSnapshot=dataSnapshot;
-
+                Log.i("asdsds", String.valueOf(seguidoresSnapshot));
             }
 
             @Override
@@ -270,7 +273,6 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
             }
         });
     }
-
     private Comercio configurarMercado(){
         String estado = campoLocal.getSelectedItem().toString();
         String loja = campoloja.getSelectedItem().toString();
@@ -329,14 +331,20 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
                }
                SalvarMercado();
            }else{
-               Toast.makeText(this, "Selecione um Estado", Toast.LENGTH_SHORT).show();
+               Toast toast = Toast.makeText(this, "Selecione um Estado", Toast.LENGTH_SHORT);
+               toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+               toast.show();
            }
 
            }else {
-                Toast.makeText(this, "Selecione uma Categoria", Toast.LENGTH_SHORT).show();
+               Toast toast= Toast.makeText(this, "Selecione uma Categoria", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
             }
         } else {
-                Toast.makeText(this, "Selecione ao menos uma foto!", Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(this, "Selecione ao menos uma foto", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
             }
 
 
@@ -535,7 +543,6 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 lojastring = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Cadastrar_Novo_MercadoActivity.this, lojastring, Toast.LENGTH_SHORT).show();
             }
 
             @Override

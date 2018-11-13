@@ -46,7 +46,7 @@ public class Adapter_Evento_Feed extends RecyclerView.Adapter<Adapter_Evento_Fee
     private DatabaseReference mDatabase;
     private DatabaseReference databasesUsuario= ConfiguracaoFirebase.getFirebaseDatabase().child("usuarios");
     private ChildEventListener ChildEventListenerperfil;
-    Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
+   private Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
 
     public Adapter_Evento_Feed(List<Evento> eventos, Context c){
         this.context =c;

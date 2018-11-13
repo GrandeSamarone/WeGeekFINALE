@@ -42,16 +42,12 @@
             android:title="@string/drawer_contos"
             android:icon="@drawable/ic_citacao"/>
 
-        <item android:id="@+id/livros_menu"
-            android:title="@string/drawer_historias"
-            android:icon="@drawable/ic_livros"/>
-
         <item android:id="@+id/topico_menu"
             android:title="@string/drawer_topico"
             android:icon="@drawable/ic_topico"/>
 
 
-        <item android:id="@+id/desenhos_menu"
+        <item android:id="@+id/fanarts_menu"
             android:title="@string/drawer_galeria"
             android:icon="@drawable/ic_galerias"/>
     </group>

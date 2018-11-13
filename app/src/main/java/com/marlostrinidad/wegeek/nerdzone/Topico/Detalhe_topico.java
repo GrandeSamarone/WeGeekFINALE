@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -83,6 +85,7 @@ public class Detalhe_topico extends AppCompatActivity {
     private ChildEventListener ChildEventListenerdetalhe;
     private ChildEventListener ChildEventListeneruser;
     private DatabaseReference ComentarioReference;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +135,9 @@ public class Detalhe_topico extends AppCompatActivity {
             }
         });
         database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
-        topicoselecionado = (Topico)  getIntent().getSerializableExtra("topicoselecionado");
+         topicoselecionado = (Topico)  getIntent().getSerializableExtra("topicoselecionado");
         if(topicoselecionado!=null){
+            ComentarioReference = FirebaseDatabase.getInstance().getReference().child("comentario-topico").child(topicoselecionado.getUid());
 
             titulo.setText(topicoselecionado.getTitulo());
             mensagem.setText(topicoselecionado.getMensagem());
@@ -159,6 +163,7 @@ public class Detalhe_topico extends AppCompatActivity {
                             //  .setPlaceholderImage(context.getResources().getDrawable(R.drawable.carregando))
                             .build();
                     foto.setHierarchy(hierarchy);
+                    dialog.dismiss();
                 }
             }else{
                 foto.setVisibility(View.GONE);
@@ -181,9 +186,29 @@ public class Detalhe_topico extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void GifCarregarDados() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        LayoutInflater layoutInflater = LayoutInflater.from(Detalhe_topico.this);
+        final View view = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop, null);
+        ImageView imageViewgif = view.findViewById(R.id.gifimage);
+
+        Glide.with(getApplicationContext())
+                .asGif()
+                .load(R.drawable.gif_self)
+                .into(imageViewgif);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+
+    }
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
+        GifCarregarDados();
         CarregarDados_do_Usuario();
         TrocarFundos_status_bar();
         CarregarDados_Comentario_Evento();
@@ -211,18 +236,16 @@ public class Detalhe_topico extends AppCompatActivity {
 
 
     private void CarregarDados_Comentario_Evento(){
-        ComentarioReference = FirebaseDatabase.getInstance().getReference()
-                .child("comentario-topico").child(topicoselecionado.getUid());
+        listcomentario.clear();
         ChildEventListeneruser=ComentarioReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Comentario comentario = dataSnapshot.getValue(Comentario.class);
-
-
+                int initialSize  = listcomentario.size();
                 listcomentario.add(comentario);
 
                 recyclerView_comentarios.scrollToPosition(listcomentario.size()-1);
-                adapter.notifyItemInserted(listcomentario.size()-1);
+                adapter.notifyItemRangeChanged(initialSize,listcomentario.size()-1);
             }
 
             @Override
@@ -342,6 +365,7 @@ public class Detalhe_topico extends AppCompatActivity {
         Glide.with(Detalhe_topico.this)
                 .load(url)
                 .into(icone);
+        dialog.dismiss();
     }
 
 

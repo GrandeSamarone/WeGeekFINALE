@@ -9,6 +9,7 @@
   android:layout_marginTop="4dp"
     android:layout_marginLeft="-4dp"
     android:layout_marginRight="-4dp"
+    android:backgroundTint="@color/background_cardview"
     android:elevation="6dp"
     android:id="@+id/cardclickevento"
     android:clickable="true"

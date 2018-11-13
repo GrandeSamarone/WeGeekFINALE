@@ -85,10 +85,10 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
         toolbar.setTitle(R.string.name_evento);
         setSupportActionBar(toolbar);
 
-              linear = findViewById(R.id.linear_nada_cadastrado_evento);
-              linearerro= findViewById(R.id.linearinformacoeserro);
-           // linear.setBackgroundResource(R.drawable.fundo_da_capa_add_evento);
-            errobusca = findViewById(R.id.textoerrobusca);
+        linear = findViewById(R.id.linear_nada_cadastrado_evento);
+        linearerro= findViewById(R.id.linearinformacoeserro);
+        // linear.setBackgroundResource(R.drawable.fundo_da_capa_add_evento);
+        errobusca = findViewById(R.id.textoerrobusca);
         database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
         Novo_Evento = findViewById(R.id.fab_novo_evento);
         Novo_Evento.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
             public void onClick(View v) {
                 Intent it = new Intent(Evento_Lista.this,Cadastrar_Novo_Evento.class);
                 startActivity(it);
-                finish();
+
             }
         });
 
@@ -118,6 +118,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
                         R.color.accent);
 
         //Configuracoes Basicas
+        icone = findViewById(R.id.icone_user_toolbar);
         recyclerEvento = findViewById(R.id.lista_evento);
         mDatabaseevento = ConfiguracaoFirebase.getFirebaseDatabase().child("evento");
 
@@ -166,9 +167,9 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                  icone.setVisibility(View.GONE);
+                icone.setVisibility(View.GONE);
                 if(newText!=null && !newText.isEmpty()){
-                   PesquisarEvento(newText.toLowerCase());
+                    PesquisarEvento(newText.toLowerCase());
 
                 }else{
 
@@ -283,7 +284,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
         switch (item.getItemId()) {
 
             case android.R.id.home:
-               // NavUtils.navigateUpFromSameTask(this);
+                // NavUtils.navigateUpFromSameTask(this);
                 startActivity(new Intent(this, MainActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     finishAffinity();
@@ -311,8 +312,18 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
                 assert perfil != null;
 
 
-                String icone = perfil.getFoto();
-                IconeUsuario(icone);
+                String iconeurl = perfil.getFoto();
+                icone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent it = new Intent(Evento_Lista.this, MinhaConta.class);
+                        startActivity(it);
+
+                    }
+                });
+                Glide.with(Evento_Lista.this)
+                        .load(iconeurl)
+                        .into(icone);
 
             }
             @Override
@@ -330,27 +341,9 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
             }
         });
     }
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Evento_Lista.this, MinhaConta.class);
-                startActivity(it);
-
-            }
-        });
-
-
-        Glide.with(Evento_Lista.this)
-                .load(url)
-                .into(icone);
-    }
 
     @Override
     public void onRefresh() {
-        ListaEvento.clear();
         RecuperarEventos();
     }
 
@@ -366,7 +359,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
         String nomeuser =usuario.getDisplayName();
 
 
-  String evento_null = getString(R.string.erro_evento_busca_evento,nomeuser,texto);
+        String evento_null = getString(R.string.erro_evento_busca_evento,nomeuser,texto);
         List<Evento> listaEventoBusca = new ArrayList<>();
         for (Evento evento : ListaEvento) {
             String nome=evento.getTitulo().toLowerCase();
@@ -429,7 +422,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
 
                 filtroEstado = spinnerEstado.getSelectedItem().toString();
 
-              if (filtroEstado.equals("Estado")) {
+                if (filtroEstado.equals("Estado")) {
                     Toast.makeText(getApplicationContext(), "Selecione um Estado.", Toast.LENGTH_SHORT).show();
                 } else {
                     RecuperarMercadoPorCategoriaeEstado(filtroEstado);

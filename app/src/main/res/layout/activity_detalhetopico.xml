@@ -38,7 +38,7 @@
 
                 <FrameLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbarsecundario">
+                    android:layout_below="@+id/toolbartopico">
                     <View android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:background="@drawable/toolbar_sombra"/>
@@ -98,9 +98,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@drawable/fundo_user"/>
-                    <TextView
+                    <com.vanniktech.emoji.EmojiTextView
                         android:id="@+id/nome_topico__detalhe_autor"
-
                         android:layout_marginLeft="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

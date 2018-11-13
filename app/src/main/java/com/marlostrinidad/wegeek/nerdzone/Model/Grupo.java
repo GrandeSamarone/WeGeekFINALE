@@ -3,9 +3,9 @@ package com.marlostrinidad.wegeek.nerdzone.Model;
 
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.Base64Custom;
-import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
 import java.util.List;

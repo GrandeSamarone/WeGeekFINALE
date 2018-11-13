@@ -7,7 +7,8 @@
     android:id="@+id/atualizarmeuseventosrefresh"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes">
+    android:background="@color/background"
+    tools:context="com.example.fulanoeciclano.nerdzone.Activits.Minhas_Publicacoes">
 
 
     <include layout="@layout/toolbarsecundario"/>
@@ -17,7 +18,7 @@
         android:layout_height="48dp"
         android:background="@color/background"
         app:stl_defaultTabTextColor="@color/custom_tab"
-        app:stl_dividerColor="@color/branco"
+        app:stl_dividerColor="@color/background"
         app:stl_indicatorColor="@color/colorPrimary"
         app:stl_defaultTabTextHorizontalPadding="24dp"
         app:stl_indicatorInterpolation="linear"

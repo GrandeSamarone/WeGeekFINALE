@@ -59,7 +59,7 @@ public class Minhas_Publicacoes extends AppCompatActivity {
                 FragmentPagerItems.with(this)
                         .add("COMÉRCIO & EVENTO",Loja_Evento_Fragment.class)
                         .add("TÓPICO & CONTO", Minhas_escritas_Fragment.class)
-                        .add("FANARTS",Minhas_arts_Fragment.class)
+                        .add("FANARTS", Minhas_arts_Fragment.class)
                         // .add("Tops", RankFragment.class)
                         .create()
         );

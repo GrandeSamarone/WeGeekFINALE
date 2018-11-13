@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/refreshconto"
     android:background="@color/background"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Mercado.MercadoActivity">
+    tools:context="com.example.fulanoeciclano.nerdzone.Mercado.MercadoActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -33,24 +33,25 @@
                 android:scrollbars="vertical"
                 />
             <LinearLayout
-                android:id="@+id/linear_nada_cadastrado_topico"
-                android:visibility="gone"
+                android:layout_margin="8dp"
+                android:id="@+id/linear_nada_cadastrado_conto"
+               android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
 
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/fundocomercioback"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/fundo_nada_encontrado_conto"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textAlignment="center"
-                    android:text="Seja o Primeiro anunciar, oque quiser!"/>
+                    android:text="@string/nda_encontrado_conto"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linearinformacoeserro_topico"

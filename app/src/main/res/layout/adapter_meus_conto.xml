@@ -98,6 +98,31 @@
             </LinearLayout>
 
         </LinearLayout>
+        <TextView
+            android:layout_below="@+id/ico"
+            android:id="@+id/editarconto"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:text="@string/editar_evento"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/Corrastag"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_below="@+id/editarconto"
+            android:id="@+id/excluirconto"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:paddingTop="8dp"
+            android:text="EXCLUIR"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/Corrastag"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
     </RelativeLayout>
 
 

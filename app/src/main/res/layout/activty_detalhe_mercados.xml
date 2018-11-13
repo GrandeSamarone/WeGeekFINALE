@@ -252,17 +252,15 @@
                 android:layout_marginLeft="2dp"
                 android:layout_height="wrap_content"
                 />
-            <TextView
+            <ImageView
                 android:id="@+id/txtvisualizacao"
                 android:layout_alignParentRight="true"
-                android:text="Visualizações"
-                android:textColor="@color/pretoescrita"
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp"
+                android:layout_width="24sp"
+               android:background="@drawable/ic_olho"
+                android:layout_marginTop="6dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="8dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24sp"
                 />
 
         </RelativeLayout>

@@ -72,6 +72,15 @@
     <string name="conto_name">CONTO</string>
     <string name="politica_de_privacidade">Política de Privacidade</string>
     <string name="politicaa_privacidade">Política de privacidade</string>
+    <string name="txt_visualizacoes">Visualizações</string>
+    <string name="seja_o_primeiro_anunciar_oque_quiser">Ainda nao temos candidato nessa categoria,
+    quer se o primeiro? Vale Prêmios!</string>
+    <string name="nda_encontrado_conto">Nemhum conto no momento,seja o primeiro!</string>
+    <string name="texto_noticia">Venha participar do maior evento de Manaus, são 20 categorias, inscreva-se, e chame seus amigos.</string>
+    <string name="text_mercado_nd">Nemhum comércio no momento.</string>
+    <string name="text_nd_event">Nemhum evento no momento.</string>
+    <string name="text_nd_fanart">Quer divulgar sua art? Seja o primeiro!</string>
+    <string name="text_nd_topico">Nemhum tópico no momento.</string>
 
     <string-array name="estados">
         <item>Estado</item>

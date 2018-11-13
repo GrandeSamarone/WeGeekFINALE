@@ -1,11 +1,12 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -69,6 +70,38 @@ public class Comercio implements Serializable {
         anuncioref.child(getEstado())
                 .child(getCategoria())
                 .child(getIdMercado()).setValue(this);
+    }
+
+    public void remover(){
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("meuscomercio")
+                .child(identificadorUsuario)
+                .child(getIdMercado());
+
+        anuncioref.removeValue();
+        removermercadoPublico();
+        deletar_img_comercio();
+    }
+
+    public void removermercadoPublico(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("comercio")
+                .child(getEstado())
+                 .child(getCategoria())
+                .child(getIdMercado());
+
+        anuncioref.removeValue();
+
+    }
+    public void deletar_img_comercio(){
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage()
+                .child("imagens")
+                .child("comercio")
+                .child(getIdMercado());
+
+        storageReference.delete();
     }
 
     public String getAutor() {

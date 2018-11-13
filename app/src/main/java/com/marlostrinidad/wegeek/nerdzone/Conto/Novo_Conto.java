@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,7 +45,7 @@ public class Novo_Conto extends AppCompatActivity {
     private DatabaseReference databaseusuario,databasetopico,SeguidoresRef;
     private DataSnapshot seguidoresSnapshot;
     private FirebaseUser usuario;
-    private ChildEventListener ChildEventListenerperfil;
+    private ChildEventListener ChildEventListenerperfil,ChildEventListenerSeguidores;
     private EditText titulo_conto,mensagem_conto;
     private Conto conto = new Conto();
     private Usuario perfil;
@@ -87,6 +88,7 @@ public class Novo_Conto extends AppCompatActivity {
         String data = simpleDateFormat.format(calendartempo.getTime());
 
         conto.setIdauthor(perfil.getId());
+
         conto.setTitulo(titulo);
         conto.setMensagem(mensagem);
         conto.setData(data);
@@ -96,7 +98,10 @@ public class Novo_Conto extends AppCompatActivity {
     }
     public void validarDadosConto() {
         conto = configurarConto();
-
+        if (TextUtils.isEmpty(conto.getTitulo())) {
+            titulo_conto.setError(padrao);
+            return;
+        }
 
         if (TextUtils.isEmpty(conto.getMensagem())) {
             mensagem_conto.setError(padrao);
@@ -116,6 +121,7 @@ public class Novo_Conto extends AppCompatActivity {
         super.onStart();
         CarregarDados_do_Usuario();
         TrocarFundos_status_bar();
+        CarregarSeguidores();
     }
 
     private void CarregarDados_do_Usuario(){
@@ -129,7 +135,6 @@ public class Novo_Conto extends AppCompatActivity {
                         assert perfil != null;
                         String icone = perfil.getFoto();
                         IconeUsuario(icone);
-                        CarregarSeguidores(perfil.getId());
 
                     }
                     @Override
@@ -147,15 +152,15 @@ public class Novo_Conto extends AppCompatActivity {
                 });
     }
 
-    private void CarregarSeguidores(String id){
-
+    private void CarregarSeguidores(){
+        String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
         //Recuperar Seguidores
-        DatabaseReference seguidoresref =SeguidoresRef.child(id);
-        seguidoresref.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference seguidoresref =SeguidoresRef.child(usuariologado);
+        seguidoresref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-              seguidoresSnapshot=dataSnapshot;
-
+                seguidoresSnapshot=dataSnapshot;
+                Log.i("asdsds", String.valueOf(seguidoresSnapshot));
             }
 
             @Override

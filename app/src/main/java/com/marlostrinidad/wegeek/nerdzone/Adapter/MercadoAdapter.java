@@ -80,8 +80,7 @@ public class MercadoAdapter extends RecyclerView.Adapter<MercadoAdapter.MyViewHo
                             .setImageRequest(request)
                             .build();
                     holder.capa.setController(controller);
-                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(1f);
-                    roundingParams.setRoundAsCircle(true);
+                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(10f);
                     GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
                     GenericDraweeHierarchy hierarchy = builder
                             .setRoundingParams(roundingParams)

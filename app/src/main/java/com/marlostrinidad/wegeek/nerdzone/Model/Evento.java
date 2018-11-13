@@ -1,12 +1,11 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.storage.StorageReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -77,7 +76,7 @@ public class Evento implements Serializable {
                 .child(getUid());
 
         anuncioref.removeValue();
-
+        removerEventoLike();
         removerEventoPublico();
         deletar_img_eventos();
     }
@@ -86,6 +85,14 @@ public class Evento implements Serializable {
         DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
                 .child("evento")
                 .child(getEstado())
+                .child(getUid());
+        anuncioref.removeValue();
+
+    }
+
+    public void removerEventoLike(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("evento-likes")
                 .child(getUid());
 
         anuncioref.removeValue();

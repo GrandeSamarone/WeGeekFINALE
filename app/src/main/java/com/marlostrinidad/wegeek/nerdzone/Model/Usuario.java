@@ -1,10 +1,10 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -68,6 +68,7 @@ public class Usuario implements Serializable {
     public Map<String,Object> ConverterparaMap(){
         HashMap<String,Object> usuarioMap = new HashMap<>();
         usuarioMap.put("nome",getNome());
+        usuarioMap.put("frase",getFrase());
         usuarioMap.put("foto",getFoto());
 
         return usuarioMap;

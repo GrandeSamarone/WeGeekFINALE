@@ -31,7 +31,7 @@
         android:layout_width="100sp"
         android:layout_height="120sp"
         android:layout_gravity="center"
-        android:background="@drawable/carregando"
+        android:background="@drawable/gradiente_icone"
         />
 
 

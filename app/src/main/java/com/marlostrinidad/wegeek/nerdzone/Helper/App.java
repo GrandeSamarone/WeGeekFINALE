@@ -37,7 +37,7 @@ public class App extends MultiDexApplication {
         FirebaseApp.initializeApp(this);
         MultiDex.install(this);
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(getApplicationContext())
-                .setBaseDirectoryPath(new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),"hq"))
+                .setBaseDirectoryPath(new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),"WeGeek"))
                 .setBaseDirectoryName(String.valueOf(R.string.app_name))
                 .setMaxCacheSize(200*1024*1024)//200MB
                 .build();

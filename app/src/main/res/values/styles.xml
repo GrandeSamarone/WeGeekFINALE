@@ -12,7 +12,9 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+    </style>
+    <style name="AppCompat.TelaCheia" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
     </style>
        <!-- Theme.AppCompat.Light-->
     <style name="botaopadrao" parent="Theme.AppCompat.Light">

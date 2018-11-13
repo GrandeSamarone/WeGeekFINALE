@@ -7,7 +7,7 @@
     android:id="@+id/atualizarminhas_lojas_eventos_refresh"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes">
+    tools:context="com.example.fulanoeciclano.nerdzone.Activits.Minhas_Publicacoes">
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

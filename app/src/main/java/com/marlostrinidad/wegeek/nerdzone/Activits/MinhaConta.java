@@ -16,10 +16,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,6 +60,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.vanniktech.emoji.EmojiEditText;
+import com.vanniktech.emoji.EmojiPopup;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -80,12 +85,13 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
     private static final int MINHA_CONTA=12;
     private CircleImageView circleImageViewperfil;
     private SimpleDraweeView capa_perfil;
+    private ImageView botaoEdit;
     private LinearLayout btn_voltar,topicoclick,contoclick,fanatsclick,seguidor_click;
     private StorageReference storageReference;
     private String identificadorUsuario;
     private TextView nome,fraserapida,n_topicos,n_contos,n_fanats,n_seguidores;
     private FloatingActionButton botaotrocarfoto;
-    private Usuario usuarioLogado;
+    private Usuario usuarioLogado,perfil;
     private Usuario user;
     private FirebaseUser usuario;
     private RelativeLayout relative;
@@ -102,6 +108,8 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
 
 
         //configuracoes iniciais
+        botaoEdit = findViewById(R.id.botao_edit);
+        botaoEdit.setOnClickListener(this);
        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
         usuario = UsuarioFirebase.getUsuarioAtual();
         database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
@@ -142,10 +150,10 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                 getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
 
-                        .add("TÓPICOS", Topicos_MinhaConta_Fragment.class )
+                        .add("TÓPICOS",Topicos_MinhaConta_Fragment.class )
                         // .add("Noticia",Noticia_Fragment.class)
                         .add("CONTOS", Contos_MinhaConta_Fragment.class)
-                        .add("FANARTS",Art_MinhaConta_Fragment.class)
+                        .add("FANARTS", Art_MinhaConta_Fragment.class)
 
                         .create()
 
@@ -186,7 +194,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                 Escolher_Foto_Perfil();
                 break;
             case R.id.perfil_button_back_perfil:
-                startActivity(new Intent(this, MainActivity.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+              //  startActivity(new Intent(this, MainActivity.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
                 finish();
                 break;
             case R.id.topico_click:
@@ -198,6 +206,8 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
             case R.id.fanats_click:
                 mViewPager.setCurrentItem(2);
                 break;
+            case  R.id.botao_edit:
+                EditNome();
         }
     }
     @Override
@@ -255,7 +265,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
         ChildEventListener=database.orderByChild("tipoconta").equalTo(email).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final Usuario perfil = dataSnapshot.getValue(Usuario.class );
+               perfil = dataSnapshot.getValue(Usuario.class );
                 assert perfil != null;
 
                 Uri  capa = Uri.parse(perfil.getCapa());
@@ -276,6 +286,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                         .into(circleImageViewperfil );
 
                 nome.setText(perfil.getNome());
+                fraserapida.setText(perfil.getFrase());
                 n_topicos.setText(String.valueOf(perfil.getTopicos()));
                 n_contos.setText(String.valueOf(perfil.getContos()));
                 n_fanats.setText(String.valueOf(perfil.getArts()));
@@ -296,7 +307,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Usuario perfil = dataSnapshot.getValue(Usuario.class );
+                perfil = dataSnapshot.getValue(Usuario.class );
                 assert perfil != null;
 
                 String capa = perfil.getCapa();
@@ -313,6 +324,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                         .into(circleImageViewperfil );
 
                 nome.setText(perfil.getNome());
+                fraserapida.setText(perfil.getFrase());
                 n_topicos.setText(String.valueOf(perfil.getTopicos()));
                 n_contos.setText(String.valueOf(perfil.getContos()));
                 n_fanats.setText(String.valueOf(perfil.getArts()));
@@ -335,32 +347,6 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
             }
         });
     }
-
-    //Salvar o novo nome do usuario no firebase
-    /*
-    private void AlterarNome(){
-        final String nome = nome.getText().toString();
-        final boolean retorno = UsuarioFirebase.atualizarNomeUsuario(nome);
-        if (retorno) {
-            usuarioLogado.setNome(nome);
-            usuarioLogado.atualizar();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("alteracao");
-            builder.setMessage("Alterado com Sucesso!");
-            builder.setCancelable(false);
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent it = new Intent(MinhaConta.this,MainActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-    }
-    */
     //Recebendo Icone
     private void RecuperarIcone() {
 
@@ -643,6 +629,72 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
         alerta.show();
 
     }
+
+    //dialog de opcoes
+    private void  EditNome() {
+        LayoutInflater li = getLayoutInflater();
+        View view = li.inflate(R.layout.dialog_edit_nome, null);
+
+        //Configuracoes
+        final EmojiPopup emojiPopup_nome,emojiPopup_frase;
+        View root_view;
+        final EmojiEditText nome_edit,frase_edit;
+        Button botao_salvar_alteracao;
+        ImageView botaoIcon_Nome,botaoIcon_Frase;
+        botaoIcon_Nome = view.findViewById(R.id.button_chat_icone_nome);
+        botaoIcon_Frase=view.findViewById(R.id.button_chat_icone_frase);
+        nome_edit = view.findViewById(R.id.edit_nome_usuario);
+        frase_edit = view.findViewById(R.id.edit_frase);
+        root_view = view.findViewById(R.id.layoutroot_dialog);
+        emojiPopup_nome = EmojiPopup.Builder.fromRootView(root_view).build(nome_edit);
+        emojiPopup_frase = EmojiPopup.Builder.fromRootView(root_view).build(frase_edit);
+        //setUpEmojiPopup();
+        botaoIcon_Nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiPopup_nome.toggle();
+            }
+        });
+        botaoIcon_Frase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiPopup_frase.toggle();
+            }
+        });
+        nome_edit.setText(perfil.getNome());
+        frase_edit.setText(perfil.getFrase());
+        botao_salvar_alteracao = view.findViewById(R.id.botaosalvaralteracao);
+        botao_salvar_alteracao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nome = nome_edit.getText().toString();
+                String frase = frase_edit.getText().toString();
+                boolean retorno = UsuarioFirebase.atualizarNomeUsuario(nome);
+                if(retorno){
+                    usuarioLogado.setNome(nome);
+                    usuarioLogado.setFrase(frase);
+                    usuarioLogado.atualizar();
+                 ToastShow();
+
+                    alerta.dismiss();
+                }
+            }
+        });
+
+        //Dialog de tela
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      //  builder.setTitle("Alterar Foto");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
+public void ToastShow(){
+    Toast toast = Toast.makeText(this, "Alterado com sucesso!", Toast.LENGTH_SHORT);
+    toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+    toast.show();
+}
+
 
 
 

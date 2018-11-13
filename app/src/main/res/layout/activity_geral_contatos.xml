@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Activits.GeralContatosActivity">
+    tools:context="com.example.fulanoeciclano.nerdzone.Activits.GeralContatosActivity">
 <include layout="@layout/toolbarsecundario"
     android:id="@+id/tolbarinclude"/>
 

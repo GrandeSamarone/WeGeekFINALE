@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Topico_Perfil_Fragment extends Fragment  implements Main{
+public class Topico_Perfil_Fragment extends Fragment  implements Main {
 
     private DatabaseReference mDatabasetopico;
     private FirebaseAuth autenticacao;

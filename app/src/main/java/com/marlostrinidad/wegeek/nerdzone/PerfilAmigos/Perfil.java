@@ -7,8 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,9 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Activits.ChatActivity;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Fragments.perfil.Comercio_perfil_Fragment;
 import com.marlostrinidad.wegeek.nerdzone.Fragments.perfil.Contos_perfil_Fragment;
-import com.marlostrinidad.wegeek.nerdzone.Fragments.perfil.Evento_perfil_Fragment;
 import com.marlostrinidad.wegeek.nerdzone.Fragments.perfil.FanArts_perfil_Fragment;
 import com.marlostrinidad.wegeek.nerdzone.Fragments.perfil.Topico_Perfil_Fragment;
 import com.marlostrinidad.wegeek.nerdzone.Helper.Main;
@@ -38,6 +39,7 @@ import com.marlostrinidad.wegeek.nerdzone.Seguidores.Perfil.SeguidoresPerfil;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.vanniktech.emoji.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,7 +49,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Perfil extends AppCompatActivity implements Main, View.OnClickListener {
 
-    private TextView nome,fraserapida,n_seguidores,n_topicos,n_contos,n_arts;
+    private TextView n_seguidores,n_topicos,n_contos,n_arts;
+    private EmojiTextView nome,fraserapida;
     private CircleImageView imgperfil;
     private ProgressBar progressBar;
     private SimpleDraweeView capausuario;
@@ -59,6 +62,8 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
     private String id_do_usuario;
     private String id_usuariologado;
     private Usuario usuarioLogado,usuarioselecionado;
+    private android.support.v7.app.AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,33 +71,33 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
 
         id_do_usuario=getIntent().getStringExtra("id");
 
-     //Configuraçoes Originais
+        //Configuraçoes Originais
         progressBar = findViewById(R.id.progressbar_perfil);
         id_usuariologado =  UsuarioFirebase.getIdentificadorUsuario();
-    database_perfil = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
-    seguidores_ref = ConfiguracaoFirebase.getDatabase().getReference().child("seguidores");
-     nome = findViewById(R.id.nomeusuario_perfil);
-     btn_conto_click=findViewById(R.id.conto_click_perfil);
-     btn_conto_click.setOnClickListener(this);
-     btn_topico_click = findViewById(R.id.topico_click_perfil);
-     btn_topico_click.setOnClickListener(this);
-     btn_fanats_click = findViewById(R.id.fanats_click_perfil);
-     btn_fanats_click.setOnClickListener(this);
-     btn_seguidor_click = findViewById(R.id.seguidores_click_perfil);
-     btn_seguidor_click.setOnClickListener(this);
-     n_contos=findViewById(R.id.num_contos_perfil);
-     n_topicos=findViewById(R.id.num_topicos_perfil);
-     n_arts=findViewById(R.id.num_fantars_perfil);
-     n_seguidores= findViewById(R.id.n_seguidores);
-     fraserapida= findViewById(R.id.fraserapida_perfil);
-     capausuario = findViewById(R.id.capaperfilusuario);
-     imgperfil= findViewById(R.id.circleImageViewFotoPerfilusuario);
-     botao_voltar = findViewById(R.id.perfil_button_back_perfil);
-     botao_voltar.setOnClickListener(this);
-     botao_msg = findViewById(R.id.botaomensagemperfil);
-     botao_msg.setOnClickListener(this);
-     botao_seguir = findViewById(R.id.botaoseguirperfil);
-     botao_seguir.setOnClickListener(this);
+        database_perfil = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        seguidores_ref = ConfiguracaoFirebase.getDatabase().getReference().child("seguidores");
+        btn_conto_click=findViewById(R.id.conto_click_perfil);
+        btn_conto_click.setOnClickListener(this);
+        btn_topico_click = findViewById(R.id.topico_click_perfil);
+        btn_topico_click.setOnClickListener(this);
+        btn_fanats_click = findViewById(R.id.fanats_click_perfil);
+        btn_fanats_click.setOnClickListener(this);
+        btn_seguidor_click = findViewById(R.id.seguidores_click_perfil);
+        btn_seguidor_click.setOnClickListener(this);
+        nome = findViewById(R.id.nomeusuario_perfil);
+        n_contos=findViewById(R.id.num_contos_perfil);
+        n_topicos=findViewById(R.id.num_topicos_perfil);
+        n_arts=findViewById(R.id.num_fantars_perfil);
+        n_seguidores= findViewById(R.id.n_seguidores);
+        fraserapida= findViewById(R.id.fraserapida_perfil);
+        capausuario = findViewById(R.id.capaperfilusuario);
+        imgperfil= findViewById(R.id.circleImageViewFotoPerfilusuario);
+        botao_voltar = findViewById(R.id.perfil_button_back_perfil);
+        botao_voltar.setOnClickListener(this);
+        botao_msg = findViewById(R.id.botaomensagemperfil);
+        botao_msg.setOnClickListener(this);
+        botao_seguir = findViewById(R.id.botaoseguirperfil);
+        botao_seguir.setOnClickListener(this);
         //Configurar Abas
         final FragmentPagerItemAdapter adapter= new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
@@ -100,8 +105,8 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
                         .add("TÓPICOS", Topico_Perfil_Fragment.class)
                         .add("CONTOS", Contos_perfil_Fragment.class)
                         .add("FANARTS",FanArts_perfil_Fragment.class)
-                        .add("COMÉRCIO",Comercio_perfil_Fragment.class)
-                        .add("EVENTO",Evento_perfil_Fragment.class)
+                        //.add("COMÉRCIO",Comercio_perfil_Fragment.class)
+                        // .add("EVENTO",Evento_perfil_Fragment.class)
                         // .add("Tops", RankFragment.class)
                         .create()
         );
@@ -198,44 +203,65 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
         }
     }
     private void CarregarDados_do_Usuario(){
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        LayoutInflater layoutInflater = LayoutInflater.from(Perfil.this);
+        final View view  = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop,null);
+        ImageView imageViewgif = view.findViewById(R.id.gifimage);
+
+        Glide.with(getApplicationContext())
+                .asGif()
+                .load(R.drawable.gif_self)
+                .into(imageViewgif);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
         ChildEventListenerperfil=database_perfil.orderByChild("id")
                 .equalTo(id_do_usuario).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         usuarioselecionado = dataSnapshot.getValue(Usuario.class );
                         assert usuarioselecionado != null;
+                        if(usuarioselecionado!=null) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            nome.setText(usuarioselecionado.getNome());
+                            fraserapida.setText(usuarioselecionado.getFrase());
+                            n_topicos.setText(String.valueOf(usuarioselecionado.getTopicos()));
+                            n_contos.setText(String.valueOf(usuarioselecionado.getContos()));
+                            n_arts.setText(String.valueOf(usuarioselecionado.getArts()));
+                            n_seguidores.setText(String.valueOf(usuarioselecionado.getSeguidores()));
 
-                        progressBar.setVisibility(View.VISIBLE);
-                         nome.setText(usuarioselecionado.getNome());
-                        n_topicos.setText(String.valueOf(usuarioselecionado.getTopicos()));
-                        n_contos.setText(String.valueOf(usuarioselecionado.getContos()));
-                        n_arts.setText(String.valueOf(usuarioselecionado.getArts()));
-                         n_seguidores.setText(String.valueOf(usuarioselecionado.getSeguidores()));
+                            Uri capa = Uri.parse(usuarioselecionado.getCapa());
+                            if (capa == null) {
+                                capausuario.setBackgroundResource(R.drawable.gradiente_toolbar);
+                            } else {
+                                DraweeController controllerOne = Fresco.newDraweeControllerBuilder()
+                                        .setUri(capa)
+                                        .build();
+                                capausuario.setController(controllerOne);
+                                progressBar.setVisibility(View.GONE);
+                            }
 
-                        Uri  capa = Uri.parse(usuarioselecionado.getCapa());
-                             if(capa==null){
-                                 capausuario.setBackgroundResource(R.drawable.gradiente_toolbar);
-                             }else {
-                                 DraweeController controllerOne = Fresco.newDraweeControllerBuilder()
-                                         .setUri(capa)
-                                         .build();
-                                 capausuario.setController(controllerOne);
-                                 progressBar.setVisibility(View.GONE);
-                             }
-
-                        String fotoperfil = usuarioselecionado.getFoto();
-                        Glide.with(Perfil.this)
-                                .load(fotoperfil)
-                                .into(imgperfil);
+                            String fotoperfil = usuarioselecionado.getFoto();
+                            Glide.with(Perfil.this)
+                                    .load(fotoperfil)
+                                    .into(imgperfil);
 
 
-                        //EventBUS
-                        EventBus.getDefault().postSticky(usuarioselecionado.getId());
+                            //EventBUS
+                            EventBus.getDefault().postSticky(usuarioselecionado.getId());
+                            dialog.dismiss();
+                        }else{
+
+                        }
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         usuarioselecionado = dataSnapshot.getValue(Usuario.class );
                         assert usuarioselecionado != null;
+                        n_topicos.setText(String.valueOf(usuarioselecionado.getTopicos()));
+                        n_contos.setText(String.valueOf(usuarioselecionado.getContos()));
+                        n_arts.setText(String.valueOf(usuarioselecionado.getArts()));
                         n_seguidores.setText(String.valueOf(usuarioselecionado.getSeguidores()));
                     }
                     @Override
@@ -260,7 +286,7 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
 
                 usuarioLogado = dataSnapshot.getValue(Usuario.class);
 
-             /*verifica se o  usuario esta seguindo*/
+                /*verifica se o  usuario esta seguindo*/
                 VerificaSegueUsuarioAmigo();
 
             }
@@ -272,60 +298,61 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
         });
     }
     public void VerificaSegueUsuarioAmigo(){
+
         DatabaseReference seguidor_ref=seguidores_ref
                 .child(usuarioselecionado.getId())
                 .child(id_usuariologado);
-               seguidor_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(DataSnapshot dataSnapshot) {
-                       if(dataSnapshot.exists()){
-                       HabilitarBotaoSeguir(true);
-                       }else{
-                        HabilitarBotaoSeguir(false);
-                       }
-                   }
+        seguidor_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    HabilitarBotaoSeguir(true);
+                }else{
+                    HabilitarBotaoSeguir(false);
+                }
+            }
 
-                   @Override
-                   public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                   }
-               });
+            }
+        });
     }
 
     private void HabilitarBotaoSeguir(Boolean segueUsuario){
         if(segueUsuario){
             botao_seguir.setText(R.string.botao_txt_seguindo);
-        botao_seguir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder msgbox = new AlertDialog.Builder(Perfil.this);
-                //configurando o titulo
-                msgbox.setTitle("Deixa de seguir");
-                // configurando a mensagem
-                msgbox.setMessage("Deseja Realmente Deixa de seguir "+usuarioselecionado.getNome()+" ?");
-                // Botao negativo
+            botao_seguir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder msgbox = new AlertDialog.Builder(Perfil.this);
+                    //configurando o titulo
+                    msgbox.setTitle("Deixa de seguir");
+                    // configurando a mensagem
+                    msgbox.setMessage("Deseja Realmente Deixa de seguir "+usuarioselecionado.getNome()+" ?");
+                    // Botao negativo
 
-                msgbox.setPositiveButton("Sim",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int wich) {
-                                RemoverSeguidor(usuarioLogado,usuarioselecionado);
-                                   }
+                    msgbox.setPositiveButton("Sim",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int wich) {
+                                    RemoverSeguidor(usuarioLogado,usuarioselecionado);
+                                }
 
-                        });
+                            });
 
 
-                msgbox.setNegativeButton("Não",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int wich) {
-                                dialog.dismiss();
-                            }
-                        });
-                msgbox.show();
+                    msgbox.setNegativeButton("Não",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int wich) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    msgbox.show();
 
-            }
-        });
+                }
+            });
 
         }else{
             botao_seguir.setText(R.string.botao_txt_seguir);
@@ -341,76 +368,77 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
         }
     }
 
-private void SalvarSeguidor(Usuario ulogado,Usuario uamigo){
+    private void SalvarSeguidor(Usuario ulogado,Usuario uamigo){
 
-    HashMap<String, Object> dadosUsuarioLogado = new HashMap<>();
-    dadosUsuarioLogado.put("id", ulogado.getId() );
+        HashMap<String, Object> dadosUsuarioLogado = new HashMap<>();
+        dadosUsuarioLogado.put("id", ulogado.getId() );
 
         DatabaseReference seguidorRef = seguidores_ref
-               .child(uamigo.getId())
-               .child(ulogado.getId());
-               seguidorRef.setValue(dadosUsuarioLogado);
+                .child(uamigo.getId())
+                .child(ulogado.getId());
+        seguidorRef.setValue(dadosUsuarioLogado);
 
-               botao_seguir.setText(R.string.botao_txt_seguindo);
-    botao_seguir.setText(R.string.botao_txt_seguir);
-    botao_seguir.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            RemoverSeguidor(usuarioLogado,usuarioselecionado);
-        }
-    });
-    Toast.makeText(this, "Agora você verá tudo que o "+uamigo.getNome()+"Postar", Toast.LENGTH_SHORT).show();
-
-    //Incrementar seguidores do amigo
-    int seguidores = uamigo.getSeguidores() + 1;
-    HashMap<String, Object> dadosSeguidores = new HashMap<>();
-    dadosSeguidores.put("seguidores", seguidores );
-    DatabaseReference usuarioSeguidores = database_perfil
-            .child( uamigo.getId() );
-    usuarioSeguidores.updateChildren( dadosSeguidores );
-    botao_seguir.setText(R.string.botao_txt_seguindo);
-    //Incrementar seguindo do usuário logado
-    int seguindo = ulogado.getSeguindo() + 1;
-    HashMap<String, Object> dadosSeguindo = new HashMap<>();
-    dadosSeguindo.put("seguindo", seguindo );
-    DatabaseReference usuarioSeguindo = database_perfil
-            .child( ulogado.getId() );
-    usuarioSeguindo.updateChildren( dadosSeguindo );
+        botao_seguir.setText(R.string.botao_txt_seguindo);
+        botao_seguir.setText(R.string.botao_txt_seguir);
+        botao_seguir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RemoverSeguidor(usuarioLogado,usuarioselecionado);
+            }
+        });
+        Toast toast = Toast.makeText(this, "Agora você verá tudo que o "+uamigo.getNome()+" Postar", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+        //Incrementar seguidores do amigo
+        int seguidores = uamigo.getSeguidores() + 1;
+        HashMap<String, Object> dadosSeguidores = new HashMap<>();
+        dadosSeguidores.put("seguidores", seguidores );
+        DatabaseReference usuarioSeguidores = database_perfil
+                .child( uamigo.getId() );
+        usuarioSeguidores.updateChildren( dadosSeguidores );
+        botao_seguir.setText(R.string.botao_txt_seguindo);
+        //Incrementar seguindo do usuário logado
+        int seguindo = ulogado.getSeguindo() + 1;
+        HashMap<String, Object> dadosSeguindo = new HashMap<>();
+        dadosSeguindo.put("seguindo", seguindo );
+        DatabaseReference usuarioSeguindo = database_perfil
+                .child( ulogado.getId() );
+        usuarioSeguindo.updateChildren( dadosSeguindo );
 
     }
-private void RemoverSeguidor(Usuario ulogado,Usuario uamigo){
+    private void RemoverSeguidor(Usuario ulogado,Usuario uamigo){
 
-    DatabaseReference seguidorRef = seguidores_ref
-            .child(uamigo.getId())
-            .child(ulogado.getId());
-    seguidorRef.removeValue();
+        DatabaseReference seguidorRef = seguidores_ref
+                .child(uamigo.getId())
+                .child(ulogado.getId());
+        seguidorRef.removeValue();
 
-    botao_seguir.setText(R.string.botao_txt_seguir);
-    botao_seguir.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            SalvarSeguidor(usuarioLogado,usuarioselecionado);
-        }
-    });
+        botao_seguir.setText(R.string.botao_txt_seguir);
+        botao_seguir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SalvarSeguidor(usuarioLogado,usuarioselecionado);
+            }
+        });
 
-    Toast.makeText(this, "Não verá mais atualização  "+uamigo.getNome()+" Postar", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Não verá mais atualização  "+uamigo.getNome()+" Postar", Toast.LENGTH_SHORT).show();
 
-    //deletar seguidores do amigo
-    int seguidores = uamigo.getSeguidores() - 1;
-    HashMap<String, Object> dadosSeguidores = new HashMap<>();
-    dadosSeguidores.put("seguidores", seguidores );
-    DatabaseReference usuarioSeguidores = database_perfil
-            .child( uamigo.getId() );
-    usuarioSeguidores.updateChildren( dadosSeguidores );
+        //deletar seguidores do amigo
+        int seguidores = uamigo.getSeguidores() - 1;
+        HashMap<String, Object> dadosSeguidores = new HashMap<>();
+        dadosSeguidores.put("seguidores", seguidores );
+        DatabaseReference usuarioSeguidores = database_perfil
+                .child( uamigo.getId() );
+        usuarioSeguidores.updateChildren( dadosSeguidores );
 
 
-    //deletar seguindo
-    int seguindo = ulogado.getSeguindo() -1 ;
-    HashMap<String, Object> dadosSeguindo = new HashMap<>();
-    dadosSeguindo.put("seguindo", seguindo );
-    DatabaseReference usuarioSeguindo = database_perfil
-            .child( ulogado.getId() );
-    usuarioSeguindo.updateChildren( dadosSeguindo );
-}
+        //deletar seguindo
+        int seguindo = ulogado.getSeguindo() -1 ;
+        HashMap<String, Object> dadosSeguindo = new HashMap<>();
+        dadosSeguindo.put("seguindo", seguindo );
+        DatabaseReference usuarioSeguindo = database_perfil
+                .child( ulogado.getId() );
+        usuarioSeguindo.updateChildren( dadosSeguindo );
+    }
 
 }

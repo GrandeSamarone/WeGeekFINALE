@@ -18,7 +18,8 @@ import android.webkit.WebViewClient;
 import com.marlostrinidad.wegeek.nerdzone.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity.setWindowFlag;
+import static com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes.setWindowFlag;
+
 
 public class Politica_PrivacidadeActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class Politica_PrivacidadeActivity extends AppCompatActivity {
 
         TrocarFundos_status_bar();
 
-
+        init();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -79,9 +80,9 @@ public class Politica_PrivacidadeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-      //  init();
+    protected void onDestroy() {
+        super.onDestroy();
+        init();
     }
 
     //Botao Voltar

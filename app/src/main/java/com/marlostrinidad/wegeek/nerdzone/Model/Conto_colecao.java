@@ -1,8 +1,8 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
+import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
 
@@ -60,7 +60,7 @@ public class Conto_colecao {
         DatabaseReference firebaseRefs = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("meusconto")
-                .child(identificadorUsuario)
+                .child(conto.getIdauthor())
                 .child(conto.getUid())
                 .child("quantcolecao");
 

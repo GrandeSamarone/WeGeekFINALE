@@ -11,7 +11,7 @@
     cardview:cardCornerRadius="4dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:id="@+id/cardevento">
+    android:id="@+id/cardcomercio">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:layout_width="100sp"
         android:layout_height="120sp"
         android:layout_gravity="center"
-        android:background="@drawable/carregando"
+        android:background="@drawable/gradiente_icone"
         />
 
 
@@ -69,11 +69,12 @@
 
             <TextView
 
-                android:text="85"
-                android:id="@+id/quantlike"
+                android:text="0"
+                android:id="@+id/quantvisu"
                 android:textColor="@color/preto"
                 android:layout_width="match_parent"
                 android:textSize="18sp"
+                android:layout_marginLeft="8dp"
                 android:singleLine="true"
                 android:fontFamily="sans-serif"
                 android:layout_height="wrap_content"
@@ -83,12 +84,18 @@
 
         <me.zhanghai.android.materialratingbar.MaterialRatingBar
             android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:numStars="5"
+            android:stepSize="0.5"
+            app:mrb_progressTint="@color/amareloclaro"
+            app:mrb_secondaryProgressTint="@color/amareloclaro"
+            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"/>
          <TextView
+             android:id="@+id/num_ratingbar"
              android:textSize="18dp"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="(30)"/>
+             android:text="(0)"/>
 
 
 

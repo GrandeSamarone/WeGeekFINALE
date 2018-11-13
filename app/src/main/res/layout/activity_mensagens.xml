@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-   <include layout="@layout/toolbarsecundario"/>
+   <include layout="@layout/toolbarsecundario_sem_foto"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerviewConversas"

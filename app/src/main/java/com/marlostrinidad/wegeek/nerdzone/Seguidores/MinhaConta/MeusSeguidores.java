@@ -1,7 +1,6 @@
 package com.marlostrinidad.wegeek.nerdzone.Seguidores.MinhaConta;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity;
 import com.marlostrinidad.wegeek.nerdzone.Adapter.ContatosAdapter;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
@@ -208,12 +206,9 @@ public class MeusSeguidores extends AppCompatActivity {
 
             case android.R.id.home:
                 // NavUtils.navigateUpFromSameTask(this);
-                startActivity(new Intent(this, MainActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    finishAffinity();
-                }else{
+
                     finish();
-                }
+
                 break;
 
 

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +117,9 @@ public void onClick(View v) {
 
                                Intent it = new Intent(context, Minhas_Publicacoes.class);
                                context.startActivity(it);
-                               Toast.makeText(context, "Deletado com Sucesso!", Toast.LENGTH_LONG).show();
+                               Toast toast = Toast.makeText(context, "Deletado com sucesso!", Toast.LENGTH_SHORT);
+                               toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+                               toast.show();
                            }
 
                        });

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.marlostrinidad.wegeek.nerdzone.Icons.PageIcon">
+    tools:context="com.example.fulanoeciclano.nerdzone.Icons.PageIcon">
 
 <include layout="@layout/toolbarsecundario"/>
 

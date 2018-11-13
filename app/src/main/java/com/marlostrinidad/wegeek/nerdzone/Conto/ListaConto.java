@@ -1,20 +1,25 @@
 package com.marlostrinidad.wegeek.nerdzone.Conto;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +43,6 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-
     private Toolbar toolbar;
     private CircleImageView icone;
     private SwipeRefreshLayout refresh;
@@ -52,7 +56,9 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
     private RecyclerView recyclerView_lista_conto;
     private ArrayList<Conto> Listaconto = new ArrayList<>();
     private ChildEventListener valueEventListenerConto;
-
+    private LinearLayout linear_nada_cadastrado;
+    private SharedPreferences preferences = null;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,13 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
             @Override
             public void run() {
                 RecuperarContos();
+
+                preferences = getSharedPreferences("primeiravezconto", MODE_PRIVATE);
+                if (preferences.getBoolean("primeiravezconto", true)) {
+                    preferences.edit().putBoolean("primeiravezconto", false).apply();
+                    Dialog_Primeiravez();
+                }
+
             }
         });
         refresh.setColorSchemeResources
@@ -76,6 +89,7 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
 
 
         //Configuraçoes Basicas
+        linear_nada_cadastrado = findViewById(R.id.linear_nada_cadastrado_conto);
         recyclerView_lista_conto = findViewById(R.id.recycleview_conto);
         botaoMaisconto=findViewById(R.id.buton_novo_conto);
         botaoMaisconto.setOnClickListener(new View.OnClickListener() {
@@ -122,12 +136,16 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
 
 
     private void RecuperarContos(){
+        linear_nada_cadastrado.setVisibility(View.VISIBLE);
         Listaconto.clear();
         valueEventListenerConto = database_conto.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Conto conto = dataSnapshot.getValue(Conto.class);
                 Listaconto.add(0, conto);
+                if(Listaconto.size()>0){
+                    linear_nada_cadastrado.setVisibility(View.GONE);
+                }
 
                 adapter_conto.notifyDataSetChanged();
                 refresh.setRefreshing(false);
@@ -256,4 +274,21 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
                 .into(icone);
     }
 
+
+    private void Dialog_Primeiravez() {
+        LayoutInflater li = getLayoutInflater();
+        View view = li.inflate(R.layout.dialog_informacao_contos, null);
+        view.findViewById(R.id.botaoentendi).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //desfaz o dialog_opcao_foto.
+                dialog.dismiss();
+            }
+        });
+        //Dialog de tela
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+
+    }
 }

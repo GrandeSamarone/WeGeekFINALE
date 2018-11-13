@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         />
+
 <de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/icone_user_toolbar"
     android:background="@drawable/fundo_user"

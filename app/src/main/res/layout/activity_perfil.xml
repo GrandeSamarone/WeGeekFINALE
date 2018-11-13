@@ -14,7 +14,7 @@
 
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbarlayoutperfil"
+            android:id="@+id/appbarladyoutperfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -80,17 +80,18 @@
                 android:layout_marginTop="60dp"
                 android:id="@+id/relativeimgperfil"
                 android:layout_width="100dp"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                android:background="@drawable/fundoicon">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circleImageViewFotoPerfilusuario"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/fundo_user"
+                    android:padding="4dp"
                     />
 
             </RelativeLayout>
 
-            <TextView
+            <com.vanniktech.emoji.EmojiTextView
                 android:layout_marginTop="8dp"
                 android:id="@+id/nomeusuario_perfil"
                 android:layout_width="match_parent"
@@ -102,7 +103,7 @@
                 android:textSize="@dimen/nome_perfil"
                 android:textStyle="bold"
                 android:textAlignment="center"/>
-            <TextView
+            <com.vanniktech.emoji.EmojiTextView
                 android:id="@+id/fraserapida_perfil"
                 android:layout_marginBottom="8dp"
                 android:textAlignment="center"

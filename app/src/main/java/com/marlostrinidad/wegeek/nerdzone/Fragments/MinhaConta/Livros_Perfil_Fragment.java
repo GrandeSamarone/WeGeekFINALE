@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.marlostrinidad.wegeek.nerdzone.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */

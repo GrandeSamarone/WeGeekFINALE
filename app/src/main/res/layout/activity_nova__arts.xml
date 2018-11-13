@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".FanArts.Nova_Arts">
 
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/toolbarsecundario_sem_foto" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/imgfarnats"
+        android:layout_width="150sp"
+        android:layout_height="250sp"
+        android:layout_gravity="center"
+        android:background="@drawable/fundo_add_art"/>
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/txtlayout_subtitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="32dp"
+
+            android:layout_marginLeft="32dp">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/legenda_arts"
+                android:maxLength="300"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Diga mais sobre sua art" />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/botao_adicionar_art"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADICIONAR"
+            android:theme="@style/botaopadrao"/>
+    </LinearLayout>
+    </ScrollView>
+    </LinearLayout>

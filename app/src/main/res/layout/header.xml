@@ -40,7 +40,8 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     >
-    <TextView
+    <com.vanniktech.emoji.EmojiTextView
+        android:letterSpacing="0.1"
         android:id="@+id/Nome_usuario_drawer"
         android:layout_width="wrap_content"
         android:layout_height="20dp"

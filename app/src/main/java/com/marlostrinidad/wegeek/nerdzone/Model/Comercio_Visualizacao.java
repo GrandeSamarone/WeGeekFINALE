@@ -1,7 +1,7 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 
 public class Comercio_Visualizacao {
     public Comercio comercio;
@@ -52,11 +52,10 @@ public class Comercio_Visualizacao {
 
 
     public void atualizar_meus_comercios(int valor){
-        String idUsuario = ConfiguracaoFirebase.getIdUsuario();
         DatabaseReference firebaseRef_comercio = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_comercio=firebaseRef_comercio
                 .child("meuscomercio")
-                 .child(idUsuario)
+                 .child(comercio.getIdAutor())
                 .child(comercio.getIdMercado())
                 .child("quantVisualizacao");
         VisuRef_comercio.setValue(getQtdvisualizacao());

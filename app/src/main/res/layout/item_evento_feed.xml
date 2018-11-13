@@ -10,6 +10,7 @@
     android:layout_marginLeft="-4dp"
     android:layout_marginRight="-4dp"
     android:elevation="6dp"
+    android:backgroundTint="@color/background_cardview"
     android:id="@+id/cardclickevento"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">

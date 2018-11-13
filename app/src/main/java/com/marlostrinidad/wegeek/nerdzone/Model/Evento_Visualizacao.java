@@ -1,8 +1,9 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
+
+import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
-import com.google.firebase.database.DatabaseReference;
 
 public class Evento_Visualizacao {
     public Evento evento;
@@ -68,7 +69,7 @@ public class Evento_Visualizacao {
         DatabaseReference firebaseRef_evento = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_evento=firebaseRef_evento
                 .child("meusevento")
-                .child(usuariologado)
+                .child(evento.getIdUsuario())
                 .child(evento.getUid())
                 .child("quantVisualizacao");
 

@@ -93,6 +93,7 @@ public class Detalhe_Mercado extends AppCompatActivity {
         criador = findViewById(R.id.detalhe_mercado_criador);
         descricao = findViewById(R.id.detalhe_mercado_descricao);
         endereco = findViewById(R.id.detalhe_mercado_endereco);
+        fabcontato = findViewById(R.id.fab_entrar_em_contato);
         click = findViewById(R.id.click_layout);
         botaovoltar = findViewById(R.id.mercado_button_back);
         botaovoltar.setOnClickListener(new View.OnClickListener() {
@@ -165,15 +166,7 @@ public class Detalhe_Mercado extends AppCompatActivity {
             }
         });
 
-        fabcontato = findViewById(R.id.fab_entrar_em_contato);
-        fabcontato.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Detalhe_Mercado.this, ChatActivity.class);
-                it.putExtra("id", mercadoselecionado.getIdAutor());
-                startActivity(it);
-            }
-        });
+
 
     }
 
@@ -193,6 +186,29 @@ public class Detalhe_Mercado extends AppCompatActivity {
                                 .load(foto)
                                 .into(perfil);
                         criador.setText(user.getNome());
+
+
+                        if(!usuarioLogado.equals(user.getId())){
+                            fabcontato.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(Detalhe_Mercado.this, ChatActivity.class);
+                                    it.putExtra("id", mercadoselecionado.getIdAutor());
+                                    startActivity(it);
+                                }
+                            });
+                        }else{
+                            fabcontato.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(Detalhe_Mercado.this, MinhaConta.class);
+                                    it.putExtra("id", user.getId());
+                                    startActivity(it);
+                                }
+                            });
+                        }
+
+
 
                         if (!usuarioLogado.equals(user.getId())) {
                             click.setOnClickListener(new View.OnClickListener() {
