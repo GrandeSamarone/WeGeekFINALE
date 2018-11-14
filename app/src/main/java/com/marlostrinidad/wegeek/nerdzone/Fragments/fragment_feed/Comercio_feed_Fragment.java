@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -34,6 +35,7 @@ import java.util.List;
 public class Comercio_feed_Fragment extends Fragment {
 
     private DatabaseReference mDatabasefeed,database_comercio;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerMercado;
@@ -50,6 +52,9 @@ public class Comercio_feed_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
           View view =inflater.inflate(R.layout.fragment_comercio_feed_, container, false);
+
+          nadaencontrado = view.findViewById(R.id.linear_nada_cadastrado_feed_mercado);
+        nadaencontrado.setVisibility(View.VISIBLE);
         recyclerMercado = view.findViewById(R.id.lista_comercio_feed);
         mDatabasefeed = ConfiguracaoFirebase.getFirebaseDatabase().child("feed-comercio");
         database_comercio = ConfiguracaoFirebase.getDatabase().getReference().child("comercio");
@@ -116,6 +121,7 @@ public class Comercio_feed_Fragment extends Fragment {
     }
     private void RecuperarComercio(final String idcomercio){
         ListaMercado.clear();
+
         valueEventListenerComercio = database_comercio.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -126,7 +132,9 @@ public class Comercio_feed_Fragment extends Fragment {
 
 
                             ListaMercado.add(0, comercio);
-
+                            if(ListaMercado.size()>0){
+                                nadaencontrado.setVisibility(View.GONE);
+                            }
                             adapter_mercado.notifyDataSetChanged();
                         }
                     }

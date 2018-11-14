@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 public class Topico_Perfil_Fragment extends Fragment  implements Main {
 
     private DatabaseReference mDatabasetopico;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerTopico;
@@ -51,7 +53,7 @@ public class Topico_Perfil_Fragment extends Fragment  implements Main {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view=inflater.inflate(R.layout.fragment_topico__perfil_, container, false);
-
+       nadaencontrado=view.findViewById(R.id.linear_nada_cadastrado_perfil_topico);
         recyclerTopico = view.findViewById(R.id.lista_topico_perfil);
         mDatabasetopico = ConfiguracaoFirebase.getFirebaseDatabase().child("topico");
         //Configuracao Adapter
@@ -123,12 +125,16 @@ public class Topico_Perfil_Fragment extends Fragment  implements Main {
 
     public void RecuperarTopico(String id){
         ListaTopico.clear();
+        nadaencontrado.setVisibility(View.VISIBLE);
         valueEventListenerTopico=mDatabasetopico.orderByChild("idauthor").equalTo(id)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Topico topico = dataSnapshot.getValue(Topico.class);
                         ListaTopico.add(0,topico);
+                        if(ListaTopico.size()>0){
+                            nadaencontrado.setVisibility(View.GONE);
+                        }
 
                         adapter_topico.notifyDataSetChanged();
 

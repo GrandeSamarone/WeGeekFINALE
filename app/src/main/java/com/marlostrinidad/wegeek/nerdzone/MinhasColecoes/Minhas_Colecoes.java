@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +44,7 @@ public class Minhas_Colecoes extends AppCompatActivity  {
     private Toolbar toolbar;
     private CircleImageView icone;
     private SwipeRefreshLayout refresh;
-
+     private LinearLayout nadaencontrado;
     private DatabaseReference database,database_conto;
     private FirebaseUser usuario;
     private MaterialSearchView SeachViewConto;
@@ -67,6 +68,7 @@ public class Minhas_Colecoes extends AppCompatActivity  {
 
 
         //Configuraçoes Basicas
+        nadaencontrado=findViewById(R.id.linear_nada_cadastrado_minhas_colecoes);
         recyclerView_lista_conto = findViewById(R.id.recycleview_MinhasColecoes);
         database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
         database_conto = ConfiguracaoFirebase.getDatabase().getReference().child("adicionei-conto").child(usuarioLogado);
@@ -104,12 +106,15 @@ public class Minhas_Colecoes extends AppCompatActivity  {
 
     private void RecuperarContos(){
         Listaconto.clear();
+        nadaencontrado.setVisibility(View.VISIBLE);
         valueEventListenerConto = database_conto.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Conto conto = dataSnapshot.getValue(Conto.class);
                 Listaconto.add(0, conto);
-
+                 if(Listaconto.size()>0){
+                     nadaencontrado.setVisibility(View.GONE);
+                 }
                 adapter_conto.notifyDataSetChanged();
 
             }

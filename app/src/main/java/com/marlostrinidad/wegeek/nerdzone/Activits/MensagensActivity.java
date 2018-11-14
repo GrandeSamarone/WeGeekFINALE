@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +43,7 @@ public class MensagensActivity extends AppCompatActivity {
     private DatabaseReference conversasRef;
     private ValueEventListener valueEventListenerContatos;
     private ChildEventListener childEventListenerConversas;
+    private LinearLayout linear_nada_cadastrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class MensagensActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         recyclerViewConversas= findViewById(R.id.recyclerviewConversas);
         adapter = new ConversasAdapter(listaConversas,MensagensActivity.this);
-
+        linear_nada_cadastrado=findViewById(R.id.linear_nada_cadastrado_mensagens);
         String identificadoUsuario= UsuarioFirebase.getIdentificadorUsuario();
         database = ConfiguracaoFirebase.getFirebaseDatabase();
         conversasRef= database.child("conversas")
@@ -196,12 +198,16 @@ public class MensagensActivity extends AppCompatActivity {
 
     public void RecuperarConversa(){
         listaConversas.clear();
+        linear_nada_cadastrado.setVisibility(View.VISIBLE);
         childEventListenerConversas =  conversasRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //Recuperar Conversa
                 Conversa conversa=dataSnapshot.getValue(Conversa.class);
                 listaConversas.add(conversa);
+                if(listaConversas.size()>0){
+                    linear_nada_cadastrado.setVisibility(View.GONE);
+                }
                 adapter.notifyDataSetChanged();
             }
             @Override

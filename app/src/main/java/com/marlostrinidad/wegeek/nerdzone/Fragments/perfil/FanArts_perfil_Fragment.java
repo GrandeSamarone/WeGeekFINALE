@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -43,6 +44,7 @@ public class FanArts_perfil_Fragment extends Fragment  implements Main {
     private Adapter_FanArts adapter_art;
     private ArrayList<FanArts> ListaArt = new ArrayList<>();
     private ChildEventListener valueEventListenerConto;
+    private LinearLayout nadaencontrado;
     public FanArts_perfil_Fragment() {
         // Required empty public constructor
     }
@@ -53,7 +55,7 @@ public class FanArts_perfil_Fragment extends Fragment  implements Main {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fan_arts_perfil_, container, false);
-
+         nadaencontrado=view.findViewById(R.id.linear_nada_cadastrado_perfil_fanart);
         recyclerart = view.findViewById(R.id.perfil_lista_art);
         mDatabaseart = ConfiguracaoFirebase.getFirebaseDatabase().child("arts");
         //Configuracao Adapter
@@ -146,13 +148,16 @@ public class FanArts_perfil_Fragment extends Fragment  implements Main {
 
     public void RecuperarArt(String id ){
         ListaArt.clear();
+        nadaencontrado.setVisibility(View.VISIBLE);
         valueEventListenerConto=mDatabaseart.orderByChild("idauthor").equalTo(id)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         FanArts conto = dataSnapshot.getValue(FanArts.class);
                         ListaArt.add(0,conto);
-
+                        if(ListaArt.size()>0){
+                            nadaencontrado.setVisibility(View.GONE);
+                        }
                         adapter_art.notifyDataSetChanged();
 
                     }

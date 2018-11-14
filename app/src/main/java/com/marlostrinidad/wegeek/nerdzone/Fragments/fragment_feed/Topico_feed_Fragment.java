@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class Topico_feed_Fragment extends Fragment {
 
     private DatabaseReference mDatabasefeed,database_conto;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerTopico;
@@ -46,7 +48,8 @@ public class Topico_feed_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_topico_feed_, container, false);
-
+       nadaencontrado=view.findViewById(R.id.linear_nada_cadastrado_feed_topico);
+        nadaencontrado.setVisibility(View.VISIBLE);
         recyclerTopico = view.findViewById(R.id.lista_topico_feed);
         mDatabasefeed = ConfiguracaoFirebase.getFirebaseDatabase().child("feed-topico");
         database_conto = ConfiguracaoFirebase.getDatabase().getReference().child("topico");
@@ -95,6 +98,9 @@ public class Topico_feed_Fragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Topico topico = dataSnapshot.getValue(Topico.class);
                 ListaTopico.add(0, topico);
+                if(ListaTopico.size()>0){
+                    nadaencontrado.setVisibility(View.GONE);
+                }
 
                 adapter_topico.notifyDataSetChanged();
 

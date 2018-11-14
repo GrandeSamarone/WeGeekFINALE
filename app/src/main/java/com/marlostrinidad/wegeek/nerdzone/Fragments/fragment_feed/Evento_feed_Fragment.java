@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class Evento_feed_Fragment extends Fragment {
 
     private DatabaseReference mDatabasefeed,database_evento;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerEvento;
@@ -46,6 +48,9 @@ public class Evento_feed_Fragment extends Fragment {
         // Inflate the layout for this fragment
        View view=inflater.inflate(R.layout.fragment_evento_feed_, container, false);
         recyclerEvento = view.findViewById(R.id.lista_evento_feed);
+
+        nadaencontrado = view.findViewById(R.id.linear_nada_cadastrado_feed_evento);
+        nadaencontrado.setVisibility(View.VISIBLE);
         mDatabasefeed = ConfiguracaoFirebase.getFirebaseDatabase().child("feed-evento");
         database_evento = ConfiguracaoFirebase.getDatabase().getReference().child("evento");
         //Configuracao Adapter
@@ -92,7 +97,9 @@ public class Evento_feed_Fragment extends Fragment {
                     Evento evento = estado.getValue(Evento.class);
                     if(idevento.equals(evento.getUid())) {
                         ListaEvento.add(0, evento);
-
+                      if(ListaEvento.size()>0){
+                          nadaencontrado.setVisibility(View.GONE);
+                      }
                         adapter_evento.notifyDataSetChanged();
                     }
                 }

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/refreshMinhasColecoes"
-    android:background="@color/background"
-    tools:context="com.example.fulanoeciclano.nerdzone.Mercado.MercadoActivity">
+    android:background="@color/background">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +19,25 @@
             layout="@layout/toolbarsecundario"/>
 
 
-
+        <LinearLayout
+            android:id="@+id/linear_nada_cadastrado_minhas_colecoes"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/colecao_kd"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:text="Nenhum conto foi adicionado."/>
+        </LinearLayout>
 
 
         <RelativeLayout

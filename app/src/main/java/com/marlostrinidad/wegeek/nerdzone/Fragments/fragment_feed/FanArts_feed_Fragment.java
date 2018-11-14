@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,7 @@ import java.util.List;
 public class FanArts_feed_Fragment extends Fragment {
 
     private DatabaseReference mDatabasefeed,database_Fanarts;
+    private LinearLayout nadaencontrado;
     private RecyclerView recyclerArts;
     private Adapter_FanArt_Feed adapter_arts;
     private ArrayList<FanArts> Listafanrts = new ArrayList<>();
@@ -47,7 +49,8 @@ public class FanArts_feed_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_fan_arts_feed_, container, false);
-
+        nadaencontrado=view.findViewById(R.id.linear_nada_cadastrado_feed_art);
+        nadaencontrado.setVisibility(View.VISIBLE);
         recyclerArts = view.findViewById(R.id.lista_fanarts_feed);
         mDatabasefeed = ConfiguracaoFirebase.getFirebaseDatabase().child("feed-arts");
         database_Fanarts = ConfiguracaoFirebase.getDatabase().getReference().child("arts");
@@ -116,13 +119,16 @@ public class FanArts_feed_Fragment extends Fragment {
     }
     private void RecuperarArt(final String idart){
         Listafanrts.clear();
+
         valueEventListenerFanarts = database_Fanarts.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     FanArts fanArts = dataSnapshot.getValue(FanArts.class);
                     if(idart.equals(fanArts.getId())) {
                         Listafanrts.add(0, fanArts);
-
+                  if(Listafanrts.size()>0){
+                      nadaencontrado.setVisibility(View.GONE);
+                  }
                         adapter_arts.notifyDataSetChanged();
                     }
 

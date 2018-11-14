@@ -13,8 +13,9 @@
     <application
         android:name=".Helper.App"
         android:allowBackup="true"
-        android:icon="@drawable/favicon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -174,7 +175,7 @@
         <activity
             android:name=".Splash.TelaSplash"
             android:theme="@style/AppCompat.TelaCheia" />
-        <activity android:name=".Conto.Detalhe_conto"></activity>
+        <activity android:name=".Conto.Detalhe_conto" />
     </application>
 
 </manifest>

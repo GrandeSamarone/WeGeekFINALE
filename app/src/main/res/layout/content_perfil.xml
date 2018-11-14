@@ -103,7 +103,7 @@
             app:stl_defaultTabTextColor="@color/custom_tab"
             app:stl_dividerColor="@color/background"
             app:stl_indicatorColor="@color/colorPrimary"
-            app:stl_defaultTabTextHorizontalPadding="24dp"
+            app:stl_defaultTabTextHorizontalPadding="36dp"
             app:stl_indicatorInterpolation="linear"
             app:stl_indicatorThickness="3dp"
             app:stl_underlineThickness="1dp"

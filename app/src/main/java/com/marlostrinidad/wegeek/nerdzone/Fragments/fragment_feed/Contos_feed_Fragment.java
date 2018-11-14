@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class Contos_feed_Fragment extends Fragment {
 
     private DatabaseReference mDatabasefeed,database_conto;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerConto;
@@ -45,7 +47,8 @@ public class Contos_feed_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view= inflater.inflate(R.layout.fragment_contos_feed_, container, false);
-
+          nadaencontrado= view.findViewById(R.id.linear_nada_cadastrado_feed_conto);
+        nadaencontrado.setVisibility(View.VISIBLE);
         recyclerConto = view.findViewById(R.id.lista_conto_feed);
         mDatabasefeed = ConfiguracaoFirebase.getFirebaseDatabase().child("feed-conto");
         database_conto = ConfiguracaoFirebase.getDatabase().getReference().child("conto");
@@ -93,7 +96,9 @@ public class Contos_feed_Fragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Conto conto = dataSnapshot.getValue(Conto.class);
                 ListaConto.add(0, conto);
-
+                   if(ListaConto.size()>0){
+                       nadaencontrado.setVisibility(View.GONE);
+                   }
                 adapter_conto.notifyDataSetChanged();
 
 

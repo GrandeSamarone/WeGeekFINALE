@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 public class Contos_perfil_Fragment extends Fragment implements Main {
 
     private DatabaseReference mDatabaseconto;
+    private LinearLayout nadaencontrado;
     private FirebaseAuth autenticacao;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView recyclerConto;
@@ -48,7 +50,7 @@ public class Contos_perfil_Fragment extends Fragment implements Main {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_contos_perfil_, container, false);
-
+        nadaencontrado=view.findViewById(R.id.linear_nada_cadastrado_perfil_conto);
         recyclerConto = view.findViewById(R.id.lista_conto_perfil);
         mDatabaseconto = ConfiguracaoFirebase.getFirebaseDatabase().child("conto");
         //Configuracao Adapter
@@ -120,13 +122,16 @@ public class Contos_perfil_Fragment extends Fragment implements Main {
 
     public void RecuperarConto(String id ){
         ListaConto.clear();
+        nadaencontrado.setVisibility(View.VISIBLE);
         valueEventListenerConto=mDatabaseconto.orderByChild("idauthor").equalTo(id)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Conto conto = dataSnapshot.getValue(Conto.class);
                         ListaConto.add(0,conto);
-
+                         if(ListaConto.size()>0){
+                             nadaencontrado.setVisibility(View.GONE);
+                         }
                         adapter_conto.notifyDataSetChanged();
 
                     }

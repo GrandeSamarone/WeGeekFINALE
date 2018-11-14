@@ -1,20 +1,25 @@
 package com.marlostrinidad.wegeek.nerdzone.Topico;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,6 +56,10 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
     private RecyclerView recyclerView_lista_topico;
     private ArrayList<Topico> ListaTopico = new ArrayList<>();
     private ChildEventListener valueEventListenerTopicos;
+    private LinearLayout linear_nada_cadastrado;
+    private Dialog dialog;
+    private SharedPreferences preferences = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +75,19 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void run() {
                 RecuperarTopicos();
+                preferences = getSharedPreferences("primeiraveztopico", MODE_PRIVATE);
+                if (preferences.getBoolean("primeiraveztopico", true)) {
+                    preferences.edit().putBoolean("primeiraveztopico", false).apply();
+                    Dialog_Primeiravez();
+                }
+
             }
         });
         refresh.setColorSchemeResources
                 (R.color.colorPrimaryDark, R.color.amareloclaro,
                         R.color.accent);
-       //Configuraçoes Basicas
+        //Configuraçoes Basicas
+        linear_nada_cadastrado= findViewById(R.id.linear_nada_cadastrado_lista_topico);
         recyclerView_lista_topico = findViewById(R.id.recycleview_topico);
         botaoMaisTopicos=findViewById(R.id.buton_novo_topico);
         botaoMaisTopicos.setOnClickListener(new View.OnClickListener() {
@@ -120,14 +136,18 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void RecuperarTopicos(){
+
+        linear_nada_cadastrado.setVisibility(View.VISIBLE);
         ListaTopico.clear();
         valueEventListenerTopicos = database_topico.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Topico topico = dataSnapshot.getValue(Topico.class);
-                    ListaTopico.add(0, topico);
-
-                    adapter_topico.notifyDataSetChanged();
+                Topico topico = dataSnapshot.getValue(Topico.class);
+                ListaTopico.add(0, topico);
+                if(ListaTopico.size()>0){
+                    linear_nada_cadastrado.setVisibility(View.GONE);
+                }
+                adapter_topico.notifyDataSetChanged();
                 refresh.setRefreshing(false);
 
 
@@ -154,26 +174,26 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
         String email = usuario.getEmail();
         ChildEventListenerperfil=database.orderByChild("tipoconta")
                 .equalTo(email).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Usuario perfil = dataSnapshot.getValue(Usuario.class );
-                assert perfil != null;
-                String icone = perfil.getFoto();
-                IconeUsuario(icone);
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Usuario perfil = dataSnapshot.getValue(Usuario.class );
+                        assert perfil != null;
+                        String icone = perfil.getFoto();
+                        IconeUsuario(icone);
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
     private void IconeUsuario(String url) {
         //Imagem do icone do usuario
@@ -263,6 +283,23 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private void Dialog_Primeiravez() {
+        LayoutInflater li = getLayoutInflater();
+        View view = li.inflate(R.layout.dialog_informacao_topico, null);
+        view.findViewById(R.id.botaoentendi).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //desfaz o dialog_opcao_foto.
+                dialog.dismiss();
+            }
+        });
+        //Dialog de tela
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+
     }
 
 
