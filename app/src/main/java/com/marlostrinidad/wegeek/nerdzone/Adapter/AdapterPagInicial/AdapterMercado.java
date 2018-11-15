@@ -18,8 +18,14 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Model.Comercio;
+import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.R;
 
 import java.util.List;
@@ -45,7 +51,7 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
     }
 
     @Override
-    public void onBindViewHolder(MyviewHolder holder, int position) {
+    public void onBindViewHolder(final MyviewHolder holder, int position) {
 
         Comercio comercio = comercios.get(position);
         if(comercio.getTitulo()!=null){
@@ -74,7 +80,29 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
                     .build();
             holder.mercadocapa.setHierarchy(hierarchy);
         }
+        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("usuarios")
+                .child(comercio.getIdAutor());
+        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final Usuario user = dataSnapshot.getValue(Usuario.class);
 
+
+                holder.authornome.setText(user.getNome());
+
+
+            /*Glide.with(context)
+                        .load(user.getFoto())
+                        .into(holder.imgperfil );*/
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -85,7 +113,7 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
     public class MyviewHolder extends RecyclerView.ViewHolder {
 
         private  SimpleDraweeView mercadocapa;
-        private  TextView mercadonome;
+        private  TextView mercadonome,authornome;
         private  LinearLayout mercadolayout;
         private  CardView card;
         private ProgressBar progresso;
@@ -94,6 +122,7 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
         public MyviewHolder(View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.cardevento);
+            authornome=itemView.findViewById(R.id.nomeautor_evento);
             mercadocapa = itemView.findViewById(R.id.iconeevento);
             mercadonome = itemView.findViewById(R.id.nomeevento);
         }

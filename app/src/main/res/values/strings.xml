@@ -120,6 +120,7 @@
         <item>Categoria</item>
         <item>Roupas</item>
         <item>HQ</item>
+        <item>ACESSÓRIOS</item>
         <item>Games</item>
         <item>Papelaria</item>
         <item>Decoração</item>
@@ -127,6 +128,13 @@
         <item>Action Figure</item>
         <item>Livros</item>
         <item>Cosplay</item>
+    </string-array>
+    <string-array name="fanartcategoria">
+        <item>Categoria</item>
+        <item>Cosplay</item>
+        <item>Design</item>
+        <item>FanArts</item>
+        <item>Fotografia</item>
     </string-array>
     <string-array name="eventos">
         <item>Acontecendo</item>

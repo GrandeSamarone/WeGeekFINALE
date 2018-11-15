@@ -20,8 +20,11 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
@@ -73,6 +76,7 @@ public class Nova_Arts extends AppCompatActivity{
     private FirebaseUser UsuarioAtual;
     private Toolbar toolbar;
     private AlertDialog dialog;
+    private Spinner spinnercategoria;
     private CircleImageView icone;
     private String id_do_usuario;
 
@@ -83,6 +87,7 @@ public class Nova_Arts extends AppCompatActivity{
     private ChildEventListener ChildEventListenerperfil;
     private DatabaseReference databaseusuario;
     private Usuario perfil;
+    private String categoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,7 @@ public class Nova_Arts extends AppCompatActivity{
 
         //Configuracoes Originais
         fanArts = new FanArts();
+
         database = FirebaseDatabase.getInstance().getReference();
         databaseusuario = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
         SeguidoresRef = ConfiguracaoFirebase.getDatabase().getReference().child("seguidores");
@@ -126,6 +132,29 @@ public class Nova_Arts extends AppCompatActivity{
         CarregarSeguidores();
         CarregarDados_do_Usuario();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    //carregar spinner
+    private void CarregarDadosSpinner() {
+        //
+        String[] artista = getResources().getStringArray(R.array.fanartcategoria);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, artista);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnercategoria.setAdapter(adapter);
+        spinnercategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoria = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
 

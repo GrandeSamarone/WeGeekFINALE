@@ -81,6 +81,8 @@ public class Comercio implements Serializable {
 
         anuncioref.removeValue();
         removermercadoPublico();
+        removermercadoVizu();
+        removerRating();
         deletar_img_comercio();
     }
 
@@ -94,6 +96,23 @@ public class Comercio implements Serializable {
         anuncioref.removeValue();
 
     }
+    public void removermercadoVizu(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("comercio-visualizacao")
+                .child(getIdMercado());
+
+        anuncioref.removeValue();
+
+    }
+    public void removerRating(){
+        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("ratingbar-comercio")
+                .child(getIdMercado());
+
+        anuncioref.removeValue();
+
+    }
+
     public void deletar_img_comercio(){
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
         StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage()

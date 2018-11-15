@@ -469,9 +469,11 @@ public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLa
                     }
                 });
 
-                Glide.with(MercadoActivity.this)
-                        .load(iconeurl)
-                        .into(icone);
+                if (!MercadoActivity.this.isFinishing()) {
+                    Glide.with(MercadoActivity.this)
+                            .load(iconeurl)
+                            .into(icone);
+                }
 
 
             }

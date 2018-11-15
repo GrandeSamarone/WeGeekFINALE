@@ -17,8 +17,14 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Model.Evento;
+import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.R;
 
 import java.util.List;
@@ -46,7 +52,7 @@ public class EventoAdapterPagInicial extends RecyclerView.Adapter<EventoAdapterP
     }
 
     @Override
-    public void onBindViewHolder(MyviewHolder holder, int position) {
+    public void onBindViewHolder(final MyviewHolder holder, int position) {
 
         final Evento ev = eventos.get(position);
         holder.eventonome.setText(ev.getTitulo());
@@ -71,7 +77,29 @@ public class EventoAdapterPagInicial extends RecyclerView.Adapter<EventoAdapterP
                     .build();
             holder.eventocapa.setHierarchy(hierarchy);
         }
+        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("usuarios")
+                .child(ev.getIdUsuario());
+        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final Usuario user = dataSnapshot.getValue(Usuario.class);
 
+
+             holder.evento_author.setText(user.getNome());
+
+
+            /*Glide.with(context)
+                        .load(user.getFoto())
+                        .into(holder.imgperfil );*/
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -87,13 +115,13 @@ public class EventoAdapterPagInicial extends RecyclerView.Adapter<EventoAdapterP
     public class MyviewHolder extends RecyclerView.ViewHolder {
 
         SimpleDraweeView eventocapa;
-        TextView eventonome;
+        TextView eventonome,evento_author;
         LinearLayout eventolayout;
         CardView card;
         public MyviewHolder(View itemView) {
             super(itemView);
 
-
+          evento_author=itemView.findViewById(R.id.nomeautor_evento);
             eventocapa = itemView.findViewById(R.id.iconeevento);
             card = itemView.findViewById(R.id.cardevento);
             eventonome = itemView.findViewById(R.id.nomeevento);

@@ -259,6 +259,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
 //Progress
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Aguarde");
+        progressDialog.setMessage("Carregando..");
         progressDialog.show();
         progressDialog.setCancelable(false);
         String email = usuario.getEmail();
@@ -281,10 +282,11 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
 
 
                 String icone = perfil.getFoto();
-                Glide.with(MinhaConta.this)
-                        .load(icone)
-                        .into(circleImageViewperfil );
-
+                if (!MinhaConta.this.isFinishing()) {
+                    Glide.with(MinhaConta.this)
+                            .load(icone)
+                            .into(circleImageViewperfil);
+                }
                 nome.setText(perfil.getNome());
                 fraserapida.setText(perfil.getFrase());
                 n_topicos.setText(String.valueOf(perfil.getTopicos()));

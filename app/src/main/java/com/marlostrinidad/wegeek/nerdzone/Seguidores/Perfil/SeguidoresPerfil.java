@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -185,7 +183,7 @@ public class SeguidoresPerfil extends AppCompatActivity {
     }
 
     //botao Pesquisar
-    public boolean onCreateOptionsMenu(Menu menu){
+   /* public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_sem_filtro_sem_foto,menu);
 
@@ -196,7 +194,7 @@ public class SeguidoresPerfil extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
+*/
     //Botao Voltar
     public boolean onOptionsItemSelected(MenuItem item) {
 

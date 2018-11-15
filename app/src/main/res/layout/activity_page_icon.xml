@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.example.fulanoeciclano.nerdzone.Icons.PageIcon">
+   >
 
-<include layout="@layout/toolbarsecundario"/>
+<include layout="@layout/toolbarsecundario_sem_foto"/>
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/SmartTabLayoutIcons"

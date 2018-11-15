@@ -35,7 +35,7 @@ public class PageIcon extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_page_icon);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarsecundario);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarsecundario_sem_foto);
         toolbar.setTitle("Escolha um icone");
         setSupportActionBar(toolbar);
 

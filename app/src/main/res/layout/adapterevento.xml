@@ -49,7 +49,7 @@
       />
         <TextView
 
-            android:text="Marlos Trinidad"
+            android:text=""
             android:id="@+id/nomeautor_evento"
             android:textColor="@color/cinzadisabilitado"
             android:layout_width="match_parent"
