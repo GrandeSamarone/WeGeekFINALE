@@ -154,6 +154,12 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
         RecuperarArts();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database_fanarts.removeEventListener(valueEventListenerFanarts);
+        database.removeEventListener(ChildEventListenerperfil);
+    }
 
     private void RecuperarArts(){
         linear_nada_cadastrado.setVisibility(View.VISIBLE);

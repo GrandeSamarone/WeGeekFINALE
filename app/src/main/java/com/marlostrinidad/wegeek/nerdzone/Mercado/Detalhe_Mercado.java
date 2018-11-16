@@ -36,7 +36,6 @@ import com.marlostrinidad.wegeek.nerdzone.Model.Comercio_Visualizacao;
 import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.PerfilAmigos.Perfil;
 import com.marlostrinidad.wegeek.nerdzone.R;
-import com.marlostrinidad.wegeek.nerdzone.Votacao.Detalhe.Detalhe_youtube_fem;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
@@ -172,6 +171,11 @@ public class Detalhe_Mercado extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database_usuario.removeEventListener(ChildEventListeneruser);
+    }
 
     private void CarregarDados_do_Criador_do_Comercio(String idusuario) {
 

@@ -36,7 +36,6 @@ import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.R;
 import com.marlostrinidad.wegeek.nerdzone.Seguidores.Perfil.SeguidoresPerfil;
-import com.marlostrinidad.wegeek.nerdzone.Votacao.Detalhe.Detalhe_youtube_fem;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;

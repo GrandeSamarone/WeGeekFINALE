@@ -16,6 +16,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.firebase.database.DataSnapshot;
@@ -64,6 +65,7 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
         if (stringcapa != null) {
             Uri uri = Uri.parse(stringcapa);
             ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                    .setResizeOptions(new ResizeOptions(200, 200))
                     .setLocalThumbnailPreviewsEnabled(true)
                     .setProgressiveRenderingEnabled(true)
                     .build();

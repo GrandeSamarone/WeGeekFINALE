@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout mdrawer;
     private CircleImageView img_drawer,img_toolbar;
     private ImageView capadrawer;
-    private TextView nome_drawer;
     private TextView email_drawer;
+    private TextView nome_drawer;
     private StorageReference storageReference;
     private String identificadorUsuario;
     private String mPhotoUrl;
@@ -309,6 +309,7 @@ public class MainActivity extends AppCompatActivity implements
         Database_Topico.removeEventListener(valueEventListenerTopico);
         Database_Conto.removeEventListener(valueEventListenerContos);
         Database_Art.removeEventListener(valueEventListenerArt);
+        database.removeEventListener(ChildEventListenerperfil);
     }
 
     private void CarregarDados_do_Usuario(){

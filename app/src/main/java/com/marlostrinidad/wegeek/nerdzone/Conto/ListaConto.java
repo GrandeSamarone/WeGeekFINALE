@@ -74,7 +74,8 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
             @Override
             public void run() {
                 RecuperarContos();
-
+                CarregarDados_do_Usuario();
+                TrocarFundos_status_bar();
                 preferences = getSharedPreferences("primeiravezconto", MODE_PRIVATE);
                 if (preferences.getBoolean("primeiravezconto", true)) {
                     preferences.edit().putBoolean("primeiravezconto", false).apply();
@@ -112,8 +113,7 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
         recyclerView_lista_conto.setAdapter(adapter_conto);
 
 
-        CarregarDados_do_Usuario();
-        TrocarFundos_status_bar();
+
 
 
         //Botao Pesquisa
@@ -133,7 +133,11 @@ public class ListaConto extends AppCompatActivity implements SwipeRefreshLayout.
         RecuperarContos();
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database_conto.removeEventListener(valueEventListenerConto);
+    }
 
     private void RecuperarContos(){
         linear_nada_cadastrado.setVisibility(View.VISIBLE);

@@ -80,6 +80,11 @@ public class Minhas_Publicacoes extends AppCompatActivity {
         CarregarDados_do_Usuario();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseusuario.removeEventListener(ChildEventListenerperfil);
+    }
 
     //Botao Voltar
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,7 +150,7 @@ public class Minhas_Publicacoes extends AppCompatActivity {
         });
 
 
-        Glide.with(Minhas_Publicacoes.this)
+        Glide.with(getApplicationContext())
                 .load(url)
                 .into(icone);
     }

@@ -321,9 +321,11 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
 
                     }
                 });
-                Glide.with(Evento_Lista.this)
-                        .load(iconeurl)
-                        .into(icone);
+                if (!Evento_Lista.this.isFinishing()) {
+                    Glide.with(getApplicationContext())
+                            .load(iconeurl)
+                            .into(icone);
+                }
 
             }
             @Override
@@ -351,6 +353,7 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
     public void onStop() {
         super.onStop();
         mDatabaseevento.removeEventListener(valueEventListenerEvento);
+        database.removeEventListener(ChildEventListenerperfil);
     }
 
 

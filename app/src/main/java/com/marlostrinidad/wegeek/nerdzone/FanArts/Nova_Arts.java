@@ -128,12 +128,23 @@ public class Nova_Arts extends AppCompatActivity{
             }
         });
 
-        TrocarFundos_status_bar();
-        CarregarSeguidores();
-        CarregarDados_do_Usuario();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TrocarFundos_status_bar();
+        CarregarSeguidores();
+        CarregarDados_do_Usuario();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseusuario.removeEventListener(ChildEventListenerperfil);
+    }
 
     //carregar spinner
     private void CarregarDadosSpinner() {

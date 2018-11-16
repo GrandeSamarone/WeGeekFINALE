@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -82,7 +80,6 @@ public class DetalheEvento extends AppCompatActivity {
     private EmojiPopup emojiPopup;
     private ChildEventListener ChildEventListeneruser;
     private String ids;
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,28 +145,18 @@ public class DetalheEvento extends AppCompatActivity {
         CarregarDados_do_Evento();
         CarregarDados_Comentario_Evento();
 
-        GifCarregarDados();
+
 
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void GifCarregarDados() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        LayoutInflater layoutInflater = LayoutInflater.from(DetalheEvento.this);
-        final View view = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop, null);
-        ImageView imageViewgif = view.findViewById(R.id.gifimage);
-
-        Glide.with(getApplicationContext())
-                .asGif()
-                .load(R.drawable.gif_self)
-                .into(imageViewgif);
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database_usuario.removeEventListener(ChildEventListeneruser);
+        database_evento.removeEventListener(ChildEventListenerevento);
     }
 
     private void CarregarDados_do_Evento(){
@@ -200,7 +187,7 @@ public class DetalheEvento extends AppCompatActivity {
                 eventobanner.setController(controllerOne);
                 progressBar.setVisibility(View.GONE);
 
-                  dialog.dismiss();
+
 
                 eventobanner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -265,11 +252,11 @@ public class DetalheEvento extends AppCompatActivity {
                         assert user != null;
 
                         String foto =user.getFoto();
-                        Glide.with(DetalheEvento.this)
-                                .load(foto)
-                                .into(AuthorFoto_evento_View );
-
-                        dialog.dismiss();
+                        if (!DetalheEvento.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(foto)
+                                    .into(AuthorFoto_evento_View);
+                        }
 
                         Author_evento_View.setText(user.getNome());
                         if(!usuarioLogado.equals(user.getId())){
@@ -340,7 +327,7 @@ public class DetalheEvento extends AppCompatActivity {
                 recyclerViewcomentarios.scrollToPosition(listcomentario.size()-1);
                 adapter.notifyItemInserted(listcomentario.size()-1);
 
-                dialog.dismiss();
+
             }
 
             @Override

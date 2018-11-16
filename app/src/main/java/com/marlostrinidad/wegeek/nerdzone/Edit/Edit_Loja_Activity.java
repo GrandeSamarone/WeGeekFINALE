@@ -147,11 +147,19 @@ public class Edit_Loja_Activity extends AppCompatActivity implements View.OnClic
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         TrocarFundos_status_bar();
-
         CarregarDados_do_Mercado();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDatabaseMercado.removeEventListener(ChildEventListenerevento);
     }
 
     private void CarregarDados_do_Mercado(){

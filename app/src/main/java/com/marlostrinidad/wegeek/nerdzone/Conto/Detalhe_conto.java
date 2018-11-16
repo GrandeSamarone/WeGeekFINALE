@@ -102,9 +102,21 @@ public class Detalhe_conto extends AppCompatActivity {
             CarregarInfo_botoes(contoselecionado.getUid());
 
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         CarregarDados_do_Usuario();
         TrocarFundos_status_bar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database.removeEventListener(ChildEventListenerdetalhe);
     }
 
     public boolean  onOptionsItemSelected(MenuItem item) {

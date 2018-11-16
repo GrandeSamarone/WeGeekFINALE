@@ -220,6 +220,12 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        database.removeEventListener(ChildEventListener);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 

@@ -84,6 +84,12 @@ public class FeedActivity extends AppCompatActivity {
         CarregarDados_do_Usuario();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseusuario.removeEventListener(ChildEventListenerfeed);
+
+    }
 
     //Botao Voltar
     public boolean onOptionsItemSelected(MenuItem item) {

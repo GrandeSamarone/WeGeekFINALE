@@ -125,11 +125,23 @@ public class Edit_evento_Activity extends AppCompatActivity implements DatePicke
         botaoSalvar.setOnClickListener(this);
         estado_edit = findViewById(R.id.localidade_edit);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         TrocarFundos_status_bar();
         IconeUsuario();
         CarregarDados_do_Evento();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDatabaseEvento.removeEventListener(ChildEventListenerevento);
     }
 
     private void CarregarDados_do_Evento(){

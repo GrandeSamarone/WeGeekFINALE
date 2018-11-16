@@ -124,6 +124,12 @@ public class Novo_Conto extends AppCompatActivity {
         CarregarSeguidores();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseusuario.removeEventListener(ChildEventListenerperfil);
+    }
+
     private void CarregarDados_do_Usuario(){
         usuario = UsuarioFirebase.getUsuarioAtual();
         String email = usuario.getEmail();
