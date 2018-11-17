@@ -476,7 +476,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                 }else if(capa!=null){
                     //Recuperar dados da imagem  para o  Firebase
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    capa.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    capa.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     byte[] dadosImagem = baos.toByteArray();
 
                     //Salvar no Firebase

@@ -264,7 +264,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
                 if(imagem!=null) {
                     //Recuperar dados da imagem  para o  Firebase
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     byte[] dadosImagem = baos.toByteArray();
 
                     StorageReference imagemRef = storageReference
