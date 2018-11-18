@@ -130,7 +130,7 @@
         <item>Cosplay</item>
     </string-array>
     <string-array name="fanartcategoria">
-        <item>Categoria</item>
+        <item>Selecione uma categoria</item>
         <item>Cosplay</item>
         <item>Design</item>
         <item>FanArts</item>

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +20,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Abrir_Imagem.AbrirImagem_Art;
 import com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity;
 import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
@@ -46,10 +49,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class Lista_Arts extends AppCompatActivity  {
     private Toolbar toolbar;
     private CircleImageView icone;
-    private SwipeRefreshLayout refresh;
     private DatabaseReference database,database_fanarts;
     private FirebaseUser usuario;
     private MaterialSearchView SeachViewTopico;
@@ -62,6 +64,8 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
     private LinearLayout linear_nada_cadastrado;
     private SharedPreferences preferences = null;
     private Dialog dialog;
+    private AlertDialog alerta;
+    private String filtroCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +73,11 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
         setContentView(R.layout.activity_lista__arts);
 
         toolbar = findViewById(R.id.toolbarsecundario);
-        toolbar.setTitle("FanArts");
+        toolbar.setTitle("WeArt");
         setSupportActionBar(toolbar);
 
 
         icone = findViewById(R.id.icone_user_toolbar);
-        refresh = findViewById(R.id.refresharts);
-        refresh.setOnRefreshListener(this);
-        refresh.post(new Runnable() {
-            @Override
-            public void run() {
-                // RecuperarTopicos();
-                CarregarDados_do_Usuario();
-                TrocarFundos_status_bar();
-                RecuperarArts();
-                preferences = getSharedPreferences("primeiravezats", MODE_PRIVATE);
-                if (preferences.getBoolean("primeiravezats", true)) {
-                    preferences.edit().putBoolean("primeiravezats", false).apply();
-                    Dialog_Primeiravez();
-                }
-            }
-        });
-        refresh.setColorSchemeResources
-                (R.color.colorPrimaryDark, R.color.amareloclaro,
-                        R.color.accent);
 
         //Configuraçoes Basicas
         linear_nada_cadastrado=findViewById(R.id.linear_nada_cadastrado_fanats);
@@ -149,9 +134,19 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
 
 
 
+
+
     @Override
-    public void onRefresh() {
+    protected void onStart() {
+        super.onStart();
+        CarregarDados_do_Usuario();
+        TrocarFundos_status_bar();
         RecuperarArts();
+        preferences = getSharedPreferences("primeiravezats", MODE_PRIVATE);
+        if (preferences.getBoolean("primeiravezats", true)) {
+            preferences.edit().putBoolean("primeiravezats", false).apply();
+            Dialog_Primeiravez();
+        }
     }
 
     @Override
@@ -167,13 +162,14 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
         valueEventListenerFanarts = database_fanarts.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FanArts fanArts = dataSnapshot.getValue(FanArts.class);
-                ListaFanarts.add(0,fanArts);
-                if(ListaFanarts.size()>0){
-                    linear_nada_cadastrado.setVisibility(View.GONE);
+                for (DataSnapshot categoria : dataSnapshot.getChildren()) {
+                    FanArts fanArts = categoria.getValue(FanArts.class);
+                    ListaFanarts.add(0, fanArts);
+                    if (ListaFanarts.size() > 0) {
+                        linear_nada_cadastrado.setVisibility(View.GONE);
+                    }
+                    adapter_fanArts.notifyDataSetChanged();
                 }
-                adapter_fanArts.notifyDataSetChanged();
-                refresh.setRefreshing(false);
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -194,7 +190,132 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
         });
     }
 
+    //botao Pesquisar
+  /*  public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_filtro,menu);
 
+
+        return super.onCreateOptionsMenu(menu);
+    }
+*/
+
+    public boolean  onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menufiltro:
+                FiltrarPorCategoria();
+                break;
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                startActivity(new Intent(this, MainActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    finishAffinity();
+                } else {
+                    finish();
+                }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void FiltrarPorCategoria(){
+
+        LayoutInflater li = getLayoutInflater();
+
+        //inflamos o layout dialog_opcao_foto.xml_foto.xml na view
+        View view = li.inflate(R.layout.dialog_spinner_art, null);
+        final Spinner spinnerCategoria =  view.findViewById(R.id.spinnerFiltroCategoria_art);
+        String [] categoria= getResources().getStringArray(R.array.fanartcategoria);
+        ArrayAdapter<String> adaptercategoria
+                = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,categoria);
+        adaptercategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategoria.setAdapter(adaptercategoria);
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        view.findViewById(R.id.spinnerok).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //exibe um Toast informativo.
+
+                filtroCategoria = spinnerCategoria.getSelectedItem().toString();
+                if (filtroCategoria.equals("Categoria")) {
+                    Toast.makeText(getApplicationContext(), "Selecione uma Categoria", Toast.LENGTH_SHORT).show();
+                } else {
+                    RecuperarArtPorCategoria(filtroCategoria);
+                    alerta.dismiss();
+                }
+            }
+        });
+
+        view.findViewById(R.id.spinnercancelar).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //exibe um Toast informativo.
+
+                alerta.dismiss();
+
+            }
+        });
+
+        view.findViewById(R.id.spinnerlimpar).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //exibe um Toast informativo.
+
+                Intent it = new Intent(getApplicationContext(),Lista_Arts.class);
+                startActivity(it);
+
+            }
+        });
+        //Dialog de tela
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Filtrar por Categoria");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
+
+    private void RecuperarArtPorCategoria(String filtroCategoria) {
+
+        //Configurar por estado
+        database_fanarts = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("arts")
+                .child(filtroCategoria);
+        database_fanarts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ListaFanarts.clear();
+                for (DataSnapshot eventos : dataSnapshot.getChildren()) {
+
+                    FanArts art = eventos.getValue(FanArts.class);
+                    ListaFanarts.add(art);
+
+
+                }
+                adapter_fanArts = new Adapter_FanArts(ListaFanarts, Lista_Arts.this);
+                recyclerView_lista_arts.setAdapter(adapter_fanArts);
+                adapter_fanArts.notifyDataSetChanged();
+                //Collections.reverse(listaanuncios);
+                //adapter.notifyDataSetChanged();
+
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
 
@@ -238,22 +359,7 @@ public class Lista_Arts extends AppCompatActivity implements SwipeRefreshLayout.
         win.setAttributes(winParams);
     }
 
-    public boolean  onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menufiltro:
-                //abrirConfiguracoes();
-                break;
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(this, MainActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    finishAffinity();
-                } else {
-                    finish();
-                }
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void CarregarDados_do_Usuario(){
         usuario = UsuarioFirebase.getUsuarioAtual();

@@ -76,7 +76,6 @@ public class Nova_Arts extends AppCompatActivity{
     private FirebaseUser UsuarioAtual;
     private Toolbar toolbar;
     private AlertDialog dialog;
-    private Spinner spinnercategoria;
     private CircleImageView icone;
     private String id_do_usuario;
 
@@ -88,6 +87,8 @@ public class Nova_Arts extends AppCompatActivity{
     private DatabaseReference databaseusuario;
     private Usuario perfil;
     private String categoria;
+    private Spinner Campo_Categoria;
+    private String categoriastring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class Nova_Arts extends AppCompatActivity{
 
         //Configuracoes Originais
         fanArts = new FanArts();
-
+       Campo_Categoria = findViewById(R.id.spinnerArt_categoria);
         database = FirebaseDatabase.getInstance().getReference();
         databaseusuario = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
         SeguidoresRef = ConfiguracaoFirebase.getDatabase().getReference().child("seguidores");
@@ -138,34 +139,13 @@ public class Nova_Arts extends AppCompatActivity{
         TrocarFundos_status_bar();
         CarregarSeguidores();
         CarregarDados_do_Usuario();
+        CarregarDadosSpinner();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         databaseusuario.removeEventListener(ChildEventListenerperfil);
-    }
-
-    //carregar spinner
-    private void CarregarDadosSpinner() {
-        //
-        String[] artista = getResources().getStringArray(R.array.fanartcategoria);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, artista);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnercategoria.setAdapter(adapter);
-        spinnercategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                categoria = parent.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
     }
 
 
@@ -213,22 +193,23 @@ private FanArts configurarArts(){
       fanArts.setLegenda(legenda_art);
       fanArts.setIdauthor(id);
       fanArts.setLikecount(0);
+      fanArts.setCategoria(categoriastring);
       fanArts.setQuantcolecao(0);
       fanArts.setQuantvizualizacao(0);
         return fanArts;
 }
 public void validardados(){
         fanArts=configurarArts();
-
+if(!categoriastring.equals("Selecione uma categoria")) {
     if (TextUtils.isEmpty(fanArts.getLegenda())) {
         campodesc.setError(padrao);
-    return;
+        return;
     }
-    if(fanArts.getArtfoto()==null){
+    if (fanArts.getArtfoto() == null) {
         Toast toast = Toast.makeText(Nova_Arts.this, "Imagem Obrigatorio", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
-    }else{
+    } else {
         fanArts.Salvar(seguidoresSnapshot);
         int qtdArt = perfil.getArts() + 1;
         perfil.setArts(qtdArt);
@@ -236,14 +217,38 @@ public void validardados(){
         Toast toast = Toast.makeText(Nova_Arts.this, "Postado  com sucesso!", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
-        Intent it = new Intent( Nova_Arts.this,Lista_Arts.class);
+        Intent it = new Intent(Nova_Arts.this, Lista_Arts.class);
         startActivity(it);
         finish();
     }
+}else {
+    Toast toast = Toast.makeText(Nova_Arts.this, "Selecione uma categoria", Toast.LENGTH_SHORT);
+    toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+    toast.show();
+}
 
 
 }
+    //carregar spinner
+    private void CarregarDadosSpinner() {
+        //
+        String[] artista = getResources().getStringArray(R.array.fanartcategoria);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, artista);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Campo_Categoria.setAdapter(adapter);
+        Campo_Categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoriastring = parent.getItemAtPosition(position).toString();
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
     private void CarregarDados_do_Usuario(){
         usuario = UsuarioFirebase.getUsuarioAtual();

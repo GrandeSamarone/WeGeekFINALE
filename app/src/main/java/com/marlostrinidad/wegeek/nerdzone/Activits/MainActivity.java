@@ -501,13 +501,15 @@ public class MainActivity extends AppCompatActivity implements
         valueEventListenerArt =Database_Art.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FanArts fanArts = dataSnapshot.getValue(FanArts.class);
-                listaArt.add(fanArts);
-                if(listaArt.size()>0){
-                    line_art.setVisibility(View.GONE);
+                for (DataSnapshot categoria : dataSnapshot.getChildren()) {
+                    FanArts fanArts = categoria.getValue(FanArts.class);
+                    listaArt.add(fanArts);
+                    if (listaArt.size() > 0) {
+                        line_art.setVisibility(View.GONE);
+                    }
+                    adapterArte.notifyDataSetChanged();
+                    swipe.setRefreshing(false);
                 }
-                adapterArte.notifyDataSetChanged();
-                swipe.setRefreshing(false);
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
