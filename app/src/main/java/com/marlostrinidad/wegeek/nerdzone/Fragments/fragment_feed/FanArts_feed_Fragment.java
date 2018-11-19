@@ -123,15 +123,17 @@ public class FanArts_feed_Fragment extends Fragment {
         valueEventListenerFanarts = database_Fanarts.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    FanArts fanArts = dataSnapshot.getValue(FanArts.class);
-                    if(idart.equals(fanArts.getId())) {
+                for (DataSnapshot categoria : dataSnapshot.getChildren()) {
+                    FanArts fanArts = categoria.getValue(FanArts.class);
+                    if (idart.equals(fanArts.getId())) {
                         Listafanrts.add(0, fanArts);
-                  if(Listafanrts.size()>0){
-                      nadaencontrado.setVisibility(View.GONE);
-                  }
+                        if (Listafanrts.size() > 0) {
+                            nadaencontrado.setVisibility(View.GONE);
+                        }
                         adapter_arts.notifyDataSetChanged();
                     }
 
+                }
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {

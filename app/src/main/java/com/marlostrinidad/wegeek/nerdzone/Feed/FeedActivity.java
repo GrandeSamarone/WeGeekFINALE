@@ -63,7 +63,7 @@ public class FeedActivity extends AppCompatActivity {
                         .add("EVENTO", Evento_feed_Fragment.class)
                         .add("TÓPICO",Topico_feed_Fragment.class)
                         .add("CONTO",Contos_feed_Fragment.class)
-                        .add("FANARTS",FanArts_feed_Fragment.class)
+                        .add("WEARTS",FanArts_feed_Fragment.class)
                         // .add("Tops", RankFragment.class)
                         .create()
         );

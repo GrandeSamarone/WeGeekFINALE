@@ -104,7 +104,7 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
                 FragmentPagerItems.with(this)
                         .add("TÓPICOS", Topico_Perfil_Fragment.class)
                         .add("CONTOS", Contos_perfil_Fragment.class)
-                        .add("FANARTS",FanArts_perfil_Fragment.class)
+                        .add("WEARTS",FanArts_perfil_Fragment.class)
                         //.add("COMÉRCIO",Comercio_perfil_Fragment.class)
                         // .add("EVENTO",Evento_perfil_Fragment.class)
                         // .add("Tops", RankFragment.class)

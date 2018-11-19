@@ -153,7 +153,7 @@ public class MinhaConta extends AppCompatActivity implements Main, View.OnClickL
                         .add("TÓPICOS",Topicos_MinhaConta_Fragment.class )
                         // .add("Noticia",Noticia_Fragment.class)
                         .add("CONTOS", Contos_MinhaConta_Fragment.class)
-                        .add("FANARTS", Art_MinhaConta_Fragment.class)
+                        .add("WEARTS", Art_MinhaConta_Fragment.class)
 
                         .create()
 

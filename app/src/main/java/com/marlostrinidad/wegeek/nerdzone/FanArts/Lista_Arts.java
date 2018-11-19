@@ -111,6 +111,7 @@ public class Lista_Arts extends AppCompatActivity  {
                 Intent it = new Intent(Lista_Arts.this, AbrirImagem_Art.class);
                 it.putExtra("id_foto",arteselecionada.getArtfoto());
                 it.putExtra("id",arteselecionada.getId());
+                it.putExtra("categoria",arteselecionada.getCategoria());
                 it.putExtra("nome_foto",arteselecionada.getLegenda());
                 startActivity(it);
             }

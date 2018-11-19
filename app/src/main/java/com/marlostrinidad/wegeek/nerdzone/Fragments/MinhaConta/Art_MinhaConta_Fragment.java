@@ -72,6 +72,7 @@ public class Art_MinhaConta_Fragment extends Fragment {
                 it.putExtra("id_foto",arteselecionada.getArtfoto());
                 it.putExtra("id",arteselecionada.getId());
                 it.putExtra("nome_foto",arteselecionada.getLegenda());
+                it.putExtra("categoria",arteselecionada.getCategoria());
                 startActivity(it);
             }
 
@@ -105,16 +106,18 @@ public class Art_MinhaConta_Fragment extends Fragment {
 
         public void RecuperarArt(){
             ListaArts.clear();
-            String identificadoUsuario= UsuarioFirebase.getIdentificadorUsuario();
-            valueEventListenerArt=mDatabaseart.orderByChild("idauthor").equalTo(identificadoUsuario)
+            final String identificadoUsuario= UsuarioFirebase.getIdentificadorUsuario();
+            valueEventListenerArt=mDatabaseart
                     .addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            FanArts fanArts = dataSnapshot.getValue(FanArts.class);
-                            ListaArts.add(0,fanArts);
-
-                            adapter_art.notifyDataSetChanged();
-
+                            for (DataSnapshot categoria : dataSnapshot.getChildren()) {
+                                FanArts fanArts = categoria.getValue(FanArts.class);
+                                if (fanArts.getIdauthor().equals(identificadoUsuario)) {
+                                    ListaArts.add(0, fanArts);
+                                    adapter_art.notifyDataSetChanged();
+                                }
+                            }
                         }
 
                         @Override

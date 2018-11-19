@@ -27,6 +27,7 @@
         android:background="@drawable/fundo_add_art"/>
 
         <Spinner
+            android:layout_margin="8dp"
             android:id="@+id/spinnerArt_categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

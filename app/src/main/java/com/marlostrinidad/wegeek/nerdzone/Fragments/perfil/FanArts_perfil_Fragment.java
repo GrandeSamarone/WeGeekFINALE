@@ -76,6 +76,7 @@ public class FanArts_perfil_Fragment extends Fragment  implements Main {
                 Intent it = new Intent(getContext(), AbrirImagem_Art.class);
                 it.putExtra("id_foto",arteselecionada.getArtfoto());
                 it.putExtra("id",arteselecionada.getId());
+                it.putExtra("categoria",arteselecionada.getCategoria());
                 it.putExtra("nome_foto",arteselecionada.getLegenda());
                 startActivity(it);
             }
@@ -146,20 +147,23 @@ public class FanArts_perfil_Fragment extends Fragment  implements Main {
 
     }
 
-    public void RecuperarArt(String id ){
+    public void RecuperarArt(final String id ){
         ListaArt.clear();
         nadaencontrado.setVisibility(View.VISIBLE);
-        valueEventListenerConto=mDatabaseart.orderByChild("idauthor").equalTo(id)
+        valueEventListenerConto=mDatabaseart
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        FanArts conto = dataSnapshot.getValue(FanArts.class);
-                        ListaArt.add(0,conto);
-                        if(ListaArt.size()>0){
-                            nadaencontrado.setVisibility(View.GONE);
+                        for (DataSnapshot categoria : dataSnapshot.getChildren()) {
+                            FanArts conto = categoria.getValue(FanArts.class);
+                            if (conto.getIdauthor().equals(id)) {
+                                ListaArt.add(0, conto);
+                                if (ListaArt.size() > 0) {
+                                    nadaencontrado.setVisibility(View.GONE);
+                                }
+                                adapter_art.notifyDataSetChanged();
+                            }
                         }
-                        adapter_art.notifyDataSetChanged();
-
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
