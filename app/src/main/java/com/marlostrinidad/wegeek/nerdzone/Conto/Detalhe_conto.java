@@ -54,7 +54,7 @@ public class Detalhe_conto extends AppCompatActivity {
     private Adapter_comentario adapter;
     private ArrayList<Comentario> listcomentario = new ArrayList<>();
     private RecyclerView recyclerView_comentarios;
-    private CircleImageView icone;
+    private CircleImageView iconetoolbar;
     private SimpleDraweeView foto;
     private TextView nome_autor,titulo,mensagem,titulotoolbar,num_like,num_conto,texto_conto;
     private EmojiEditText edit_chat_emoji;
@@ -81,7 +81,7 @@ public class Detalhe_conto extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_detalhe_conto);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
+        iconetoolbar = findViewById(R.id.icone_user_toolbar_detalhe);
         titulotoolbar=findViewById(R.id.nome_conto_detalhe);
         texto_conto =findViewById(R.id.txt_add_colecao_detalhe);
         botao_add_colecao=findViewById(R.id.botao_add_a_colecao_detalhe);
@@ -176,16 +176,29 @@ public class Detalhe_conto extends AppCompatActivity {
         });
     }
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerdetalhe=database.orderByChild("tipoconta")
-                .equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerdetalhe=database.orderByChild("id")
+                .equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Usuario perfil = dataSnapshot.getValue(Usuario.class );
                         assert perfil != null;
                         String icone = perfil.getFoto();
-                        IconeUsuario(icone);
+
+                        if (!Detalhe_conto.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(icone)
+                                    .into(iconetoolbar);
+                        }
+
+                        iconetoolbar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(Detalhe_conto.this, MinhaConta.class);
+                                startActivity(it);
+
+                            }
+                        });
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -200,22 +213,6 @@ public class Detalhe_conto extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-    }
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar_detalhe);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Detalhe_conto.this, MinhaConta.class);
-                startActivity(it);
-
-            }
-        });
-        Glide.with(Detalhe_conto.this)
-                .load(url)
-                .into(icone);
-
     }
 
     private void CarregarInfo_botoes(String idConto){

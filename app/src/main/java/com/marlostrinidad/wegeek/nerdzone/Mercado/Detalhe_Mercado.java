@@ -188,11 +188,12 @@ public class Detalhe_Mercado extends AppCompatActivity {
                         assert user != null;
                         RatingBar(user);
                         String foto = user.getFoto();
-                        Glide.with(Detalhe_Mercado.this)
-                                .load(foto)
-                                .into(perfil);
-                        criador.setText(user.getNome());
-
+                        if(!Detalhe_Mercado.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(foto)
+                                    .into(perfil);
+                            criador.setText(user.getNome());
+                        }
 
                         if(!usuarioLogado.equals(user.getId())){
                             fabcontato.setOnClickListener(new View.OnClickListener() {

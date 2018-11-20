@@ -44,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private Toolbar toolbar;
-    private CircleImageView icone;
+    private CircleImageView icone,iconeToolbar;
     private SwipeRefreshLayout refresh;
 
     private DatabaseReference database,database_topico;
@@ -87,6 +87,7 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
                 (R.color.colorPrimaryDark, R.color.amareloclaro,
                         R.color.accent);
         //Configuraçoes Basicas
+        iconeToolbar = findViewById(R.id.icone_user_toolbar);
         linear_nada_cadastrado= findViewById(R.id.linear_nada_cadastrado_lista_topico);
         recyclerView_lista_topico = findViewById(R.id.recycleview_topico);
         botaoMaisTopicos=findViewById(R.id.buton_novo_topico);
@@ -170,16 +171,29 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
 
     }
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerperfil=database.orderByChild("tipoconta")
-                .equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerperfil=database.orderByChild("id")
+                .equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Usuario perfil = dataSnapshot.getValue(Usuario.class );
                         assert perfil != null;
                         String icone = perfil.getFoto();
-                        IconeUsuario(icone);
+
+                        if(!ListaTopicos.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(icone)
+                                    .into(iconeToolbar);
+                        }
+                        iconeToolbar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(ListaTopicos.this, MinhaConta.class);
+                                startActivity(it);
+                                finish();
+
+                            }
+                        });
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -195,22 +209,7 @@ public class ListaTopicos extends AppCompatActivity implements SwipeRefreshLayou
                     }
                 });
     }
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(ListaTopicos.this, MinhaConta.class);
-                startActivity(it);
-                finish();
 
-            }
-        });
-        Glide.with(ListaTopicos.this)
-                .load(url)
-                .into(icone);
-    }
 
 
     public boolean  onOptionsItemSelected(MenuItem item) {

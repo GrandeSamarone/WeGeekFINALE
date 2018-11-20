@@ -6,13 +6,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +27,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +36,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Abrir_Imagem.AbrirImagem;
 import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
 import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_comentario;
@@ -69,7 +67,7 @@ public class Detalhe_topico extends AppCompatActivity {
     private Adapter_comentario adapter;
     private List<Comentario> listcomentario = new ArrayList<>();
     private RecyclerView recyclerView_comentarios;
-    private CircleImageView icone;
+    private CircleImageView icone,iconetoolbar;
     private SimpleDraweeView foto;
     private TextView nome_autor,titulo,mensagem,titulotoolbar;
     private EmojiEditText edit_chat_emoji;
@@ -77,15 +75,14 @@ public class Detalhe_topico extends AppCompatActivity {
     private EmojiPopup emojiPopup;
     private ImageView botaoicone;
     private View root;
-    private DatabaseReference database,database_topico;
+    private DatabaseReference database,database_topico,databaseperfil;
     private FirebaseUser usuario;
     private String usuarioLogado;
     private Topico topicoselecionado;
     private LinearLayout clickPerfil;
     private ChildEventListener ChildEventListenerdetalhe;
-    private ChildEventListener ChildEventListeneruser;
+    private ChildEventListener ChildEventListeneruser,ChildEventListenercomentario,ChildEventListenerperfil;
     private DatabaseReference ComentarioReference;
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +94,7 @@ public class Detalhe_topico extends AppCompatActivity {
 
         //Configuracoes Iniciais
         icone = findViewById(R.id.icon_topico_detalhe_author);
+        iconetoolbar = findViewById(R.id.icone_user_toolbar);
         foto = findViewById(R.id.foto_topico);
         nome_autor = findViewById(R.id.nome_topico__detalhe_autor);
         titulo = findViewById(R.id.detalhe_topico_titulo);
@@ -135,6 +133,7 @@ public class Detalhe_topico extends AppCompatActivity {
             }
         });
         database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        databaseperfil = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
          topicoselecionado = (Topico)  getIntent().getSerializableExtra("topicoselecionado");
         if(topicoselecionado!=null){
             ComentarioReference = FirebaseDatabase.getInstance().getReference().child("comentario-topico").child(topicoselecionado.getUid());
@@ -148,6 +147,7 @@ public class Detalhe_topico extends AppCompatActivity {
                     foto.setVisibility(View.VISIBLE);
                     ImageRequest request = ImageRequestBuilder.newBuilderWithSource(capa)
                             .setLocalThumbnailPreviewsEnabled(true)
+                            .setResizeOptions(new ResizeOptions(200, 200))
                             .setProgressiveRenderingEnabled(true)
                             .build();
 
@@ -163,7 +163,7 @@ public class Detalhe_topico extends AppCompatActivity {
                             //  .setPlaceholderImage(context.getResources().getDrawable(R.drawable.carregando))
                             .build();
                     foto.setHierarchy(hierarchy);
-                    dialog.dismiss();
+
                 }
             }else{
                 foto.setVisibility(View.GONE);
@@ -186,35 +186,26 @@ public class Detalhe_topico extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void GifCarregarDados() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        LayoutInflater layoutInflater = LayoutInflater.from(Detalhe_topico.this);
-        final View view = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop, null);
-        ImageView imageViewgif = view.findViewById(R.id.gifimage);
 
-        Glide.with(getApplicationContext())
-                .asGif()
-                .load(R.drawable.gif_self)
-                .into(imageViewgif);
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
-
-    }
 
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        GifCarregarDados();
         CarregarDados_do_Usuario();
         TrocarFundos_status_bar();
         CarregarDados_Comentario_Evento();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ComentarioReference.removeEventListener(ChildEventListenercomentario);
+        databaseperfil.removeEventListener(ChildEventListenerperfil);
+        database.removeEventListener(ChildEventListenerdetalhe);
 
+    }
 
     public void SalvarComentario(){
         String textoComentario = edit_chat_emoji.getText().toString();
@@ -237,7 +228,7 @@ public class Detalhe_topico extends AppCompatActivity {
 
     private void CarregarDados_Comentario_Evento(){
         listcomentario.clear();
-        ChildEventListeneruser=ComentarioReference.addChildEventListener(new ChildEventListener() {
+        ChildEventListenercomentario=ComentarioReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Comentario comentario = dataSnapshot.getValue(Comentario.class);
@@ -272,44 +263,56 @@ public class Detalhe_topico extends AppCompatActivity {
 
 
     private void RecuperarIcone_e_nome_author(String id ) {
-        database.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final Usuario  user = dataSnapshot.getValue(Usuario.class);
-               nome_autor.setText(user.getNome());
-                String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=databaseperfil.orderByChild("id").equalTo(id)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        final Usuario perfil = dataSnapshot.getValue(Usuario.class );
+                        assert perfil != null;
 
-                if(!user.getId().equals(identificadorUsuario)) {
+                        if(!perfil.getId().equals(identificadorUsuario)) {
 
-                    clickPerfil.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(Detalhe_topico.this, Perfil.class);
-                            it.putExtra("id", user.getId());
-                            startActivity(it);
+                            clickPerfil.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(Detalhe_topico.this, Perfil.class);
+                                    it.putExtra("id", perfil.getId());
+                                    startActivity(it);
+                                }
+                            });
+                        }else{
+                            clickPerfil.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(Detalhe_topico.this, MinhaConta.class);
+                                    startActivity(it);
+                                }
+                            });
                         }
-                    });
-                }else{
-                    clickPerfil.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(Detalhe_topico.this, MinhaConta.class);
-                            startActivity(it);
+                        if (!Detalhe_topico.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(perfil.getFoto())
+                                    .into(icone);
                         }
-                    });
-                }
-                Glide.with(Detalhe_topico.this)
-                        .load(user.getFoto())
-                        .into(icone);
 
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
+                    }
+                });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
 
@@ -326,16 +329,30 @@ public class Detalhe_topico extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerdetalhe=database.orderByChild("tipoconta")
-                .equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerdetalhe=database.orderByChild("id")
+                .equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Usuario perfil = dataSnapshot.getValue(Usuario.class );
                         assert perfil != null;
                         String icone = perfil.getFoto();
-                        IconeUsuario(icone);
+
+                        if (!Detalhe_topico.this.isFinishing()) {
+                            Glide.with(getApplicationContext())
+                                    .load(icone)
+                                    .into(iconetoolbar);
+                        }
+                        iconetoolbar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(Detalhe_topico.this, MinhaConta.class);
+                                startActivity(it);
+
+                            }
+                        });
+
+
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -350,22 +367,6 @@ public class Detalhe_topico extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-    }
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Detalhe_topico.this, MinhaConta.class);
-                startActivity(it);
-
-            }
-        });
-        Glide.with(Detalhe_topico.this)
-                .load(url)
-                .into(icone);
-        dialog.dismiss();
     }
 
 

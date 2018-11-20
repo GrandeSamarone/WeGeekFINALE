@@ -78,7 +78,7 @@ public class DetalheEvento extends AppCompatActivity {
     private com.google.firebase.database.ChildEventListener ChildEventListenerevento;
     private View root_view;
     private EmojiPopup emojiPopup;
-    private ChildEventListener ChildEventListeneruser;
+    private ChildEventListener ChildEventListeneruser,ChildEventListenercomentario;
     private String ids;
 
     @Override
@@ -157,6 +157,7 @@ public class DetalheEvento extends AppCompatActivity {
         super.onStop();
         database_usuario.removeEventListener(ChildEventListeneruser);
         database_evento.removeEventListener(ChildEventListenerevento);
+        ComentarioReference.removeEventListener(ChildEventListenercomentario);
     }
 
     private void CarregarDados_do_Evento(){
@@ -318,7 +319,7 @@ public class DetalheEvento extends AppCompatActivity {
     private void CarregarDados_Comentario_Evento(){
         ComentarioReference = FirebaseDatabase.getInstance().getReference()
                 .child("comentario-evento").child(ids);
-        ChildEventListeneruser=ComentarioReference.addChildEventListener(new ChildEventListener() {
+        ChildEventListenercomentario=ComentarioReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Comentario comentario = dataSnapshot.getValue(Comentario.class);

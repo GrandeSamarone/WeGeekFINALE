@@ -303,9 +303,8 @@ public class Evento_Lista extends AppCompatActivity  implements SwipeRefreshLayo
         return true;
     }
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerperfil=database.orderByChild("tipoconta").equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Usuario perfil = dataSnapshot.getValue(Usuario.class );
