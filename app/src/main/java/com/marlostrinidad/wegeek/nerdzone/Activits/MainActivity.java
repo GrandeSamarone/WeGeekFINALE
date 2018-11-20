@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements
     private CardView votacao;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout mdrawer;
-    private CircleImageView img_drawer,img_toolbar;
+    private CircleImageView img_drawer,img_icone_toolbar;
     private ImageView capadrawer;
     private TextView email_drawer;
     private TextView nome_drawer;
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         //Configuraçoes Originais
+        img_icone_toolbar = findViewById(R.id.icone_img_toolbar);
         line_art= findViewById(R.id.nada_encontrado_art_inicial);
         line_comercio=findViewById(R.id.nada_encontrado_mercado_inicial);
         line_conto = findViewById(R.id.nada_encontrado_contos_inicial);
@@ -313,24 +314,40 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerperfil=database.orderByChild("tipoconta").equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Usuario perfil = dataSnapshot.getValue(Usuario.class );
                 assert perfil != null;
 
                 String capa = perfil.getCapa();
-                Glide.with(getApplicationContext())
-                        .load(capa)
-                        .into(capadrawer );
+                if (!MainActivity.this.isFinishing()) {
+                    Glide.with(getApplicationContext())
+                            .load(capa)
+                            .into(capadrawer);
+                }
+                if (!MainActivity.this.isFinishing()) {
+                    String icone = perfil.getFoto();
 
-                String icone = perfil.getFoto();
-                IconeUsuario(icone);
-                Glide.with(getApplicationContext())
-                        .load(icone)
-                        .into(img_drawer );
+                    Glide.with(getApplicationContext())
+                            .load(icone)
+                            .into(img_drawer);
+
+                    Glide.with(getApplicationContext())
+                            .load(icone)
+                            .into(img_icone_toolbar);
+                }
+                //Imagem do icone do usuario
+                img_icone_toolbar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent it = new Intent(MainActivity.this, MinhaConta.class);
+                        startActivity(it);
+
+                    }
+                });
+
 
                 nome_drawer.setText(perfil.getNome());
                 email_drawer.setText(perfil.getTipoconta());
@@ -625,22 +642,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        img_toolbar = findViewById(R.id.icone_img_toolbar);
-        img_toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, MinhaConta.class);
-                startActivity(it);
-
-            }
-        });
-
-        Glide.with(getApplicationContext())
-                .load(url)
-                .into(img_toolbar);
-    }
 
 
     private void TrocarFundos_status_bar(){
