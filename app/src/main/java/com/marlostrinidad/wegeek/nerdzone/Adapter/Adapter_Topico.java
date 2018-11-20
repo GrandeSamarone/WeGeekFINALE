@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,8 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
    private List<Topico> listatopicos;
     private Context context;
     Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
+    private DatabaseReference database;
+    private ChildEventListener ChildEventListenerperfil;
     public Adapter_Topico(List<Topico> topico, Context c){
         this.context=c;
         this.listatopicos = topico;
@@ -84,6 +87,38 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
 
             }
         });
+
+
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(topico.getIdauthor())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Usuario user = dataSnapshot.getValue(Usuario.class );
+                        assert user != null;
+
+                        holder.autor.setText(user.getNome());
+
+                        Glide.with(context)
+                                .load(user.getFoto())
+                                .into(holder.foto_autor );
+
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         DatabaseReference database_topico = FirebaseDatabase.getInstance().getReference()
                 .child("comentario-topico").child(topico.getUid());

@@ -65,7 +65,7 @@ public class Comercio_Visualizacao {
         DatabaseReference firebaseRef_comercio = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_comercio=firebaseRef_comercio
                 .child("comercio")
-             .child(comercio.getEstado())
+                 .child(comercio.getEstado())
                 .child(comercio.getCategoria())
                 .child(comercio.getIdMercado())
                    .child("quantVisualizacao");

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,8 @@ public class Adapter_Minha_Colecoes extends RecyclerView.Adapter<Adapter_Minha_C
     private Context context;
 
     Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
-
+    private DatabaseReference database;
+    private ChildEventListener ChildEventListenerperfil;
     public Adapter_Minha_Colecoes(List<Conto> conto, Context c){
         this.listaconto=conto;
         this.context=c;
@@ -58,27 +60,31 @@ public class Adapter_Minha_Colecoes extends RecyclerView.Adapter<Adapter_Minha_C
         holder.conto.setText(conto.getMensagem());
 
 
-        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("usuarios")
-                .child(conto.getIdauthor());
-        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario  user = dataSnapshot.getValue(Usuario.class);
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(conto.getIdauthor())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Usuario perfil = dataSnapshot.getValue(Usuario.class );
+                        assert perfil != null;
 
-                holder.nome.setText(user.getNome());
+                        holder.nome.setText(perfil.getNome());
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            /*Glide.with(context)
-                        .load(user.getFoto())
-                        .into(holder.imgperfil );*/
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                    }
+                });
 
 
 

@@ -19,10 +19,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Model.Comercio;
@@ -38,7 +38,8 @@ import java.util.List;
 public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHolder> {
     private Context context;
     private List<Comercio> comercios;
-
+    private DatabaseReference database;
+    private ChildEventListener ChildEventListenerperfil;
 
     public AdapterMercado(List<Comercio> merc, Context cx){
         this.context = cx;
@@ -82,29 +83,32 @@ public class AdapterMercado extends RecyclerView.Adapter<AdapterMercado.MyviewHo
                     .build();
             holder.mercadocapa.setHierarchy(hierarchy);
         }
-        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("usuarios")
-                .child(comercio.getIdAutor());
-        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final Usuario user = dataSnapshot.getValue(Usuario.class);
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(comercio.getIdAutor())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Usuario perfil = dataSnapshot.getValue(Usuario.class );
+                        assert perfil != null;
 
+                        holder.authornome.setText(perfil.getNome());
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                holder.authornome.setText(user.getNome());
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
 
-            /*Glide.with(context)
-                        .load(user.getFoto())
-                        .into(holder.imgperfil );*/
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override

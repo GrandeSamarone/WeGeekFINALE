@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
@@ -33,7 +33,8 @@ public class Adapter_comentario extends RecyclerView.Adapter<Adapter_comentario.
     private Context context;
     private  String usuarioLogado =  UsuarioFirebase.getIdentificadorUsuario();
     private String Criador;
-
+    private DatabaseReference database;
+    private ChildEventListener ChildEventListenerperfil;
     public Adapter_comentario(List<Comentario> comentario,Context c){
         this.comentarios=comentario;
         this.context = c;
@@ -56,71 +57,85 @@ public class Adapter_comentario extends RecyclerView.Adapter<Adapter_comentario.
 
         holder.mensagem.setText(comentario.getText());
 
-        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("usuarios")
-                .child(comentario.getId_author());
-        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final Usuario user = dataSnapshot.getValue(Usuario.class);
-                holder.nome.setText(user.getNome());
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(comentario.getId_author())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        final Usuario user = dataSnapshot.getValue(Usuario.class );
+                        assert user != null;
 
-                Glide.with(context)
-                        .load(user.getFoto())
-                        .into(holder.foto );
+                        holder.nome.setText(user.getNome());
+
+                        Glide.with(context)
+                                .load(user.getFoto())
+                                .into(holder.foto );
 
 
-                if(!usuarioLogado.equals(user.getId())){
-                   holder.nome.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                        if(!usuarioLogado.equals(user.getId())){
+                            holder.nome.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
-                            Intent it = new Intent(context, Perfil.class);
-                            it.putExtra("id",user.getId());
-                            it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(it);
+                                    Intent it = new Intent(context, Perfil.class);
+                                    it.putExtra("id",user.getId());
+                                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(it);
+                                }
+                            });
+                            holder.foto.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(context, Perfil.class);
+                                    it.putExtra("id",user.getId());
+                                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(it);
+                                }
+                            });
+                        }else {
+                            holder.nome.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent it = new Intent(context, MinhaConta.class);
+                                    it.putExtra("id",user.getId());
+                                    context.startActivity(it);
+                                }
+                            });
+                            holder.foto.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(context, MinhaConta.class);
+                                    it.putExtra("id",user.getId());
+                                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(it);
+                                }
+                            });
                         }
-                    });
-                    holder.foto.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(context, Perfil.class);
-                            it.putExtra("id",user.getId());
-                            it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(it);
-                        }
-                    });
-                }else {
-                   holder.nome.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                            Intent it = new Intent(context, MinhaConta.class);
-                            it.putExtra("id",user.getId());
-                            context.startActivity(it);
-                        }
-                    });
-                    holder.foto.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(context, MinhaConta.class);
-                            it.putExtra("id",user.getId());
-                            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(it);
-                        }
-                    });
-                }
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 
-    }
+
+
 
     @Override
     public int getItemCount() {

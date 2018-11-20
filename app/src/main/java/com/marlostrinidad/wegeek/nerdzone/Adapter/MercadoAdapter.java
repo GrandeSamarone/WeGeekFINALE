@@ -16,6 +16,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.firebase.database.FirebaseDatabase;
@@ -74,6 +75,7 @@ public class MercadoAdapter extends RecyclerView.Adapter<MercadoAdapter.MyViewHo
                     ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(stringcapa))
                             .setLocalThumbnailPreviewsEnabled(true)
                             .setProgressiveRenderingEnabled(true)
+                            .setResizeOptions(new ResizeOptions(200, 200))
                             .build();
 
                     DraweeController controller = Fresco.newDraweeControllerBuilder()

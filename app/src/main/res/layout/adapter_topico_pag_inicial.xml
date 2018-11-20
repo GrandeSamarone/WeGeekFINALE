@@ -45,11 +45,8 @@
         </RelativeLayout>
 
             <TextView
-            android:text="Logo, l
-            ogo, assim que puder, vou telefonar
-Por enquanto tá doendo
-E quando a saudade quiser me deixar cantar
-Vão saber que andei sofrendo"
+
+            android:text="GAME OF THONES | Teoria"
             android:layout_marginTop="4dp"
             android:id="@+id/titulotopico_adapter"
             android:textSize="14sp"

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +38,8 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
     private Context context;
     Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
     String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+    private DatabaseReference database;
+    private ChildEventListener ChildEventListenerperfil;
     public Adapter_Conto(List<Conto> conto,Context c){
         this.listaconto=conto;
         this.context=c;
@@ -59,47 +62,53 @@ public class Adapter_Conto extends RecyclerView.Adapter<Adapter_Conto.MyviewHold
         holder.conto.setText(conto.getMensagem());
         holder.nome_conto.setText(conto.getTitulo());
 
-        DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("usuarios")
-                .child(conto.getIdauthor());
-        eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final Usuario  user = dataSnapshot.getValue(Usuario.class);
+        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
+        ChildEventListenerperfil=database.orderByChild("id").equalTo(conto.getIdauthor())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        final Usuario user = dataSnapshot.getValue(Usuario.class );
+                        assert user != null;
 
-            holder.author.setText(user.getNome());
-                if(!user.getId().equals(identificadorUsuario)) {
+                        holder.author.setText(user.getNome());
+                        if(!user.getId().equals(identificadorUsuario)) {
 
-                    holder.author.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(context, Perfil.class);
-                            it.putExtra("id", user.getId());
-                            context.startActivity(it);
+                            holder.author.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(context, Perfil.class);
+                                    it.putExtra("id", user.getId());
+                                    context.startActivity(it);
+                                }
+                            });
+                        }else {
+                            holder.author.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(context, MinhaConta.class);
+                                    it.putExtra("id", user.getId());
+                                    context.startActivity(it);
+                                }
+                            });
                         }
-                    });
-                }else {
-                    holder.author.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent it = new Intent(context, MinhaConta.class);
-                            it.putExtra("id", user.getId());
-                            context.startActivity(it);
-                        }
-                    });
-                }
+                    }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            /*Glide.with(context)
-                        .load(user.getFoto())
-                        .into(holder.imgperfil );*/
+                    }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
+                    }
+                });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
         DatabaseReference topicoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
                 .child("conto-likes")
                 .child(conto.getUid());
