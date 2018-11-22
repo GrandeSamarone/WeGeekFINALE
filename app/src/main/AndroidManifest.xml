@@ -176,6 +176,7 @@
             android:name=".Splash.TelaSplash"
             android:theme="@style/AppCompat.TelaCheia" />
         <activity android:name=".Conto.Detalhe_conto" />
+        <activity android:name=".Suporte.Contato"></activity>
     </application>
 
 </manifest>

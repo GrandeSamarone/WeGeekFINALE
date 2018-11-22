@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,7 +60,6 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
     private String id_do_usuario;
     private String id_usuariologado;
     private Usuario usuarioLogado,usuarioselecionado;
-    private android.support.v7.app.AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,21 +200,6 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
         }
     }
     private void CarregarDados_do_Usuario(){
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        LayoutInflater layoutInflater = LayoutInflater.from(Perfil.this);
-        final View view  = layoutInflater.inflate(R.layout.dialog_carregando_gif_comscroop,null);
-        ImageView imageViewgif = view.findViewById(R.id.gifimage);
-
-        if (!Perfil.this.isFinishing()) {
-            Glide.with(getApplicationContext())
-                    .asGif()
-                    .load(R.drawable.gif_self)
-                    .into(imageViewgif);
-        }
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
         ChildEventListenerperfil=database_perfil.orderByChild("id")
                 .equalTo(id_do_usuario).addChildEventListener(new ChildEventListener() {
                     @Override
@@ -254,7 +236,7 @@ public class Perfil extends AppCompatActivity implements Main, View.OnClickListe
 
                             //EventBUS
                             EventBus.getDefault().postSticky(usuarioselecionado.getId());
-                            dialog.dismiss();
+
                         }else{
 
                         }

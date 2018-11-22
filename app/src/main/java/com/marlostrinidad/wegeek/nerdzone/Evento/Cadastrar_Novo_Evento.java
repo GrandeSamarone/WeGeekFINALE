@@ -373,7 +373,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
             mensagem.setError(MENSAGEM);
             return;
         }
-        if ( (!eventos.getEstado().equals("Estado"))) {
+        if ( (!eventos.getEstado().equals("Selecione um estado"))) {
             if(eventos.getCapaevento()!=null){
 
                 eventos.salvar(seguidoresSnapshot);
@@ -455,5 +455,7 @@ public class Cadastrar_Novo_Evento extends AppCompatActivity implements DatePick
         });
 
     }
+
+
 }
 

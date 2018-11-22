@@ -99,7 +99,7 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
 
                         holder.autor.setText(user.getNome());
 
-                        Glide.with(context)
+                        Glide.with(context.getApplicationContext())
                                 .load(user.getFoto())
                                 .into(holder.foto_autor );
 

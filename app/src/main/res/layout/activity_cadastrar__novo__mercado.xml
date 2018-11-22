@@ -7,10 +7,9 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@color/background"
-    tools:context="com.example.fulanoeciclano.nerdzone.Mercado.Cadastrar_Novo_MercadoActivity">
+   >
 
-
-    <include layout="@layout/toolbarsecundario"/>
+    <include layout="@layout/toolbarsecundario_sem_foto"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

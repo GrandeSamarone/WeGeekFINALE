@@ -3,10 +3,12 @@ package com.marlostrinidad.wegeek.nerdzone.Activits;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -304,14 +306,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onStop() {
-        super.onStop();
         GibiEventos.removeEventListener(valueEventListenerEvento);
         GibiMercado.removeEventListener(valueEventListenerMercado);
         Database_Topico.removeEventListener(valueEventListenerTopico);
         Database_Conto.removeEventListener(valueEventListenerContos);
         Database_Art.removeEventListener(valueEventListenerArt);
         database.removeEventListener(ChildEventListenerperfil);
-    }
+        super.onStop();
+     }
 
     private void CarregarDados_do_Usuario(){
         final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
@@ -849,12 +851,29 @@ public class MainActivity extends AppCompatActivity implements
                     });
             msgbox.show();
 
-        }
+        }else if(id == R.id.avaliar_dmenu){
+           // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.marlostrinidad.wegeek.nerdzone")));
+            AbrirLoja_na_play_store();
+        }else if(id == R.id.suport_dmenu){
 
+        }
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void AbrirLoja_na_play_store()
+    {
+        Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try
+        {
+            getApplication().startActivity(myAppLinkToMarket);
+        }
+        catch (ActivityNotFoundException e)
+        {
+            Toast.makeText(this, " Sorry, Not able to open!", Toast.LENGTH_SHORT).show();
+        }
     }
     private void sendToLogin() { //funtion
         GoogleSignInClient mGoogleSignInClient ;

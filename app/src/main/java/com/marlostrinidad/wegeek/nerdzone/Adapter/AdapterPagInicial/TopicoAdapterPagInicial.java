@@ -66,8 +66,7 @@ public class TopicoAdapterPagInicial  extends RecyclerView.Adapter<TopicoAdapter
 
                         if(perfil.getFoto()!=null){
                             Uri uri = Uri.parse(perfil.getFoto());
-
-                            Glide.with(context)
+                            Glide.with(context.getApplicationContext())
                                     .load(uri)
                                     .into( holder.icone );
                         }else{

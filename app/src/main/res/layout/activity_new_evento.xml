@@ -34,16 +34,19 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginLeft="32dp"
+
                 app:counterEnabled="true"
                 app:counterMaxLength="40">
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/titulo_evento"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="10dp"
                     android:maxLength="40"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/nome_do_evento"
-                    android:inputType="textWebEmailAddress"
+                    android:inputType="textMultiLine"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -62,6 +65,8 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/subtitulo_evento"
                     android:maxLength="30"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="#exempla"
@@ -73,6 +78,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginLeft="32dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_edit_text"
                 android:id="@+id/spnilocalidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -89,8 +96,10 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/desc_evento"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="90dp"
                     android:hint="Detalhes"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="10dp"
                     android:inputType="textMultiLine"/>
 
             </android.support.design.widget.TextInputLayout>

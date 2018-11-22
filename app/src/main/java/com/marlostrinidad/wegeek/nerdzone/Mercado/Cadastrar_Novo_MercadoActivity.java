@@ -41,7 +41,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.Permissoes;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
@@ -82,7 +81,6 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
     private FirebaseUser UsuarioAtual;
     private Toolbar toolbar;
     private AlertDialog dialog;
-    private CircleImageView icone;
     private String id_do_usuario;
 
 
@@ -104,7 +102,7 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar__novo__mercado);
 
-        toolbar = findViewById(R.id.toolbarsecundario);
+        toolbar = findViewById(R.id.toolbarsecundario_sem_foto);
         toolbar.setTitle(R.string.novocomercio);
         setSupportActionBar(toolbar);
 
@@ -230,17 +228,14 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
         });
     }
     private void CarregarDados_do_Usuario(){
-        usuario = UsuarioFirebase.getUsuarioAtual();
-        String email = usuario.getEmail();
-        ChildEventListenerperfil=databaseconta.orderByChild("tipoconta").equalTo(email).addChildEventListener(new ChildEventListener() {
+        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        ChildEventListenerperfil=databaseconta.orderByChild("id").equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Usuario perfil = dataSnapshot.getValue(Usuario.class );
                 assert perfil != null;
 
                 id_do_usuario = perfil.getId();
-                String icone = perfil.getFoto();
-                IconeUsuario(icone);
 
             }
             @Override
@@ -471,21 +466,6 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
         android.app.AlertDialog dialog = builder.create();
         dialog.show();
     }
-    private void IconeUsuario(String url) {
-        //Imagem do icone do usuario
-        icone = findViewById(R.id.icone_user_toolbar);
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Cadastrar_Novo_MercadoActivity.this, MinhaConta.class);
-                startActivity(it);
-            }
-        });
-
-        Glide.with(Cadastrar_Novo_MercadoActivity.this)
-                .load(url)
-                .into(icone);
-    }
     private void TrocarFundos_status_bar(){
         //mudando a cor do statusbar
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -518,7 +498,7 @@ public class Cadastrar_Novo_MercadoActivity extends AppCompatActivity implements
     //carregar spinner
     private void CarregarDadosSpinner() {
         //
-        String[] artista = getResources().getStringArray(R.array.estados);
+        String[] artista = getResources().getStringArray(R.array.estado);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, artista);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         campoLocal.setAdapter(adapter);
