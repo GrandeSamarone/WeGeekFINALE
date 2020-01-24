@@ -1,10 +1,10 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class Comentario implements Serializable {
     private String text;
     private int totalcomentarios =0;
     private int quantcomentario=0;
-    String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
+    private FirebaseFirestore db;
     @JsonIgnore
     private String key;
 
@@ -38,17 +38,14 @@ public class Comentario implements Serializable {
         return true;
 }
 
-    public  boolean salvar_Topico(){
+    public  boolean salvar_Forum(){
+        db = FirebaseFirestore.getInstance();
 
-        DatabaseReference comentarioRef = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comentario-topico")
-                .child(getId_postagem());
-
-        String chave = comentarioRef.push().getKey();
-        setIdcomentario(chave);
-        comentarioRef.child(getIdcomentario()).setValue(this);
-
-
+        /*DocumentReference messageRef = db
+                .collection("Weforum")
+                .whereEqualTo("opcao", "grupo")
+                .add("message1");
+*/
         return true;
     }
 

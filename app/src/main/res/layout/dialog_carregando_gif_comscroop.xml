@@ -26,7 +26,8 @@
             android:textColor="@color/cinzaescuro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Por favor,Aguarde."
+            android:text="Aguarde..."
+            android:fontFamily="@font/fontgeek"
             android:textSize="18sp"
             android:textAlignment="center"/>
 

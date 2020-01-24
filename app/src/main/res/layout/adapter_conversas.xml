@@ -3,11 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/chat"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp">
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:elevation="4dp"
+        cardview:cardCornerRadius="4dp"
+        android:clickable="true"
+        android:backgroundTint="@color/brancofraco"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content">
+    <RelativeLayout
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:id="@+id/lineardamsg"
@@ -20,28 +28,53 @@
     android:id="@+id/imageViewFotoConversa"
     android:layout_width="50dp"
     android:layout_height="50dp"
-   android:background="@drawable/fundo_user"/>
+    android:layout_alignParentLeft="true"
+    app:civ_border_width="2dp"
+    android:layout_marginLeft="8dp"
+   cardview:civ_border_color="@color/branco" />
 
     <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+   android:layout_toRightOf="@+id/imageViewFotoConversa"
+        android:layout_width="wrap_content"
+        android:layout_toLeftOf="@+id/data_conversa"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
        >
-        <com.vanniktech.emoji.EmojiTextView
-            android:layout_marginLeft="8dp"
-            android:id="@+id/textNomeConversa"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <com.vanniktech.emoji.EmojiTextView
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/textNomeConversa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="nome"
-            android:textSize="16sp"
+            android:fontFamily="@font/fontgeek"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/pretoescrita"/>
+        <TextView
+            android:id="@+id/quant"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:fontFamily="@font/fontgeek"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        </LinearLayout>
         <com.vanniktech.emoji.EmojiTextView
+            android:layout_marginTop="4dp"
             android:text="Mensagem"
+            android:lines="1"
+            android:fontFamily="@font/fontgeek"
             android:layout_marginLeft="8dp"
+            android:textStyle="bold"
             android:id="@+id/UltimaMsgConversa"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
@@ -49,15 +82,36 @@
             android:textIsSelectable="true"
             app:emojiSize="@dimen/emoji_size_default"/>
 
-
     </LinearLayout>
-
-    </LinearLayout>
+<TextView
+    android:id="@+id/data_conversa"
+    android:layout_marginRight="8dp"
+    android:fontFamily="@font/fontgeek"
+    android:textSize="16sp"
+    android:layout_alignParentRight="true"
+    android:text=""
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/data_conversa"
+            android:id="@+id/online"
+            android:textColor="@color/verde"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/fontgeek"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:layout_below="@+id/lineardamsg"
+        android:layout_below="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         android:layout_marginLeft="55dp"/>
+
 </RelativeLayout>

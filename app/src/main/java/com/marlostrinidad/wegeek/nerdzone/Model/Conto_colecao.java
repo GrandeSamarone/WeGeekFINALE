@@ -22,7 +22,7 @@ public class Conto_colecao {
 
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-colecao")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child(usuario.getId());
         pLikeRef.setValue(dadosusuario);
 
@@ -37,7 +37,7 @@ public class Conto_colecao {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-colecao")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("qtdadd");
 
         setQtdadd(getQtdadd()+valor);
@@ -51,7 +51,7 @@ public class Conto_colecao {
         DatabaseReference firebaseRefs = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("conto")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("quantcolecao");
         pLikeQuantRef.setValue(getQtdadd());
     }
@@ -61,7 +61,7 @@ public class Conto_colecao {
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("meusconto")
                 .child(conto.getIdauthor())
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("quantcolecao");
 
         pLikeQuantRef.setValue(getQtdadd());
@@ -72,7 +72,7 @@ public class Conto_colecao {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-colecao")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child(usuario.getId());
         pLikeRef.removeValue();
         //Atualizar quantidade de like
@@ -87,7 +87,7 @@ public class Conto_colecao {
         DatabaseReference pLikeRef=firebaseRef
                 .child("adicionei-conto")
                 .child(identificadorUsuario)
-                .child(conto.getUid());
+                .child(conto.getId());
         pLikeRef.removeValue();
 
     }

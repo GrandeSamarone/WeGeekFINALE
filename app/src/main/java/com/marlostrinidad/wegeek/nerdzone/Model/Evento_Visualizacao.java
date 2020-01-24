@@ -1,6 +1,5 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
@@ -33,7 +32,7 @@ public class Evento_Visualizacao {
 
         DatabaseReference VisuRef=firebaseRef
                 .child("evento-visualizacao");
-                VisuRef.child(evento.getUid());
+                VisuRef.child(evento.getId());
 
 
         //Atualizar quantidade de like
@@ -47,7 +46,7 @@ public class Evento_Visualizacao {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef=firebaseRef
                 .child("evento-visualizacao")
-                .child(evento.getUid())
+                .child(evento.getId())
                 .child("qtdvisualizacao");
 
         setQtdvisualizacao(getQtdvisualizacao()+valor);
@@ -59,7 +58,7 @@ public class Evento_Visualizacao {
         DatabaseReference VisuRef_evento=firebaseRef_evento
                 .child("evento")
                 .child(evento.getEstado())
-                .child(evento.getUid())
+                .child(evento.getId())
                 .child("quantVisualizacao");
 
         VisuRef_evento.setValue(getQtdvisualizacao());
@@ -69,8 +68,8 @@ public class Evento_Visualizacao {
         DatabaseReference firebaseRef_evento = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_evento=firebaseRef_evento
                 .child("meusevento")
-                .child(evento.getIdUsuario())
-                .child(evento.getUid())
+                .child(evento.getIdauthor())
+                .child(evento.getId())
                 .child("quantVisualizacao");
 
         VisuRef_evento.setValue(getQtdvisualizacao());

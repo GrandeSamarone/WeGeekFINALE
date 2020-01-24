@@ -2,7 +2,7 @@ package com.marlostrinidad.wegeek.nerdzone.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Model.Icones;
 import com.marlostrinidad.wegeek.nerdzone.R;
+
 
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class IconeAdapter   extends RecyclerView.Adapter<IconeAdapter.MyViewHold
 
 
         }else{
-            holder.draweeView.setImageResource(R.drawable.gradiente_icone);
+
         }
 
 

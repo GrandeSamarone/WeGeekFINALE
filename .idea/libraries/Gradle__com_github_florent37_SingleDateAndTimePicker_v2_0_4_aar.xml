@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.florent37:SingleDateAndTimePicker:v2.0.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f363b0322fb5664d92d0dbd8462b82a5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f363b0322fb5664d92d0dbd8462b82a5/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/SingleDateAndTimePicker/v2.0.4/ffa7754509853b42bed3038cf195c87a336e5a55/SingleDateAndTimePicker-v2.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

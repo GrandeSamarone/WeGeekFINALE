@@ -3,7 +3,7 @@ package com.marlostrinidad.wegeek.nerdzone.Adapter;
 import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.marlostrinidad.wegeek.nerdzone.R;
+
 
 import me.relex.photodraweeview.PhotoDraweeView;
 

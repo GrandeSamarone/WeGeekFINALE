@@ -26,7 +26,7 @@ public class ContoLike {
 
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-likes")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child(usuario.getId());
         pLikeRef.setValue(dadosusuario);
 
@@ -39,7 +39,7 @@ public class ContoLike {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-likes")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("qtdlikes");
 
         setQtdlikes(getQtdlikes()+valor);
@@ -52,7 +52,7 @@ public class ContoLike {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeRef=firebaseRef
                 .child("conto-likes")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child(usuario.getId());
         pLikeRef.removeValue();
         //Atualizar quantidade de like
@@ -68,7 +68,7 @@ public class ContoLike {
         DatabaseReference firebaseRefs = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("conto")
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("likecount");
 
         pLikeQuantRef.setValue(getQtdlikes());
@@ -79,7 +79,7 @@ public class ContoLike {
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("meusconto")
                 .child(conto.getIdauthor())
-                .child(conto.getUid())
+                .child(conto.getId())
                 .child("likecount");
 
         pLikeQuantRef.setValue(getQtdlikes());

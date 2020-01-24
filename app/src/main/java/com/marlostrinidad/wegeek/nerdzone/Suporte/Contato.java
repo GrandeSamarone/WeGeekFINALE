@@ -5,8 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -24,7 +24,7 @@ import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 import com.marlostrinidad.wegeek.nerdzone.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import static com.marlostrinidad.wegeek.nerdzone.Evento.Evento_Lista.setWindowFlag;
+import static com.marlostrinidad.wegeek.nerdzone.Helper.TrocarFundo.setWindowFlag;
 
 public class Contato extends AppCompatActivity {
     private Spinner spinnerMotivo;
@@ -135,6 +135,8 @@ public class Contato extends AppCompatActivity {
             }
         });
     }
+
+
     private void TrocarFundos_status_bar() {
         //mudando a cor do statusbar
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {

@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@color/background"
+    android:background="@color/background_geral"
    >
 
-    <include layout="@layout/toolbarsecundario_sem_foto"/>
+
+    <include layout="@layout/toolbarsecundario"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,15 +22,11 @@
     android:padding="16dp"
     android:scrollbars="vertical">
 
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="left"
         android:layout_marginBottom="16dp"
         android:scrollbars="horizontal"
         >
@@ -39,52 +37,40 @@
             android:layout_width="100dp"
             android:layout_marginRight="8dp"
             android:layout_height="100dp"
-           android:background="@drawable/fundoloja"
+          android:src="@drawable/ic_add_photo"
             />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-           android:visibility="gone"
-            android:id="@+id/imageLojaCadastro2"
-            android:layout_marginRight="8dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/fundoloja"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/imageLojaCadastro3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/fundoloja"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/imageLojaCadastro4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/fundoloja"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/imageLojaCadastro5"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/fundoloja"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/imageLojaCadastro6"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/fundoloja"/>
-
-
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_geral"
+            android:elevation="4dp"
+            cardview:cardCornerRadius="4dp"
+            android:clickable="true"
+            >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtlayout_subtitulo"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
+            >
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/nome_mercado"
+                android:fontFamily="@font/fontgeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome da empresa"
+                android:padding="10dp"
+                android:maxLength="40"
+                android:textAlignment="center"
+                android:inputType="textMultiLine"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-    </HorizontalScrollView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,59 +78,32 @@
         android:orientation="horizontal"
         android:layout_marginBottom="16dp"
         >
-
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_geral"
+            android:elevation="4dp"
+            cardview:cardCornerRadius="4dp"
+            android:clickable="true"
+            >
         <Spinner
+            android:theme="@style/spinner"
             android:id="@+id/spinnerloja"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"/>
-
-        <Spinner
-            android:id="@+id/spinneralocal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/txtlayout_subtitulo"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-          >
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/nome_mercado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Titulo"
-            android:padding="10dp"
-            android:background="@drawable/bg_edit_text"
-            android:textAlignment="center"
-            android:inputType="textMultiLine"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_gravity="center_vertical"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="40"
+        android:background="@color/background_geral"
+        android:elevation="4dp"
+        cardview:cardCornerRadius="4dp"
+        android:clickable="true"
         >
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/fraserapida_mercado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/legenda_nvo_comercio"
-            android:padding="10dp"
-            android:maxLength="40"
-            android:background="@drawable/bg_edit_text"
-            android:textAlignment="center"
-            android:inputType="textMultiLine"
-            />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtlayout_descricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -152,51 +111,68 @@
         app:counterMaxLength="400"
 
         >
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/desc_mercado"
             android:maxLength="400"
+            android:fontFamily="@font/fontgeek"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:hint="@string/descricao"
-            android:background="@drawable/bg_edit_text"
             android:textAlignment="center"
             android:inputType="textMultiLine"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+    </androidx.cardview.widget.CardView>
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/text_opcional"
-    android:textColor="@color/cinzasecunradrio"/>
-    <com.blackcat.currencyedittext.CurrencyEditText
-        android:id="@+id/desc_valor"
-        android:layout_marginBottom="16dp"
-        android:padding="10dp"
-        android:background="@drawable/bg_edit_text"
+    <TextView
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="R$ 20,50"/>
+        android:text="Endereço"
+        android:fontFamily="@font/fontgeek"
+        android:textSize="16sp"/>
 
-    <android.support.design.widget.TextInputLayout
+    <androidx.cardview.widget.CardView
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_geral"
+    android:elevation="4dp"
+    cardview:cardCornerRadius="4dp"
+    android:clickable="true"
+    >
+    <fragment
+
+        android:id="@+id/autocomplete_fragment_mercado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        />
+</androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtlayout_endereco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         >
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
+            android:visibility="gone"
             android:id="@+id/desc_endereco"
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Endereço"
+            android:hint="Endereço,deixe alguma dica."
+          android:fontFamily="@font/fontgeek"
+            android:textColor="@color/cinzaescuro"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_edit_text"
             android:textAlignment="center"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/botaosalvarmercado"
         android:layout_width="match_parent"

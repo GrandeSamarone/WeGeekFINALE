@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
-    android:backgroundTint="@color/background">
+    android:backgroundTint="@color/background_geral">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
 
                 />
             <ImageView
-                android:layout_below="@id/relaimg"
+
                 android:id="@+id/botaocurtirtopico"
                 android:layout_width="24sp"
                 android:layout_height="24sp"
@@ -109,4 +109,4 @@
     </RelativeLayout>
 
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.library.tangxiaolv:telegramgallery:1.0.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bff8d69031493099589380f95a79605e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bff8d69031493099589380f95a79605e/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.library.tangxiaolv/telegramgallery/1.0.5/8a4f0eec69c485a96553c0aa8c61d1958a2c922/telegramgallery-1.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

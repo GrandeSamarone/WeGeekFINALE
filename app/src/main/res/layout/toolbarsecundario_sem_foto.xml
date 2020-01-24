@@ -7,27 +7,35 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarsecundario_sem_foto"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/gradiente_toolbar"
         android:theme="@style/Theme.AppCompat">
-    </android.support.v7.widget.Toolbar>
-    <RelativeLayout
+
+    </androidx.appcompat.widget.Toolbar>
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="50sp"
+        android:layout_height="50sp" />
+    <TextView
+        android:layout_toRightOf="@+id/img_icon"
+        android:layout_marginTop="16dp"
+        android:id="@+id/app_toolbar_title_secundario_semfoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <com.miguelcatalan.materialsearchview.MaterialSearchView
-        android:id="@+id/materialSeach_toolbar_sem_foto"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        />
-    </RelativeLayout>
+        android:text="Wegeek"
+        android:textSize="20dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textStyle="bold"
+        android:textColor="@color/background_geral"
+        android:fontFamily="@font/fontgeek"/>
 
     <FrameLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarsecundario">
+        android:layout_below="@+id/toolbarsecundario_sem_foto">
         <View android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/toolbar_sombra"/>

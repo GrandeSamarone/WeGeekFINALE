@@ -1,14 +1,24 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
 
+import androidx.annotation.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.StorageReference;
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,132 +29,147 @@ import java.util.Map;
 
 public class Comercio implements Serializable {
 
-    private String idMercado;
-    private String idAutor;
+    private String id;
+    private String idauthor;
     private int numRatings;
-    private double totalrating;
+    private double totalrating=0;
     private int quantVisualizacao=0;
-    private String autor;
+    private String url_img_status;
+    private String nomeauthor;
     private String categoria;
     private String estado;
     private String titulo;
+    private GeoPoint geoPoint;
     private String endereco;
     private String valor;
+    private String nome_img;
     private String descricao;
-    private String fraserapida;
-    private String data;
-    private List<String> fotos;
     private String icone;
+    private String token_author;
+    private Boolean analizado;
+    private @ServerTimestamp
+    Date data;
+    private @ServerTimestamp
+    Date ultima_atualizacao;
     @JsonIgnore
     private String key;
     public Comercio() {
-        DatabaseReference mercadoref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comercio");
-        setIdMercado(mercadoref.push().getKey());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String idBefore = db.collection("Comercio").document().getId();
+        setId(idBefore);
     }
 
 
 
-    public void salvar(DataSnapshot seguidoressnapshot){
+    public void salvar(GeoPoint geoPoint){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase();
-        Map objeto = new HashMap();
-        String combinacaoId="/"+ identificadorUsuario+"/"+getIdMercado();
 
-        objeto.put("/meuscomercio"+combinacaoId,this);
-        for(DataSnapshot Seguidores:seguidoressnapshot.getChildren()){
-            String idSeguidores=Seguidores.getKey();
-            HashMap<String,Object> dadosSeguidor = new HashMap<>();
-            dadosSeguidor.put("idmercado",getIdMercado());
-            String IdAtualizacao="/"+ idSeguidores+"/"+getIdMercado();
+        Map<String, Object> newComercio = new HashMap<>();
+        newComercio.put("id",getId());
+        newComercio.put("titulo", getTitulo());
+        newComercio.put("analizado",false);
+        newComercio.put("descricao", getDescricao());
+        newComercio.put("endereco", getEndereco());
+        newComercio.put("nome_img", getNome_img());
+        newComercio.put("idauthor", getIdauthor());
+        newComercio.put("geoPoint",geoPoint);
+        newComercio.put("token_author", getToken_author());
+        newComercio.put("icone",getIcone());
+        newComercio.put("nomeauthor", getNomeauthor());
+        newComercio.put("estado", getEstado());
+        newComercio.put("categoria", getCategoria());
+        newComercio.put("data", FieldValue.serverTimestamp());
+        newComercio.put("url_img_status","");
+        newComercio.put("ultima_atualizacao", FieldValue.serverTimestamp());
+      //  newComercio.put("categoria_itens",FieldValue.arrayUnion(getIdauthor()));
+// Add a new document with a generated ID
+        db.collection("Comercio")
+                .add(newComercio)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-            objeto.put("/feed-comercio"+IdAtualizacao,dadosSeguidor);
-        }
+            }
+        });
 
-        anuncioref.updateChildren(objeto);
-       salvarMercadoPublico();
+
     }
-    public void salvarMercadoPublico(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comercio");
-        anuncioref.child(getEstado())
-                .child(getCategoria())
-                .child(getIdMercado()).setValue(this);
-    }
-
-    public void remover(){
+    public void Atualizar(GeoPoint geoPoint,String id_doc){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("meuscomercio")
-                .child(identificadorUsuario)
-                .child(getIdMercado());
 
-        anuncioref.removeValue();
-        removermercadoPublico();
-        removermercadoVizu();
-        removerRating();
-        deletar_img_comercio();
-    }
+        Map<String, Object> atualizar = new HashMap<>();
+        atualizar.put("titulo", getTitulo());
+        atualizar.put("descricao", getDescricao());
+        atualizar.put("endereco", getEndereco());
+        atualizar.put("idauthor", getIdauthor());
+        atualizar.put("geoPoint",geoPoint);
+        atualizar.put("token_author", getToken_author());
+        atualizar.put("icone",getIcone());
+        atualizar.put("analizado",false);
+        atualizar.put("nomeauthor", getNomeauthor());
+        atualizar.put("estado", getEstado());
+        atualizar.put("categoria", getCategoria());
+        atualizar.put("data", FieldValue.serverTimestamp());
+        atualizar.put("ultima_atualizacao", FieldValue.serverTimestamp());
+        //  newComercio.put("categoria_itens",FieldValue.arrayUnion(getIdauthor()));
+// Add a new document with a generated ID
+        db.collection("Comercio").document(id_doc).update(atualizar);
 
-    public void removermercadoPublico(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comercio")
-                .child(getEstado())
-                 .child(getCategoria())
-                .child(getIdMercado());
-
-        anuncioref.removeValue();
-
-    }
-    public void removermercadoVizu(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comercio-visualizacao")
-                .child(getIdMercado());
-
-        anuncioref.removeValue();
-
-    }
-    public void removerRating(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("ratingbar-comercio")
-                .child(getIdMercado());
-
-        anuncioref.removeValue();
 
     }
 
-    public void deletar_img_comercio(){
-        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("imagens")
-                .child("comercio")
-                .child(getIdMercado());
-
-        storageReference.delete();
+    public Boolean getAnalizado() {
+        return analizado;
     }
 
-    public String getAutor() {
-        return autor;
+    public void setAnalizado(Boolean analizado) {
+        this.analizado = analizado;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public String getNomeauthor() {
+        return nomeauthor;
     }
 
-    public String getIdMercado() {
-        return idMercado;
+    public String getNome_img() {
+        return nome_img;
     }
 
-    public void setIdMercado(String idMercado) {
-        this.idMercado = idMercado;
+    public void setNome_img(String nome_img) {
+        this.nome_img = nome_img;
     }
 
-    public String getData() {
+    public void setNomeauthor(String nomeauthor) {
+        this.nomeauthor = nomeauthor;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
+    }
+
+    public Date getUltima_atualizacao() {
+        return ultima_atualizacao;
+    }
+
+    public void setUltima_atualizacao(Date ultima_atualizacao) {
+        this.ultima_atualizacao = ultima_atualizacao;
     }
 
     public String getCategoria() {
@@ -194,23 +219,6 @@ public class Comercio implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    public String getFraserapida() {
-        return fraserapida;
-    }
-
-    public void setFraserapida(String fraserapida) {
-        this.fraserapida = fraserapida;
-    }
-
-    public List<String> getFotos() {
-        return fotos;
-    }
-
-    public void setFotos(List<String> fotos) {
-        this.fotos = fotos;
-    }
-
     public String getIcone() {
         return icone;
     }
@@ -219,12 +227,12 @@ public class Comercio implements Serializable {
         this.icone = icone;
     }
 
-    public String getKey() {
-        return key;
+    public String getUrl_img_status() {
+        return url_img_status;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setUrl_img_status(String url_img_status) {
+        this.url_img_status = url_img_status;
     }
 
     public void setValues(Comercio comercio) {
@@ -247,12 +255,12 @@ public class Comercio implements Serializable {
         this.totalrating = totalrating;
     }
 
-    public String getIdAutor() {
-        return idAutor;
+    public String getIdauthor() {
+        return idauthor;
     }
 
-    public void setIdAutor(String idAutor) {
-        this.idAutor = idAutor;
+    public void setIdauthor(String idauthor) {
+        this.idauthor = idauthor;
     }
 
     public int getQuantVisualizacao() {
@@ -261,5 +269,22 @@ public class Comercio implements Serializable {
 
     public void setQuantVisualizacao(int quantVisualizacao) {
         this.quantVisualizacao = quantVisualizacao;
+    }
+
+    public String getToken_author() {
+        return token_author;
+    }
+
+    public void setToken_author(String token_author) {
+        this.token_author = token_author;
+    }
+
+
+    public GeoPoint getGeoPoint() {
+        return geoPoint;
+    }
+
+    public void setGeoPoint(GeoPoint geoPoint) {
+        this.geoPoint = geoPoint;
     }
 }

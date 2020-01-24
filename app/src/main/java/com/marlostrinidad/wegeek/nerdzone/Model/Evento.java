@@ -1,13 +1,23 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.StorageReference;
-import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,151 +26,176 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Evento implements Serializable {
 
-    private String uid;
-    private String author;
+    private String id;
+    private String nomeauthor;
     private String titulo;
     private String subtitulo;
-    private String imgperfilusuario;
-    private String idUsuario;
+    private String idauthor;
     private String capaevento;
-    private List<String> fotoseventos;
     private String mensagem;
-    private String datainicio;
-    private String datafim;
+    private String entrada;
+    private String ultima_foto_data;
+    private String preco_ingresso;
+    private String token_author;
+    private Boolean analizado;
+    private @ServerTimestamp
+    Date data_inicio;
+    private @ServerTimestamp
+    Date data_fim;
+    private String ativado_desativado;
+    private String gratis_pago;
+    private GeoPoint geoPoint;
+    private String endereco;
     private String estado;
     private int curtirCount = 0;
     private int quantVisualizacao=0;
+    private String url_img_status;
+    private long data_fim_min;
+    private long data_inicio_min;
 
 
-    String usuariologado = UsuarioFirebase.getIdentificadorUsuario();
 
     public Evento() {
-        DatabaseReference eventoref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("evento");
-        setUid(eventoref.push().getKey());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String idBefore = db.collection("Evento").document().getId();
+        setId(idBefore);
     }
 
 
-    public void salvar(DataSnapshot seguidoressnapshot){
+    public void salvar(GeoPoint geoPoint){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase();
-        Map objeto = new HashMap();
-        String combinacaoId="/"+ usuariologado+"/"+getUid();
 
-        objeto.put("/meusevento"+combinacaoId,this);
-        for(DataSnapshot Seguidores:seguidoressnapshot.getChildren()){
-            String idSeguidores=Seguidores.getKey();
-            HashMap<String,Object> dadosSeguidor = new HashMap<>();
-            dadosSeguidor.put("idevento",getUid());
-            String IdAtualizacao="/"+ idSeguidores+"/"+getUid();
+        Map<String, Object> newEvento = new HashMap<>();
+        newEvento.put("id",getId());
+        newEvento.put("analizado",false);
+        newEvento.put("titulo", getTitulo());
+        newEvento.put("gratis_pago", getGratis_pago());
+        newEvento.put("mensagem", getMensagem());
+        newEvento.put("entrada",getEntrada());
+        newEvento.put("preco_ingresso",getPreco_ingresso());
+        newEvento.put("endereco", getEndereco());
+        newEvento.put("token_author", getToken_author());
+        newEvento.put("estado", "AM");
+        newEvento.put("geoPoint",geoPoint);
+        newEvento.put("ativado_desativado",getAtivado_desativado());
+        newEvento.put("capaevento",getCapaevento());
+        newEvento.put("nomeauthor", getNomeauthor());
+        newEvento.put("idauthor", getIdauthor());
+        newEvento.put("data_inicio", getData_inicio());
+        newEvento.put("data_fim", getData_fim());
+        newEvento.put("data_fim_min", getData_fim_min());
+        newEvento.put("url_img_status", "");
+        newEvento.put("ultima_atualizacao", FieldValue.serverTimestamp());
+        //  newComercio.put("categoria_itens",FieldValue.arrayUnion(getIdauthor()));
+// Add a new document with a generated ID
+        db.collection("Evento")
+                .add( newEvento)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-            objeto.put("/feed-evento"+IdAtualizacao,dadosSeguidor);
-        }
+            }
+        });
 
-        anuncioref.updateChildren(objeto);
-          salvarEventoPublico();
     }
-
-    public void salvarEventoPublico(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("evento");
-        anuncioref.child(getEstado())
-                .child(getUid()).setValue(this);
-    }
-
-    public void remover(){
+    public void Atualizar(GeoPoint geoPoint,String id_doc){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("meusevento")
-                .child(identificadorUsuario)
-                .child(getUid());
 
-        anuncioref.removeValue();
-        removerEventoLike();
-        removerEventoPublico();
-        deletar_img_eventos();
+        Map<String, Object> atualizar_Evento = new HashMap<>();
+        atualizar_Evento.put("titulo", getTitulo());
+        atualizar_Evento.put("gratis_pago", getGratis_pago());
+        atualizar_Evento.put("mensagem", getMensagem());
+        atualizar_Evento.put("entrada",getEntrada());
+        atualizar_Evento.put("analizado",false);
+        atualizar_Evento.put("preco_ingresso",getPreco_ingresso());
+        atualizar_Evento.put("endereco", getEndereco());
+        atualizar_Evento.put("token_author", getToken_author());
+        atualizar_Evento.put("estado", "AM");
+        atualizar_Evento.put("geoPoint",geoPoint);
+        atualizar_Evento.put("ativado_desativado",getAtivado_desativado());
+        atualizar_Evento.put("capaevento",getCapaevento());
+        atualizar_Evento.put("nomeauthor", getNomeauthor());
+        atualizar_Evento.put("idauthor", getIdauthor());
+        atualizar_Evento.put("data_inicio", getData_inicio());
+        atualizar_Evento.put("data_fim", getData_fim());
+        atualizar_Evento.put("data_fim_min", getData_fim_min());
+        atualizar_Evento.put("url_img_status", "");
+        atualizar_Evento.put("ultima_atualizacao", FieldValue.serverTimestamp());
+        //  newComercio.put("categoria_itens",FieldValue.arrayUnion(getIdauthor()));
+// Add a new document with a generated ID
+        db.collection("Evento")
+               .document(id_doc).update(atualizar_Evento);
+
     }
 
-    public void removerEventoPublico(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("evento")
-                .child(getEstado())
-                .child(getUid());
-        anuncioref.removeValue();
-
+    public Boolean getAnalizado() {
+        return analizado;
     }
 
-    public void removerEventoLike(){
-        DatabaseReference anuncioref = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("evento-likes")
-                .child(getUid());
-
-        anuncioref.removeValue();
-
-    }
-    public void deletar_img_eventos(){
-        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("imagens")
-                .child("evento")
-                .child(identificadorUsuario)
-                .child(getUid());
-
-        storageReference.delete();
+    public void setAnalizado(Boolean analizado) {
+        this.analizado = analizado;
     }
 
-    /*public Evento(String uid, String author, String imgperfilusuario,String fotoevento, String titulo,
-                  String subtitulo,
-                  String mensagem,String datafim,String datainicio,String estado) {
-        this.uid = uid;
-        this.author = author;
-        this.titulo = titulo;
-        this.subtitulo = subtitulo;
-        this.mensagem = mensagem;
-        this.imgperfilusuario= imgperfilusuario;
-        this.datainicio = datainicio;
-        this.datafim= datafim;
-        this.estado= estado;
-        this.fotoevento = fotoevento;
-    }
-*/
-    // [START post_to_map]
-    /*@Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("author", author);
-        result.put("imgperfilusuario", imgperfilusuario);
-        result.put("fotoevento", fotoevento);
-        result.put("titulo", titulo);
-        result.put("subtitulo",subtitulo);
-        result.put("mensagem", mensagem);
-        result.put("datainicio",datainicio);
-        result.put("datafim", datafim);
-        result.put("estado", estado);
-        result.put("starCount", curtirCount);
-        result.put("stars", curtida);
-
-        return result;
-    }
-    */
-    // [END post_to_map]
-
-
-    public String getUid() {
-        return uid;
+    public String getUrl_img_status() {
+        return url_img_status;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUrl_img_status(String url_img_status) {
+        this.url_img_status = url_img_status;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getEntrada() {
+        return entrada;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setEntrada(String entrada) {
+        this.entrada = entrada;
+    }
+
+    public String getPreco_ingresso() {
+        return preco_ingresso;
+    }
+
+    public String getGratis_pago() {
+        return gratis_pago;
+    }
+
+    public void setGratis_pago(String gratis_pago) {
+        this.gratis_pago = gratis_pago;
+    }
+
+    public void setPreco_ingresso(String preco_ingresso) {
+        this.preco_ingresso = preco_ingresso;
+    }
+
+    public String getToken_author() {
+        return token_author;
+    }
+
+    public void setToken_author(String token_author) {
+        this.token_author = token_author;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNomeauthor() {
+        return nomeauthor;
+    }
+
+    public void setNomeauthor(String nomeauthor) {
+        this.nomeauthor = nomeauthor;
     }
 
     public String getTitulo() {
@@ -179,20 +214,12 @@ public class Evento implements Serializable {
         this.subtitulo = subtitulo;
     }
 
-    public String getImgperfilusuario() {
-        return imgperfilusuario;
+    public String getIdauthor() {
+        return idauthor;
     }
 
-    public void setImgperfilusuario(String imgperfilusuario) {
-        this.imgperfilusuario = imgperfilusuario;
-    }
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdauthor(String idauthor) {
+        this.idauthor = idauthor;
     }
 
     public String getCapaevento() {
@@ -203,14 +230,6 @@ public class Evento implements Serializable {
         this.capaevento = capaevento;
     }
 
-    public List<String> getFotoseventos() {
-        return fotoseventos;
-    }
-
-    public void setFotoseventos(List<String> fotoseventos) {
-        this.fotoseventos = fotoseventos;
-    }
-
     public String getMensagem() {
         return mensagem;
     }
@@ -219,20 +238,21 @@ public class Evento implements Serializable {
         this.mensagem = mensagem;
     }
 
-    public String getDatainicio() {
-        return datainicio;
+
+    public Date getData_inicio() {
+        return data_inicio;
     }
 
-    public void setDatainicio(String datainicio) {
-        this.datainicio = datainicio;
+    public void setData_inicio(Date data_inicio) {
+        this.data_inicio = data_inicio;
     }
 
-    public String getDatafim() {
-        return datafim;
+    public Date getData_fim() {
+        return data_fim;
     }
 
-    public void setDatafim(String datafim) {
-        this.datafim = datafim;
+    public void setData_fim(Date data_fim) {
+        this.data_fim = data_fim;
     }
 
     public String getEstado() {
@@ -257,6 +277,47 @@ public class Evento implements Serializable {
 
     public void setQuantVisualizacao(int quantVisualizacao) {
         this.quantVisualizacao = quantVisualizacao;
+
+    }
+
+    public long getData_fim_min() {
+        return data_fim_min;
+    }
+
+    public void setData_fim_min(long data_fim_min) {
+        this.data_fim_min = data_fim_min;
+    }
+
+    public long getData_inicio_min() {
+        return data_inicio_min;
+    }
+
+    public void setData_inicio_min(long data_inicio_min) {
+        this.data_inicio_min = data_inicio_min;
+    }
+
+    public GeoPoint getGeoPoint() {
+        return geoPoint;
+    }
+
+    public void setGeoPoint(GeoPoint geoPoint) {
+        this.geoPoint = geoPoint;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getAtivado_desativado() {
+        return ativado_desativado;
+    }
+
+    public void setAtivado_desativado(String ativado_desativado) {
+        this.ativado_desativado = ativado_desativado;
     }
 }
 

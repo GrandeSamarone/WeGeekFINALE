@@ -7,21 +7,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.marlostrinidad.wegeek.nerdzone.Helper.TrocarFundo;
 import com.marlostrinidad.wegeek.nerdzone.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes.setWindowFlag;
 
-
-public class Politica_PrivacidadeActivity extends AppCompatActivity {
+public class Politica_PrivacidadeActivity extends TrocarFundo {
 
     private  WebView webView;
     private Toolbar toolbar;
@@ -31,11 +30,10 @@ public class Politica_PrivacidadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_politica__privacidade);
 
-        toolbar = findViewById(R.id.toolbarsecundario_sem_foto);
+        toolbar = findViewById(R.id.toolbarsecundario);
         toolbar.setTitle(R.string.politicaa_privacidade);
         setSupportActionBar(toolbar);
 
-        TrocarFundos_status_bar();
 
         init();
 
@@ -49,7 +47,9 @@ public class Politica_PrivacidadeActivity extends AppCompatActivity {
 
         if (netInfo != null) {
             if (netInfo.isConnected()) {
-                webView.loadUrl("https://www.iubenda.com/privacy-policy/50217024");
+                webView.loadUrl("file:///android_asset/privacidade.html");
+
+                // webView.loadUrl("https://www.iubenda.com/privacy-policy/50217024");
             }else {
                 webView.loadUrl("file:///android_asset/privacidade.html");
             }
@@ -103,34 +103,7 @@ public class Politica_PrivacidadeActivity extends AppCompatActivity {
         return true;
     }
 
-    private void TrocarFundos_status_bar(){
-        //mudando a cor do statusbar
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-            //  systemBarTintManager.setStatusBarTintDrawable(Mydrawable);
-        }
-        //make fully Android Transparent Status bar
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().setNavigationBarColor(Color.parseColor("#1565c0"));
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setNavigationBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-        }
-    }
+
 
 
 }

@@ -11,37 +11,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarmain"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/gradiente_toolbar"
         android:theme="@style/Theme.AppCompat"
         >
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:gravity="center">
 
-        <RelativeLayout
+        <TextView
+
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="WeGeek"
+            android:textSize="26dp"
+            android:fontFamily="@font/fontgeek"
+            android:textColor="@color/background_geral"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"
-                style="@style/Theme.AppCompat.Light.DarkActionBar"/>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/icone_img_toolbar"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/fundo_user"
-
-                />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+ </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout android:layout_width="match_parent"
         android:layout_height="wrap_content">

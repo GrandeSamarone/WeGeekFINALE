@@ -1,9 +1,9 @@
 package com.marlostrinidad.wegeek.nerdzone.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,14 +18,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Model.Topico;
+import com.marlostrinidad.wegeek.nerdzone.Model.Forum;
 import com.marlostrinidad.wegeek.nerdzone.Model.TopicoLike;
 import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
 import com.marlostrinidad.wegeek.nerdzone.R;
-import com.marlostrinidad.wegeek.nerdzone.Topico.Detalhe_topico;
+import com.squareup.picasso.Picasso;
 import com.vanniktech.emoji.EmojiTextView;
 import com.varunest.sparkbutton.SparkButton;
 import com.varunest.sparkbutton.SparkEventListener;
+
 
 import java.util.List;
 
@@ -36,16 +34,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHolder> {
 
-   private List<Topico> listatopicos;
+   private List<Forum> listatopicos;
     private Context context;
     Usuario usuariologado = UsuarioFirebase.getDadosUsuarioLogado();
-    private DatabaseReference database;
-    private ChildEventListener ChildEventListenerperfil;
-    public Adapter_Topico(List<Topico> topico, Context c){
+    public Adapter_Topico(List<Forum> forum, Context c){
         this.context=c;
-        this.listatopicos = topico;
+        this.listatopicos = forum;
     }
-    public List<Topico> getTopicos(){
+    public List<Forum> getTopicos(){
         return this.listatopicos;
     }
 
@@ -61,24 +57,23 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        final Topico topico = listatopicos.get(position);
+        final Forum forum = listatopicos.get(position);
 
-        holder.titulo.setText(topico.getTitulo());
-        holder.mensagem.setText(topico.getMensagem());
+        holder.titulo.setText(forum.getTitulo());
+        holder.mensagem.setText(forum.getDescricao());
 
 
         DatabaseReference eventoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
                 .child("usuarios")
-                .child(topico.getIdauthor());
+                .child(forum.getIdauthor());
         eventoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     Usuario  user = dataSnapshot.getValue(Usuario.class);
                     holder.autor.setText(user.getNome());
-
-                    Glide.with(context)
-                            .load(user.getFoto())
-                            .into(holder.foto_autor );
+                Picasso.get()
+                        .load(user.getFoto())
+                        .into(holder.foto_autor);
 
             }
 
@@ -88,40 +83,8 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
             }
         });
 
-
-        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
-        ChildEventListenerperfil=database.orderByChild("id").equalTo(topico.getIdauthor())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Usuario user = dataSnapshot.getValue(Usuario.class );
-                        assert user != null;
-
-                        holder.autor.setText(user.getNome());
-
-                        Glide.with(context.getApplicationContext())
-                                .load(user.getFoto())
-                                .into(holder.foto_autor );
-
-                    }
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
         DatabaseReference database_topico = FirebaseDatabase.getInstance().getReference()
-                .child("comentario-topico").child(topico.getUid());
+                .child("comentario-forum").child(forum.getId());
         database_topico.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -138,13 +101,11 @@ public class Adapter_Topico extends RecyclerView.Adapter<Adapter_Topico.MyViewHo
 holder.click.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        List<Topico> listTopicoAtualizado = getTopicos();
+        List<Forum> listForumAtualizado = getTopicos();
 
-        if (listTopicoAtualizado.size() > 0) {
-            Topico topicoselecionado = listTopicoAtualizado.get(position);
-            Intent it = new Intent(context, Detalhe_topico.class);
-            it.putExtra("topicoselecionado", topicoselecionado);
-            context.startActivity(it);
+        if (listForumAtualizado.size() > 0) {
+            Forum topicoselecionado = listForumAtualizado.get(position);
+
 
 
         }
@@ -153,12 +114,10 @@ holder.click.setOnClickListener(new View.OnClickListener() {
         holder.clicktambem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Topico> listTopicoAtualizado = getTopicos();
-                if (listTopicoAtualizado.size() > 0) {
-                    Topico topicoselecionado = listTopicoAtualizado.get(position);
-                    Intent it = new Intent(context, Detalhe_topico.class);
-                    it.putExtra("topicoselecionado", topicoselecionado);
-                    context.startActivity(it);
+                List<Forum> listForumAtualizado = getTopicos();
+                if (listForumAtualizado.size() > 0) {
+                    Forum topicoselecionado = listForumAtualizado.get(position);
+
 
                 }
             }
@@ -166,8 +125,8 @@ holder.click.setOnClickListener(new View.OnClickListener() {
         });
 
         DatabaseReference topicoscurtidas= ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("topico-likes")
-                .child(topico.getUid());
+                .child("forum-likes")
+                .child(forum.getId());
         topicoscurtidas.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -185,7 +144,7 @@ holder.click.setOnClickListener(new View.OnClickListener() {
 
                 //Montar objeto postagem curtida
                 final TopicoLike like = new TopicoLike();
-               like.setTopico(topico);
+               like.setForum(forum);
                 like.setUsuario(usuariologado);
                 like.setQtdlikes(QtdLikes);
 

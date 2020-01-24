@@ -1,6 +1,5 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
@@ -26,7 +25,7 @@ public class EventoLike {
 
         DatabaseReference pLikeRef=firebaseRef
                 .child("evento-likes")
-                .child(evento.getUid())
+                .child(evento.getId())
                 .child(usuario.getId());
         pLikeRef.setValue(dadosusuario);
 
@@ -39,7 +38,7 @@ public class EventoLike {
           DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
           DatabaseReference pLikeRef=firebaseRef
                   .child("evento-likes")
-                  .child(evento.getUid())
+                  .child(evento.getId())
                   .child("qtdlikes");
 
           setQtdlikes(getQtdlikes()+valor);
@@ -52,7 +51,7 @@ public class EventoLike {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeRef=firebaseRef
                 .child("evento-likes")
-                .child(evento.getUid())
+                .child(evento.getId())
                 .child(usuario.getId());
         pLikeRef.removeValue();
         //Atualizar quantidade de like
@@ -69,7 +68,7 @@ public class EventoLike {
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("evento")
                 .child(evento.getEstado())
-                .child(evento.getUid())
+                .child(evento.getId())
                 .child("curtirCount");
 
         pLikeQuantRef.setValue(getQtdlikes());
@@ -78,8 +77,8 @@ public class EventoLike {
         DatabaseReference firebaseRefs = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference pLikeQuantRef=firebaseRefs
                 .child("meusevento")
-                .child(evento.getIdUsuario())
-                .child(evento.getUid())
+                .child(evento.getIdauthor())
+                .child(evento.getId())
                 .child("curtirCount");
 
         pLikeQuantRef.setValue(getQtdlikes());

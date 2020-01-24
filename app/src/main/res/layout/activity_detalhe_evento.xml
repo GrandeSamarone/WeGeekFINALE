@@ -1,213 +1,752 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/brancochat"
     android:fitsSystemWindows="true"
-    android:background="@color/background"
-    >
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarlayout"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:orientation="vertical"
+    android:id="@+id/detalhe_evento"
+    tools:context=".Mercado.Detalhe_Loja">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapseLayoutevento"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:background="@drawable/gradiente_toolbar"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-
-            >
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/bannereventocapa"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:background="@drawable/gradientefundobranco"
-                android:fitsSystemWindows="true" />
-            <ProgressBar
-                android:id="@+id/progressbar_detalhe_Evento"
-                android:indeterminateTint="@color/primary_dark"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"/>
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarlayout"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                >
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/barlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_detalhe_evento"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="8dp">
-
-
-            <TextView
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:id="@+id/detalhe_evento_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/pretoescrita"
-                android:textSize="18sp"
-                tools:text="Titulo" />
-
-            <TextView
-                android:layout_below="@+id/detalhe_evento_titulo"
-                android:id="@+id/detalhe_evento_mensagem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textAllCaps="false"
-                android:textColor="@color/pretoescrita"
-                android:textSize="16sp"
-                app:fontFamily="sans-serif-condensed"
-                tools:text="topico" />
-
-
-
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/gradiente_toolbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <RelativeLayout
-                android:id="@+id/detalhe_evento_perfil"
-                android:layout_below="@id/detalhe_evento_mensagem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                android:layout_marginTop="8dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/icone_author"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/fundo_user"
-                android:layout_alignParentLeft="true"
-                  />
-                <com.vanniktech.emoji.EmojiTextView
-                    android:layout_toRightOf="@+id/icone_author"
-                    android:textColor="@color/primary_dark"
-                    android:textSize="14sp"
-                    android:id="@+id/author_evento"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    tools:text="someauthor@email.com" />
 
                 <TextView
-                    android:layout_toLeftOf="@+id/txtvisualizacao"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text=""
+                    android:id="@+id/textViewtitulo_evento"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/fontgeek"
+                    android:textColor="@color/branco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_below="@+id/textViewtitulo_evento"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
                     android:text="0"
-                    android:id="@+id/quantvisualizacao_detalhe"
-                    android:textColor="@color/pretoescrita"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/quant_user_vizu_evento"
                     android:textSize="14sp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_height="wrap_content"
-                    />
+                    android:fontFamily="@font/fontgeek"
+                    android:textColor="@color/branco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/txtvisualizacao"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/txt_visualizacoes"
-                    android:textColor="@color/pretoescrita"
-                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/text_onlines"
+                    android:layout_below="@+id/textViewtitulo_evento"
+                    android:layout_toRightOf="@+id/quant_user_vizu_evento"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Online"
                     android:textSize="14sp"
-                    android:layout_marginLeft="2dp"
-                     android:layout_marginRight="8dp"
+                    android:fontFamily="@font/fontgeek"
+                    android:textColor="@color/branco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_chat_online_Detalhe_evento"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_marginLeft="8dp"
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_below="@+id/icone_author"
-                android:id="@+id/recycler_comentario"
+                    android:layout_below="@+id/textViewtitulo_evento"
+                    android:layout_toRightOf="@+id/text_onlines"
+                    tools:listitem="@layout/adapter_commentario" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/bton_permitir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/verde"
+            android:text="PERMITIR"
+            />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/bton_deletar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/vermelho"
+            android:text="DELETAR"
+            />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fitsSystemWindows="true"
+        >
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+         <androidx.cardview.widget.CardView
+            android:id="@+id/card_topo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            cardview:cardCornerRadius="4dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="100dp"
-                tools:listitem="@layout/adapter_commentario" />
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+
+                    android:id="@+id/rel_sup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/icon_loja_evento"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/cinzaclaro"
+                        android:src="@drawable/userpic" />
+                    <androidx.cardview.widget.CardView
+                        android:visibility="gone"
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@+id/icon_loja_evento"
+                        android:backgroundTint="@color/laranja"
+                        cardview:cardCornerRadius="4dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:id="@+id/em_analise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                  <LinearLayout
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+                      <ImageView
+                          android:layout_marginRight="4dp"
+                          android:layout_width="24dp"
+                          android:layout_height="24dp"
+                          android:background="@drawable/clock"/>
+
+                      <TextView
+                          android:layout_marginTop="4dp"
+                          android:textColor="@color/branco"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="em análise"/>
+                  </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <TextView
+
+                        android:id="@+id/nome_loja_evento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:fontFamily="@font/fontgeek"
+                        android:text="NOME"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/desc_loja_evento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/nome_loja_evento"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:fontFamily="@font/fontgeek"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis elit et enim egestas euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+            Sed pharetra laoreet sem, quis sagittis massa molestie eu. Donec tincidunt eros sed condimentum bibendum"
+                        android:textSize="16sp" />
+                    <LinearLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:layout_below="@+id/line_endereco"
+                        android:id="@+id/line_valor_entrada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <ImageView
+
+                        android:id="@+id/txt_entrada"
+                           android:src="@drawable/tickets"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                      />
+                    <TextView
+                        android:layout_marginLeft="4dp"
+                        android:text="R$20,00"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:textAlignment="center"
+                        android:id="@+id/txt_valor_entrada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/fontgeek"
+                        android:textSize="16dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/line_endereco"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:layout_below="@+id/line_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <ImageView
+                        android:src="@drawable/placeholder"
+                        android:layout_marginTop="4dp"
+                        android:textAlignment="center"
+                        android:id="@+id/txt_end"
+                        android:layout_below="@+id/line_valor_entrada"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+                    <TextView
+                        android:layout_marginLeft="4dp"
+                        android:id="@+id/desc_end_loja_evento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_end"
+
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:fontFamily="@font/fontgeek"
+                        android:lines="3"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis elit et enim egestas euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+            Sed pharetra laoreet sem, quis sagittis massa molestie eu. Donec tincidunt eros sed condimentum bibendum"
+                        android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/line_data"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@+id/icon_loja_evento"
+                        android:layout_below="@+id/desc_loja_evento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/clock_inicio"
+                        android:layout_marginTop="4dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                          android:src="@drawable/clock_inicio"/>
+                        <ImageView
+                            android:id="@+id/cloc_fim"
+                            android:layout_below="@+id/clock_inicio"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/clock_fim"/>
+
+
+
+                        <TextView
+                            android:layout_toRightOf="@+id/clock_inicio"
+                            android:layout_marginLeft="4dp"
+                            android:id="@+id/data_evento_inicio"
+                            android:layout_marginTop="8dp"
+                             android:text="04 á 18"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/fontgeek"
+                            android:textSize="14dp"/>
+                            <TextView
+                                android:layout_below="@+id/clock_inicio"
+                                android:layout_toRightOf="@+id/cloc_fim"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/data_evento_fim"
+                                android:text="04 á 18"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/fontgeek"
+                                android:textSize="14dp"/>
+                    </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/line_menu_visitante_evento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rel_sup"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/rel_status_detalhe_loja_visitante_evento"
+                        android:layout_width="60dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="8dp">
+
+                        <LinearLayout
+                            android:id="@+id/line_click_status_evento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/circleImageViewStatus_visitante_evento"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+
+                                android:layout_gravity="center"
+                                android:src="@color/cinzaclaro"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/nome_loja_Status_evento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:lines="1"
+                                android:text="Status"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/const_carregando_icon_de_loja_visitante_evento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ProgressBar
+                                android:id="@+id/img_carregando"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginBottom="26dp"
+                                android:indeterminateOnly="true"
+                                android:indeterminateTint="@color/colorPrimary"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="MissingConstraints" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/icon_chat_evento"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_gravity="center"
+                            android:id="@+id/circleImage_Loc"
+                            android:layout_width="36sp"
+                            android:layout_height="36sp"
+                            app:civ_border_color="@color/cinzaclaro"
+                            app:civ_border_width="2dp"
+                            android:src="@drawable/chat_detalhe_mercado"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/txt_loc"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Contato"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/como_chegar_evento"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_gravity="center"
+                            android:id="@+id/circleImage_asasLoc"
+                            android:layout_width="36sp"
+                            android:layout_height="36sp"
+                            app:civ_border_color="@color/cinzaclaro"
+                            app:civ_border_width="2dp"
+                            android:src="@drawable/ic_map"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/txtasas_loc_evento"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Como Chegar"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.varunest.sparkbutton.SparkButton
+
+                            android:layout_gravity="center"
+                            android:id="@+id/botao_receber_novidades_evento"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:sparkbutton_activeImage="@drawable/ic_notificacao_sim"
+                            app:sparkbutton_inActiveImage="@drawable/ic_notificacao_noa"
+                            app:sparkbutton_iconSize="36dp"
+                            app:sparkbutton_primaryColor="@color/primary"
+                            app:sparkbutton_secondaryColor="@color/primary_dark" />
+                        <TextView
+                            android:id="@+id/txt_lossssc_evento"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Receber Novidades"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/line_menu_admin_evento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rel_sup"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rel_status_detalhe_loja_admin_evento"
+                        android:layout_width="60dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="6dp">
+
+                        <LinearLayout
+                            android:id="@+id/line_click_status_admin_evento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/circleImageViewStatus_admin_evento"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                android:layout_gravity="center"
+                                android:src="@color/cinzaclaro"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/nome_loja_Status_admin_evento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:text="Add Status"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/const_carregando_icon_de_loja_admin_evento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ProgressBar
+                                android:id="@+id/img_carregando_admin_evento"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginBottom="26dp"
+                                android:indeterminateOnly="true"
+                                android:indeterminateTint="@color/colorPrimary"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="MissingConstraints" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/line_assinante_evento"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_gravity="center"
+                            android:id="@+id/circleImage_Loc_admin_evento"
+                            android:layout_width="36sp"
+                            android:layout_height="36sp"
+                            app:civ_border_color="@color/cinzaclaro"
+                            app:civ_border_width="2dp"
+                            android:src="@drawable/ic_notificacao_sim"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/txt_mensagens_admin_evento"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Assinantes"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/line_vizu_evento"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_gravity="center"
+                            android:id="@+id/circleImage_admin_evento"
+                            android:layout_width="36sp"
+                            android:layout_height="36sp"
+                            app:civ_border_color="@color/cinzaclaro"
+                            app:civ_border_width="2dp"
+                            android:src="@drawable/ic_quemviu"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/txt_view_admin_evento"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Quem viu?"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/line_config_evento"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_gravity="center"
+                            android:id="@+id/circleImage_conf_admin_evento"
+                            android:layout_width="36sp"
+                            android:layout_height="36sp"
+                            app:civ_border_color="@color/cinzaclaro"
+                            app:civ_border_width="2dp"
+                            android:src="@drawable/ic_config"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/txt_confi_evento"
+                            android:fontFamily="@font/fontgeek"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Configurações"
+                            android:ellipsize="end"
+                            android:lines="1"/>
+                    </LinearLayout>
+                </LinearLayout>
+
             </RelativeLayout>
 
+        </androidx.cardview.widget.CardView>
 
-        </RelativeLayout>
+             <Button
+                 android:id="@+id/botao_minimizar_evento"
+                 android:layout_width="170dp"
+                 android:layout_height="40dp"
+                 android:layout_below="@+id/card_topo"
+                 android:layout_gravity="center"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginEnd="8dp"
+                 android:layout_marginRight="8dp"
+                 android:drawableRight="@drawable/ic_seta_subir"
+                 android:fontFamily="@font/fontgeek"
+                 android:gravity="center"
+                 android:text="ESCONDER"
+                 android:textSize="18sp"
+                 android:theme="@style/botaopadrao"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/card_topo" />
 
-    </android.support.v4.widget.NestedScrollView>
+             <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/recycler_chat_grupo_detalhe_evento"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_above="@+id/digitar"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginBottom="8dp"
+                 app:layout_constraintBottom_toTopOf="@+id/digitar"
+                 app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_gravity="bottom"
-        android:weightSum="1.0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp">
+             <LinearLayout
+                 android:id="@+id/digitar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentBottom="true"
+                 android:gravity="center_vertical"
+                 android:orientation="horizontal"
+                 android:weightSum="1.0"
+                 android:background="@color/brancochat"
+                 app:layout_constraintBottom_toBottomOf="parent"
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_weight="1"
-        android:elevation="2dp"
-        android:gravity="center_vertical"
+                 >
 
-        android:background="@drawable/fundo_mensagem_chat">
-        <ImageView
-            android:id="@+id/botao_post_icone"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_emotion_chat"/>
-        <com.vanniktech.emoji.EmojiEditText
-            android:id="@+id/caixa_de_texto_comentario"
-            android:layout_marginLeft="5dp"
-            android:layout_width="250dp"
-            android:background="@android:color/white"
-            android:inputType="textMultiLine"
-            android:layout_height="wrap_content"
-            android:hint="Deixe um comentário"/>
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/imageCamera"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:srcCompat="@drawable/ic_emotion_chat" />
-    </LinearLayout>
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="3dp"
+                     android:layout_marginRight="5dp"
+                     android:layout_marginBottom="8dp"
+                     android:layout_weight="1"
+                     android:background="@drawable/fundo_mensagem_chat"
+                     android:elevation="2dp"
+                     android:gravity="center_vertical"
+                     android:orientation="horizontal"
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_marginTop="8dp"
-        android:id="@+id/button_postar_comentario"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/icon_enviar" />
-    </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+                     android:padding="8dp">
+
+                     <ImageView
+                         android:id="@+id/botao_post_icone_detalhe_evento"
+                         android:layout_width="24dp"
+                         android:layout_height="24dp"
+                         android:src="@drawable/ic_emotion_chat" />
+
+                     <com.vanniktech.emoji.EmojiEditText
+                         android:id="@+id/caixa_de_texto_comentario_detalhe_evento"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="5dp"
+                         android:gravity="center"
+                         android:background="@android:color/white"
+                         android:hint="Digite aqui.."
+                         android:textColor="@color/pretoescrita"
+                         android:fontFamily="@font/fontgeek"
+                         android:inputType="textMultiLine" />
+
+                 </LinearLayout>
+
+                 <androidx.appcompat.widget.AppCompatButton
+                     android:id="@+id/button_postar_comentario_detalhe_evento"
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+                     android:layout_marginBottom="4dp"
+                     android:background="@drawable/icon_enviar" />
+             </LinearLayout>
+
+             <LinearLayout
+                 android:visibility="gone"
+                 android:id="@+id/line_botoes_evento"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentBottom="true"
+                 android:layout_marginEnd="8dp"
+                 android:layout_marginRight="8dp"
+                 android:layout_marginBottom="8dp"
+                 android:orientation="vertical"
+                 app:layout_constraintBottom_toTopOf="@+id/digitar"
+                 app:layout_constraintEnd_toEndOf="parent">
+
+
+
+             </LinearLayout>
+
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

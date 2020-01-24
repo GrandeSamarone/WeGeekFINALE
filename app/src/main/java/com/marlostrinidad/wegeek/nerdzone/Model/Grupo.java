@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
-import com.marlostrinidad.wegeek.nerdzone.Helper.Base64Custom;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,29 +27,7 @@ public class Grupo implements Serializable {
         String idGrupoFirebase =gruporef.push().getKey();
         setId(idGrupoFirebase);
     }
-    public void salvar(){
-        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
-        DatabaseReference gruporef = database.child("grupos");
 
-        gruporef.child(getId()).setValue(this);
-
-        //Salvar conversa para membros do grupo
-        for(Usuario membro:getMembros()){
-
-            String idRemetente= Base64Custom.codificarBase64(membro.getTipoconta());
-            Log.i("contaRemetente",idRemetente);
-            String idDestinatario =getId();
-
-           Conversa conversa = new Conversa();
-           conversa.setIdRemetente(idRemetente);
-           conversa.setIdDestinatario(idDestinatario);
-           conversa.setUltimaMensagem("");
-           conversa.setIsGroup("true");
-           conversa.setGrupo(this);
-
-           conversa.salvar();
-        }
-    }
 
     public String getId() {
         return id;

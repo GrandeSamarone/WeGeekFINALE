@@ -2,11 +2,13 @@ package com.marlostrinidad.wegeek.nerdzone.Abrir_Imagem;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,29 +17,38 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_mostra_HQ;
 import com.marlostrinidad.wegeek.nerdzone.Adapter.MyViewPagerAdapter;
 import com.marlostrinidad.wegeek.nerdzone.Model.Foto;
+import com.marlostrinidad.wegeek.nerdzone.Model.HQ;
 import com.marlostrinidad.wegeek.nerdzone.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class AbrirImagemHQ extends AppCompatActivity {
+
+
+    private FirebaseFirestore db;
+    private ArrayList<HQ> list_hq =new ArrayList<>() ;
+    private Adapter_mostra_HQ adapter;
+    private ListenerRegistration registration_hq,registration_hq_id;
     private ArrayList<Foto> FotoList;
     private MyViewPagerAdapter myViewPagerAdapter;
     private RequestQueue mRequestQueue;
     private ViewPager viewPager;
     private ProgressDialog pDialog;
     private AlertDialog alerta;
+    private String id_HQ;
     private TextView tantasPaginas,nomeGibi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +66,12 @@ public class AbrirImagemHQ extends AppCompatActivity {
 */
         setContentView(R.layout.activity_abrir_imagem_hq);
 
-        FotoList = new ArrayList<>();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
-
+        db = FirebaseFirestore.getInstance();
+        id_HQ = getIntent().getStringExtra("id_hq");
+        if(!id_HQ.equals("")){
+            RecuperarDados_HQ(id_HQ);
+        }
 
         pDialog = new ProgressDialog(this);
         tantasPaginas = findViewById(R.id.lbl_count);
@@ -66,14 +79,46 @@ public class AbrirImagemHQ extends AppCompatActivity {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
 
-        mRequestQueue = Volley.newRequestQueue(this);
-        parseJSON();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (registration_hq!= null) {
+            registration_hq.remove();
+            registration_hq = null;
+        }
+        if (registration_hq_id!= null) {
+            registration_hq_id.remove();
+            registration_hq_id = null;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (registration_hq!= null) {
+            registration_hq.remove();
+            registration_hq = null;
+        }
+        if (registration_hq_id!= null) {
+            registration_hq_id.remove();
+            registration_hq_id = null;
+        }
+    }
+
     private int prox(int i) {
         return viewPager.getCurrentItem() + i;
     }
@@ -88,16 +133,14 @@ public class AbrirImagemHQ extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             switch (item.getItemId()) {
-                case R.id.navigation_finish:
-                   finish();
+                case R.id.navigation_home:
+                    finish();
                     return true;
                 case R.id.navigation_zoom:
-                    Zoom();
+                   Zoom();
                     return true;
                 case R.id.navigation_voltar:
-
                     viewPager.setCurrentItem(voltar(-1),true);
-
                     return true;
                 case R.id.navigation_prox:
                     viewPager.setCurrentItem(prox(+1),true);
@@ -127,64 +170,83 @@ public class AbrirImagemHQ extends AppCompatActivity {
         }
     };
     private void displayMetaInfo(int position) {
-        tantasPaginas.setText((position + 1) + " de " + FotoList.size());
+        tantasPaginas.setText((position + 1) + " de " + list_hq.size());
 
 
-        Foto image = FotoList.get(position);
-        nomeGibi.setText(image.getNome());
+        HQ image = list_hq.get(position);
+        nomeGibi.setText(image.getTitulo());
 
     }
+    public void RecuperarDados_HQ(String id){
 
-    private void parseJSON() {
-        pDialog.setMessage("Carregando...");
-        pDialog.show();
-        String url = "http://149.56.182.39/MARVEL/hulk-ocaido/hulkocaido.json";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("HQ");
-                            pDialog.hide();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
-
-
-                                String imageNome = hit.getString("nome");
-                                String imageUrl = hit.getString("url");
-
-
-                                //Pega o nome
-                              /*  toolbar.setTitle(imageNome);
-                                toolbar.setSubtitle("Paginas:"+"01"+" de "+FotoList.size());*/
-
-                                Log.i("textoposicao", String.valueOf(hit));
-
-                                FotoList.add(new Foto(imageNome,imageUrl));
-                            }
-
-                            myViewPagerAdapter = new MyViewPagerAdapter(AbrirImagemHQ.this,FotoList);
-                            viewPager.setAdapter(myViewPagerAdapter);
-                            /// / mExampleAdapter = new ExampleAdapter(MainActivity.this, FotoList);
-                            //mRecyclerView.setAdapter(mExampleAdapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        Query query= db.collection("HQ").whereEqualTo("id",id);
+        registration_hq_id=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                pDialog.hide();
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("", "listen:error", e);
+                    return;
+                }
+
+                for (DocumentChange change : snapshots.getDocumentChanges()) {
+                    HQ HQ = change.getDocument().toObject( HQ.class);
+                    switch (change.getType()) {
+                        case ADDED:
+                         String id_selecionado= change.getDocument().getId();
+                            Recuperar_HQ(id_selecionado);
+                            break;
+                        case MODIFIED:
+                            break;
+                        case REMOVED:
+                            break;
+                    }
+                }
             }
         });
 
-        mRequestQueue.add(request);
     }
 
+    private void Recuperar_HQ(String id_HQ){
+        list_hq.clear();
+        Query query= db.collection("HQ")
+                .document(id_HQ)
+                .collection("Imagens")
+                .orderBy("pos", Query.Direction.ASCENDING);
+        registration_hq=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("", "listen:error", e);
+                    return;
+                }
+
+                for (DocumentChange change : snapshots.getDocumentChanges()) {
+                    Log.i("sdsdsd",change.getDocument().getId());
+                    HQ hq_model = change.getDocument().toObject(HQ.class);
+                    //  Log.i("sdsdsd",change.getDocument().getId());
+                    // Log.i("sdsdsd2",conto.getUid());
+                    switch (change.getType()) {
+                        case ADDED:
+                           list_hq.add( hq_model);
+                            myViewPagerAdapter = new MyViewPagerAdapter(AbrirImagemHQ.this,list_hq);
+                            viewPager.setAdapter(myViewPagerAdapter);
+                            if (list_hq.size() > 0) {
+
+                            }
+                           // adapter.notifyDataSetChanged();
+                            Log.d("ad", "New city: " + change.getDocument().getData());
+                            break;
+                        case MODIFIED:
+                            break;
+                        case REMOVED:
+                            break;
+                    }
+                }
+
+            }
+        });
+
+    }
     //dialog de opcoes
     private void Zoom() {
         //LayoutInflater é utilizado para inflar nosso layout em uma view.

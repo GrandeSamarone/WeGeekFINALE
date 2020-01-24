@@ -1,8 +1,13 @@
 <resources>
+    <string name="Api_key">
+       AAAANqMaf_0:APA91bG71b1DhsrTcvpqHAaCCL81OSlhr
+        HUMiF1snxMPCFbWq8UInKHcjsaPLP4-Ezfekh6YwMKG7ltBA0Gs
+        -l5eoqzlnakYRfabk9LeQwh9nBpZGIjqA1xdrGBoxTXp6FtTM_S9ciYY</string>
     <string name="app_name">WeGeek</string>
+    <string name="notification_channel_id">default</string>
     <string name="buscar_usuario">Ei %1$s, nemhum Usuario Foi encontrado.</string>
     <string name="title_activity_cadastrar_icon_nome_">Cadastrar_icon_nome_Activity</string>
-
+    <string name="picker_today">Hoje</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_descricao_gibi">DescricaoGibiActivity</string>
     <!--<string name="facebook_app_id">187928898608771</string>-->
@@ -18,18 +23,29 @@
     <string name="title_activity_minha_conta">MinhaConta</string>
 
 
-    <string name="title_shop">Voltar</string>
-    <string name="title_gifts">Zoom</string>
+    <string name="title_shop">Inicio</string>
+    <string name="title_forum">Fórum</string>
+    <string name="title_leilao">Leilão</string>
+    <string name="title_gifts">Notificação</string>
+    <string name="title_grupos">Grupos</string>
+    <string name="title_lance_leilao">Lance</string>
+    <string name="title_topicos">Tópicos</string>
+    <string name="title_hist_leilao">Histórico</string>
     <string name="title_cart">Anterior</string>
-    <string name="title_profile">Próximo</string>
-    <string name="text_icone_heroi">ICONS</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_profile">EU</string>
+    <string name="title_Voltar">Voltar</string>
+    <string name="text_icone_heroi">HERÓIS</string>
     <string name="text_icon_galeria">GALERIA</string>
     <string name="text_icon_camera">CÂMERA</string>
+    <string name="text_lista_forum">Fórum</string>
+    <string name="text_lista_leilao">Leilão</string>
+    <string name="text_novo_leilao">Novo Leilão</string>
     <string name="drawer_colecoes_es">Coleções</string>
     <string name="drawer_loja">Loja</string>
     <string name="drawer_Criar_loja">Comércios</string>
     <string name="drawer_Promover">Promover</string>
-    <string name="drawer_Suporte">Contato</string>
+    <string name="drawer_Suporte">Suporte</string>
     <string name="drawer_Sair">Sair</string>
     <string name="drawer_eventos">Eventos</string>
     <string name="drawer_mensagens">Mensagens</string>
@@ -41,13 +57,14 @@
     <string name="title_activity_detalhe_evento">DetalheEvento</string>
     <string name="analizando_informa_es_aguarde">Analisando informações,aguarde.</string>
     <string name="carregando_informa_es">Carregando...</string>
-    <string name="mais_comercio">MAIS</string>
+    <string name="mais_comercio">MAIS ></string>
     <string name="drawer_topico">Tópicos</string>
-    <string name="drawer_galeria">WeArts</string>
+    <string name="drawer_galeria">FanArts</string>
     <string name="name_evento">Eventos</string>
     <string name="novocomercio">Novo Comércio</string>
     <string name="legenda_nvo_comercio">Legenda Ex: Games e muito mais..</string>
-    <string name="descricao">DESCRIÇÃO</string>
+    <string name="descricao">Descrição.</string>
+    <string name="descricao_produto">Descrição(Opcional)</string>
     <string name="_0_n_perfil">0</string>
     <string name="fans_perfil">Seguidores</string>
     <string name="drawer_contos">Contos</string>
@@ -71,52 +88,26 @@
     <string name="topico_name">TÓPICO</string>
     <string name="conto_name">CONTO</string>
     <string name="politica_de_privacidade">Política de Privacidade</string>
-    <string name="politicaa_privacidade">Política de privacidade</string>
+    <string name="politicaa_privacidade">Política de Privacidade</string>
     <string name="txt_visualizacoes">Visualizações</string>
-    <string name="seja_o_primeiro_anunciar_oque_quiser">Ainda não temos candidato nessa categoria,
+    <string name="seja_o_primeiro_anunciar_oque_quiser">Ainda nao temos candidato nessa categoria,
     quer se o primeiro? Vale Prêmios!</string>
-    <string name="nda_encontrado_conto">Nenhum conto no momento,seja o primeiro!</string>
+    <string name="nda_encontrado_conto">Nemhum conto no momento,seja o primeiro!</string>
     <string name="texto_noticia">Venha participar do maior evento de Manaus, são 20 categorias, inscreva-se, e chame seus amigos.</string>
-    <string name="text_mercado_nd">Nenhum comércio no momento.</string>
-    <string name="text_nd_event">Nenhum evento no momento.</string>
+    <string name="text_mercado_nd">Nemhum comércio no momento.</string>
+    <string name="text_nd_event">Nemhum evento no momento.</string>
     <string name="text_nd_fanart">Quer divulgar sua art? Seja o primeiro!</string>
-    <string name="text_nd_topico">Nenhum tópico no momento.</string>
-    <string name="infor_cad_atencao">Obs: Suas informações não poderá ser alterada ou excluida após o cadastro, então atente-se aos detalhes,Boa sorte!</string>
-    <string name="start">VAMOS LÁ!</string>
-    <string name="next">PRÓXIMO</string>
+    <string name="text_nd_topico">Nemhum tópico no momento.</string>
+    <string name="default_notification_channel_id">teste</string>
     <string name="avalie_nos">Avalie-nos</string>
+    <string name="texto_compartilhar">Ola, sou %1$ estou participando de uma competição no App %2$,vamos lá vote em mim!</string>
+    <string name="regulamento"> 1- 1a Fase - 16/ 11/18 até 25/12/18\n 2- 2a Fase - 26/12/18 até 16/01/19\n \n Observação: 2a Fase o voto será secreto, revelando o campeão no dia do evento.</string>
+    <string name="arrasta_img">Informação:\nNa ordem das imagens que irá carregar aqui é como será apresentado para o público.</string>
+    <string name="ajuda_valor_lance">Os lances começará apartir do valor que for decidido aqui.</string>
+
+    <string name="duvida_novoLeilao"> Depois de carregar as imagens \n Clique e apagará a foto ou \n pressione para trocar de lugar.</string>
 
     <string-array name="estados">
-        <item>Selecione um estado</item>
-        <item>AC</item>
-        <item>AL</item>
-        <item>AM</item>
-        <item>AP</item>
-        <item>BA</item>
-        <item>CE</item>
-        <item>DF</item>
-        <item>ES</item>
-        <item>GO</item>
-        <item>MA</item>
-        <item>MG</item>
-        <item>MS</item>
-        <item>MT</item>
-        <item>PA</item>
-        <item>PB</item>
-        <item>PE</item>
-        <item>PI</item>
-        <item>PR</item>
-        <item>RJ</item>
-        <item>RN</item>
-        <item>RO</item>
-        <item>RR</item>
-        <item>RS</item>
-        <item>SC</item>
-        <item>SE</item>
-        <item>SP</item>
-        <item>TO</item>
-    </string-array>
-    <string-array name="estado">
         <item>Estado</item>
         <item>AC</item>
         <item>AL</item>
@@ -146,33 +137,80 @@
         <item>SP</item>
         <item>TO</item>
     </string-array>
-    <string-array name="suporte">
-        <item>Selecione um motivo</item>
-        <item>Elogio</item>
-        <item>Sugestão</item>
-        <item>Reclamação</item>
-        <item>Bug</item>
+
+    <string-array name="categoria_grupo">
+        <item>Selecione</item>
+        <item>Action Figures</item>
+        <item>Comércio</item>
+        <item>Filmes</item>
+        <item>Ficção Cientifica</item>
+        <item>Games</item>
+        <item>HQ</item>
+        <item>Mangá</item>
+        <item>Musica</item>
+        <item>Leilão</item>
+        <item>K-PoP</item>
+        <item>Tecnologia</item>
+        <item>História</item>
     </string-array>
 
-    <string-array name="loja">
-        <item>categoria</item>
-        <item>Roupas</item>
-        <item>HQ</item>
-        <item>ACESSÓRIOS</item>
+    <string-array name="categoria_leilao">
+        <item>Selecione uma Categoria</item>
+        <item>Action Figures</item>
+        <item>Filmes</item>
         <item>Games</item>
+        <item>HQ</item>
+        <item>Mangá</item>
+        <item>Roupas</item>
+        <item>Livros</item>
         <item>Papelaria</item>
         <item>Decoração</item>
         <item>Cozinha</item>
-        <item>Action Figure</item>
-        <item>Livros</item>
         <item>Cosplay</item>
+        <item>Outros</item>
     </string-array>
+
     <string-array name="fanartcategoria">
-        <item>Selecione uma categoria</item>
+        <item>Categoria</item>
         <item>Cosplay</item>
         <item>Design</item>
         <item>FanArts</item>
         <item>Fotografia</item>
+    </string-array>
+
+    <string-array name="suporte">
+        <item>Selecione um Motivo</item>
+        <item>Sugestão</item>
+        <item>Reclamação</item>
+        <item>Elogio</item>
+        <item>Bug</item>
+    </string-array>
+
+    <string-array name="loja">
+        <item>Categoria</item>
+        <item>Bar/Restaurante Temático</item>
+        <item>Cosplay</item>
+        <item>Design</item>
+        <item>Fotógrafo(a)</item>
+        <item>Loja</item>
+        <item>Outros</item>
+    </string-array>
+    <string-array name="Dentro_loja">
+        <item>Categoria</item>
+        <item>Action Figure</item>
+        <item>Cozinha</item>
+        <item>Cosplay</item>
+        <item>Decoração</item>
+        <item>Games</item>
+        <item>HQ</item>
+        <item>Livros</item>
+        <item>Papelaria</item>
+        <item>Roupas</item>
+    </string-array>
+    <string-array name="Dentro_loja_lanche">
+        <item>Categoria</item>
+        <item>Bebidas</item>
+        <item>Lanches</item>
     </string-array>
     <string-array name="eventos">
         <item>Acontecendo</item>
@@ -189,6 +227,9 @@
         <item>Infantil</item>
         <item>Agro</item>
     </string-array>
+    <string name="title_activity_convite_">Convite_Activity</string>
+    <string name="title_activity_configuracao__grupo_">Configuracao_Grupo_Activity</string>
+    <string name="title_activity_leilai_page_principal">leilai_page_principal</string>
 
 
 </resources>

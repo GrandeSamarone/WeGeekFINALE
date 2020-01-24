@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bg_item_normal_state">#fff0f0f0</color>
+    <color name="bg_item_dragging_state">#FFE7A7</color>
+    <color name="bg_item_dragging_active_state">#F1E61D</color>
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#1565c0</color>
     <color name="branco">#FFFFFF</color>
-    <color name="brancochat">#efeded</color>
-    <color name="background">#fcfcfc</color>
-    <color name="transparente">#00000000</color>
-    <color name="background_cardview">#fafafa</color>
-    <color name="colorAccent">#fa2c28</color>
-    <color name="vermelho">#ff0500</color>
     <color name="brancofraco">#d2e1e0e0</color>
+    <color name="brancochat">#efeded</color>
+    <color name="background_geral">#EEEEEE</color>
+    <color name="transparente">#00000000</color>
+    <color name="background_cardview">#F3F3F3</color>
+    <color name="colorAccent">#DDF36060</color>
+    <color name="vermelho">#8F2626</color>
+    <color name="vermelho_chat">#c36a6b</color>
+    <color name="laranja">#EB9640</color>
     <color name="cinzaclaro">#EEEEEE</color>
     <color name="cinzabalao">#c1c1c1</color>
     <color name="amareloclaro">#F4B400</color>
     <color name="amareloescuro">#d7a516</color>
     <color name="preto">#000</color>
-    <color name="pretoescrita">#3a3a3a</color>
+    <color name="preto_melhor">#333030</color>
+    <color name="pretoescrita">#4D4D4D</color>
     <color name="verde">#34b338</color>
     <color name="text_enabled">#1565c0</color>
-    <color name="text_disabled">#cdccce</color>
+    <color name="text_disabled">#7e7c7c</color>
     <color name="pretoclaro">#7e7c7c</color>
     <color name="cinzasecunradrio">#8B000000</color>
     <color name="cinzadisabilitado">#61000000</color>
@@ -29,6 +35,7 @@
     <color name="colorFloatingActionBarAccent">#4285F4</color>
     <color name="actionbar_opacity">#33000000</color>
     <color name="azul_votacao">#e01565c0</color>
+    <color name="fundo_chat">#d6dfe6</color>
 
     <integer-array name="custom_tab_colors">
         <item>@color/branco</item>
@@ -36,7 +43,8 @@
         <item>@color/branco</item>
     </integer-array>
 
-
-
-
+    <color name="emoji_background">#ECEFF1</color>
+    <color name="emoji_icons">#61000000</color>
+    <color name="accentColor">#A81872E6</color>
+    <color name="emoji_divider">#15000000</color>
 </resources>

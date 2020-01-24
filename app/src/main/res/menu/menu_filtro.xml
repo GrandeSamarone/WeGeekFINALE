@@ -6,10 +6,4 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_filter_list_24dp"/>
 
-   
-
-    <item
-        android:id="@+id/menufiltroa"
-        android:title=""
-        app:showAsAction="always" />
 </menu>

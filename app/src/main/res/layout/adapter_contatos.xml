@@ -17,7 +17,7 @@
     android:id="@+id/imageViewFotoContato"
     android:layout_width="50dp"
     android:layout_height="50dp"
-    android:src="@drawable/gradiente_icone"/>
+    android:src="@drawable/padrao"/>
 
     <LinearLayout
         android:layout_width="match_parent"

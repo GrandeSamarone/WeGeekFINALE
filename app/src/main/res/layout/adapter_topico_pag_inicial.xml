@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
@@ -8,8 +8,8 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     cardview:cardCornerRadius="4dp"
-    android:background="@color/background"
-    android:backgroundTint="@color/background_cardview"
+    android:background="@color/background_geral"
+    android:backgroundTint="@color/background_geral"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true">
 
@@ -45,8 +45,11 @@
         </RelativeLayout>
 
             <TextView
-
-            android:text="GAME OF THONES | Teoria"
+            android:text="Logo, l
+            ogo, assim que puder, vou telefonar
+Por enquanto tá doendo
+E quando a saudade quiser me deixar cantar
+Vão saber que andei sofrendo"
             android:layout_marginTop="4dp"
             android:id="@+id/titulotopico_adapter"
             android:textSize="14sp"
@@ -56,4 +59,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/layoutroot"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_chat">
 
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container_Detalhe_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        shimmer:duration="1000">
+        <!-- Adding 3 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <include layout="@layout/recipe_placeholder_item" />
 
-    <android.support.v7.widget.RecyclerView
+            <include layout="@layout/recipe_placeholder_item" />
+
+            <include layout="@layout/recipe_placeholder_item" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMensagens"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +72,9 @@
             <com.vanniktech.emoji.EmojiEditText
                 android:id="@+id/editMensagem"
                 android:layout_marginLeft="5dp"
+                android:textColor="@color/cinzaescuro"
                 android:layout_width="250dp"
+                android:fontFamily="@font/fontgeek"
                 android:background="@android:color/white"
                 android:inputType="textMultiLine"
                 android:layout_height="wrap_content"
@@ -69,5 +94,5 @@
             android:layout_height="40dp"
             android:background="@drawable/icon_enviar" />
     </LinearLayout>
-
 </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

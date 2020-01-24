@@ -1,6 +1,5 @@
 package com.marlostrinidad.wegeek.nerdzone.Model;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 
@@ -56,7 +55,7 @@ public class RatingBar_Comercio {
 
         DatabaseReference pLikeRef=firebaseRef
                 .child("ratingbar-comercio")
-                .child(comercio.getIdMercado())
+                .child(comercio.getId())
                 .child(usuario.getId());
         pLikeRef.setValue(dadosusuario);
 

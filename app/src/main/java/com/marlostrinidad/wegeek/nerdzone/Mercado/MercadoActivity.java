@@ -1,88 +1,92 @@
 package com.marlostrinidad.wegeek.nerdzone.Mercado;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity;
-import com.marlostrinidad.wegeek.nerdzone.Activits.MinhaConta;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
+import com.marlostrinidad.wegeek.nerdzone.Adapter.AdapterPagInicial.Adapter_item_tela_inicial;
+import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_status;
 import com.marlostrinidad.wegeek.nerdzone.Adapter.MercadoAdapter;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.RecyclerItemClickListener;
-import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
+import com.marlostrinidad.wegeek.nerdzone.Helper.TrocarFundo;
+import com.marlostrinidad.wegeek.nerdzone.Mercado.Status.Ver_StatusActivity;
 import com.marlostrinidad.wegeek.nerdzone.Model.Comercio;
-import com.marlostrinidad.wegeek.nerdzone.Model.Usuario;
+import com.marlostrinidad.wegeek.nerdzone.Model.Item_loja;
+import com.marlostrinidad.wegeek.nerdzone.Model.Status;
 import com.marlostrinidad.wegeek.nerdzone.R;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.marlostrinidad.wegeek.nerdzone.Activits.Minhas_Publicacoes.setWindowFlag;
+import static android.view.View.GONE;
 
-public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
+public class MercadoActivity extends TrocarFundo {
+    private static final String OPCAO_PREFERENCIA = "opcao_preferencia";
+    private SharedPreferences opcao_sPreferences=null;
     private Toolbar toolbar;
+    private TextView textToolbar;
+    private Adapter_status adapter_status;
+    private Adapter_item_tela_inicial adapter_item;
     private FloatingActionButton novoMercado;
-    private FirebaseAuth autenticacao;
-    private FirebaseUser usuario;
-    private SwipeRefreshLayout refresh;
-    private MaterialSearchView SeachView;
-    private RecyclerView recyclerViewMercadoPublico;
+    private RecyclerView recyclerViewMercadoPublico,RecycleView_status,RecycleView_itens;
     private MercadoAdapter adapter;
-    private DatabaseReference mercadopublico;
-    private ChildEventListener valueMercadoListener;
     private Comercio comercio;
+    private ArrayList<Item_loja> lista_itens = new ArrayList<>();
     private ArrayList<Comercio> listamercado = new ArrayList<>();
-    private ImageView botaoPesquisar;
-    private SharedPreferences preferences = null;
+    private ArrayList<Comercio> lista_status = new ArrayList<>();
     private Dialog dialog;
     private AlertDialog alerta;
     private CircleImageView icone;
-    private LinearLayoutManager mManager;
-    private DatabaseReference database;
-    private ChildEventListener ChildEventListenerperfil;
-    private  String filtroEstado = "";
-    private  String filtroCategoria = "";
-    private Boolean filtrandoPorEstado=false;
-    private TextView errobusca;
-    private LinearLayout linear_nada_cadastrado,linearerro,linear;
-
+    private LinearLayoutManager mManager,mManager_iten;
+    private FirebaseFirestore db;
+    private  long tempo_atual;
+    private RelativeLayout rel_status;
+    private  StorageReference storageReference;
+    private ListenerRegistration registration,registration_status,registration_itens;
+    private SharedPreferences dados_opcao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,45 +94,43 @@ public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLa
         setContentView(R.layout.activity_mercado);
 
         toolbar = findViewById(R.id.toolbarsecundario);
-        toolbar.setTitle(R.string.comercio);
+        toolbar.setTitle("");
+        textToolbar=findViewById(R.id.app_toolbar_title_secundario);
         setSupportActionBar(toolbar);
 
 
-        preferences = getSharedPreferences("primeiravezcomercio", MODE_PRIVATE);
-        if (preferences.getBoolean("primeiravezcomercio", true)) {
-            preferences.edit().putBoolean("primeiravezcomercio", false).apply();
-            Dialog_Primeiravez();
-        }else{
 
-        }
 
         //Configuraçoes iniciais
-        icone = findViewById(R.id.icone_user_toolbar);
-        linearerro=findViewById(R.id.linearinformacoeserro_mercado);
-        linear_nada_cadastrado = findViewById(R.id.linear_nada_cadastrado);
-        errobusca = findViewById(R.id.textoerrobusca_mercado);
-        database = ConfiguracaoFirebase.getDatabase().getReference().child("usuarios");
-        comercio = new Comercio();
-        refresh = findViewById(R.id.refreshmercado);
-        refresh.setOnRefreshListener(this);
-        refresh.post(new Runnable() {
-            @Override
-            public void run() {
-                RecuperarMercadoPublicos();
-            }
-        });
-        refresh.setColorSchemeResources
-                (R.color.colorPrimaryDark, R.color.amareloclaro,
-                        R.color.accent);
 
-        mercadopublico = ConfiguracaoFirebase.getFirebaseDatabase().child("comercio");
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        dados_opcao = getSharedPreferences(OPCAO_PREFERENCIA, MODE_PRIVATE);
+        rel_status=findViewById(R.id.rel_status);
+        tempo_atual = System.currentTimeMillis();
+        db = FirebaseFirestore.getInstance();
+        icone = findViewById(R.id.icone_user_toolbar);
+        comercio = new Comercio();
+        RecycleView_itens=findViewById(R.id.recycleview_itens);
+        adapter_item=new Adapter_item_tela_inicial(lista_itens,getApplicationContext());
+        //recycleview
+        @SuppressLint("WrongConstant") RecyclerView.LayoutManager layoutManager_itens =
+                new LinearLayoutManager(MercadoActivity.this, LinearLayoutManager.VERTICAL,false);
+        RecycleView_itens.setLayoutManager(layoutManager_itens);
+        RecycleView_itens.setHasFixedSize(true);
+        RecycleView_itens.setAdapter(adapter_item);
+
+        RecycleView_status=findViewById(R.id.RecycleViewstatus);
+        RecycleView_status.setHasFixedSize(true);
+
+        @SuppressLint("WrongConstant") RecyclerView.LayoutManager layoutManager_status =
+                new LinearLayoutManager(MercadoActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        RecycleView_status.setLayoutManager(layoutManager_status);
+        adapter_status = new Adapter_status(lista_status, this);
+        RecycleView_status.setAdapter(adapter_status);
+
         recyclerViewMercadoPublico = findViewById(R.id.recycleviewmercado);
         recyclerViewMercadoPublico.setHasFixedSize(true);
         //recycleview
         mManager = new LinearLayoutManager(this);
-        mManager.setReverseLayout(true);
-        mManager.setStackFromEnd(true);
         recyclerViewMercadoPublico.setLayoutManager(mManager);
         adapter = new MercadoAdapter(listamercado, this);
 
@@ -146,7 +148,7 @@ public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLa
 
             }
         });
-        //Aplicar Evento click
+       //Aplicar Evento click em loja
         recyclerViewMercadoPublico.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 recyclerViewMercadoPublico, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -155,10 +157,72 @@ public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLa
 
                 if (listComercioAtualizado.size() > 0) {
                     Comercio mercadoselecionado = listComercioAtualizado.get(position);
-                    Intent it = new Intent(MercadoActivity.this, Detalhe_Mercado.class);
-                    it.putExtra("mercadoelecionado", mercadoselecionado);
+                    Intent it = new Intent(MercadoActivity.this, Detalhe_Loja.class);
+                   it.putExtra("id",mercadoselecionado.getId());
+                 //  it.putExtra("icone_loja",mercadoselecionado.getIcone());
+                  //  it.putExtra("token_dono_loja",mercadoselecionado.getToken_author());
+                 //   it.putExtra("id_dono_loja",mercadoselecionado.getIdauthor());
+                  //  it.putExtra("categoria",mercadoselecionado.getCategoria());
                     startActivity(it);
-                    finish();
+                }
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
+        //Aplicar Evento click em item
+        RecycleView_itens.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                RecycleView_itens, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                List<Item_loja> listComercioAtualizado = adapter_item.get_item();
+
+                if (listComercioAtualizado.size() > 0) {
+                    Item_loja item_selecionado = listComercioAtualizado.get(position);
+                    Intent it = new Intent(MercadoActivity.this, Detalhe_item_comercio.class);
+                    it.putExtra("nome", item_selecionado.getTitulo());
+                    it.putExtra("desc", item_selecionado.getDescricao());
+                    it.putExtra("foto", item_selecionado.getItem_foto());
+                    it.putExtra("preco", item_selecionado.getPreco());
+                    it.putExtra("id_loja", item_selecionado.getId_loja());
+                    it.putExtra("nome_loja", item_selecionado.getTitulo());
+                    it.putExtra("id_item", item_selecionado.getId());
+                    it.putExtra("categoria", item_selecionado.getCategoria());
+                    startActivity(it);
+                }
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
+        RecycleView_status.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                RecycleView_status, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                List<Comercio> list_status_atualizado = adapter_status.getStatus();
+
+                if (list_status_atualizado.size() > 0) {
+                    Comercio status_selecionado = list_status_atualizado.get(position);
+                    Intent it = new Intent(MercadoActivity.this, Ver_StatusActivity.class);
+                   it.putExtra("userid",status_selecionado.getIdauthor());
+                    it.putExtra("id_loja",status_selecionado.getId());
+                    it.putExtra("nome_loja",status_selecionado.getTitulo());
+                   it.putExtra("icone_loja",status_selecionado.getIcone());
+                    startActivity(it);
                 }
             }
 
@@ -173,374 +237,367 @@ public class MercadoActivity extends AppCompatActivity implements SwipeRefreshLa
             }
         }));
 
-        //Botao Pesquisa
-        SeachView = findViewById(R.id.materialSeachComercio);
-        SeachView.setHint("Pesquisar");
-        SeachView.setHintTextColor(R.color.cinzaclaro);
-        SeachView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                if(newText!=null && !newText.isEmpty()){
-                    PesquisarComercio(newText.toLowerCase());
-
-                }else{
-
-
-                    recarregarMercado();
-                }
-
-                return true;
-            }
-        });
-
-        TrocarFundos_status_bar();
-        CarregarDados_do_Usuario();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
+
+
+
+
     @Override
-    public void onRefresh() {
-        refresh.setRefreshing(true);
-        RecuperarMercadoPublicos();
-    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_filtro,menu);
 
-
-    public void onStop() {
-        super.onStop();
-        mercadopublico.removeEventListener(valueMercadoListener);
-    }
-
-    public void RecuperarMercadoPublicos() {
-        linear_nada_cadastrado.setVisibility(View.VISIBLE);
-        listamercado.clear();
-
-        valueMercadoListener = mercadopublico.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for(DataSnapshot categorias:dataSnapshot.getChildren()){
-                    for(DataSnapshot mercados:categorias.getChildren()){
-                        Comercio comercio = mercados.getValue(Comercio.class);
-                        listamercado.add(0, comercio);
-                        if(listamercado.size()>0){
-                            linear_nada_cadastrado.setVisibility(View.GONE);
-                        }
-
-                    }
-                }
-                adapter.notifyDataSetChanged();
-                refresh.setRefreshing(false);
-
-            }
-
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-    }
-
-
-
-    public void PesquisarComercio(String texto) {
-        String nomeuser =usuario.getDisplayName();
-        String evento_null = getString(R.string.erro_evento_busca_comercio,nomeuser,texto);
-        List<Comercio> listaComercioBusca = new ArrayList<>();
-        for (Comercio mercados : listamercado) {
-            String nome=mercados.getTitulo().toLowerCase();
-            String descricao = mercados.getDescricao().toLowerCase();
-            // String author = mercados.getAutor().toLowerCase();
-            if(nome.contains(texto)|| descricao.contains(texto)){
-                listaComercioBusca.add(mercados);
-
-            }else if(listaComercioBusca.size()==0){
-                linearerro.setVisibility(View.VISIBLE);
-                errobusca.setVisibility(View.VISIBLE);
-                errobusca.setText(evento_null);
-            }else{
-                linear.setBackgroundColor (getResources().getColor(R.color.background));
-            }
-        }
-        adapter = new MercadoAdapter(listaComercioBusca, MercadoActivity.this);
-        recyclerViewMercadoPublico.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void recarregarMercado(){
-        linearerro.setVisibility(View.GONE);
-        errobusca.setVisibility(View.GONE);
-        adapter = new MercadoAdapter(listamercado, MercadoActivity.this);
-        recyclerViewMercadoPublico.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void FiltrarPorEstadoeCategoria(){
-
-        LayoutInflater li = getLayoutInflater();
-
-        //inflamos o layout dialog_opcao_foto.xml_foto.xml na view
-        View view = li.inflate(R.layout.dialog_spinner, null);
-        //definimos para o botão do layout um clickListener
-        final Spinner spinnerEstado = view.findViewById(R.id.spinnerFiltroEstado);
-        String [] estado= getResources().getStringArray(R.array.estados);
-        ArrayAdapter<String> adapterestado = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,estado);
-        adapterestado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEstado.setAdapter(adapterestado);
-
-        spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filtroEstado = spinnerEstado.getSelectedItem().toString();
-                // RecuperarAnunciosPorEstado();
-                filtrandoPorEstado=true;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        final Spinner spinnerCategoria =  view.findViewById(R.id.spinnerFiltroCategoria);
-        String [] categoria= getResources().getStringArray(R.array.loja);
-        ArrayAdapter<String> adaptercategoria
-                = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,categoria);
-        adaptercategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategoria.setAdapter(adaptercategoria);
-        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        view.findViewById(R.id.spinnerok).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                //exibe um Toast informativo.
-
-                filtroEstado = spinnerEstado.getSelectedItem().toString();
-                filtroCategoria = spinnerCategoria.getSelectedItem().toString();
-                if ((filtroEstado.equals("Estado")) && (filtroCategoria.equals("Categoria"))) {
-                    Toast.makeText(getApplicationContext(), "Selecione uma das Opções.", Toast.LENGTH_SHORT).show();
-                } else if (filtroEstado.equals("Estado")) {
-                    Toast.makeText(getApplicationContext(), "Selecione um Estado.", Toast.LENGTH_SHORT).show();
-                } else if (filtroCategoria.equals("Categoria")) {
-                    Toast.makeText(getApplicationContext(), "Selecione uma Categoria", Toast.LENGTH_SHORT).show();
-                } else {
-                    RecuperarMercadoPorCategoriaeEstado(filtroEstado, filtroCategoria);
-                    alerta.dismiss();
-                }
-            }
-        });
-
-        view.findViewById(R.id.spinnercancelar).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                //exibe um Toast informativo.
-
-                alerta.dismiss();
-
-            }
-        });
-
-        view.findViewById(R.id.spinnerlimpar).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                //exibe um Toast informativo.
-
-                Intent it = new Intent(getApplicationContext(),MercadoActivity.class);
-                startActivity(it);
-
-            }
-        });
-        //Dialog de tela
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Filtrar Comércio");
-        builder.setView(view);
-        alerta = builder.create();
-        alerta.show();
-
-    }
-
-
-    public void RecuperarMercadoPorCategoriaeEstado(String estado,String categoria) {
-
-        //Configurar por estado
-        mercadopublico = ConfiguracaoFirebase.getFirebaseDatabase()
-                .child("comercio")
-                .child(estado)
-                .child(categoria);
-        mercadopublico.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                listamercado.clear();
-                for (DataSnapshot mercados : dataSnapshot.getChildren()) {
-
-                    Comercio comercio = mercados.getValue(Comercio.class);
-                    listamercado.add(comercio);
-
-
-                }
-                adapter = new MercadoAdapter(listamercado, MercadoActivity.this);
-                recyclerViewMercadoPublico.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                //Collections.reverse(listaanuncios);
-                //adapter.notifyDataSetChanged();
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-
-    //Nao muito uteis
-    private void TrocarFundos_status_bar(){
-        //mudando a cor do statusbar
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-            //  systemBarTintManager.setStatusBarTintDrawable(Mydrawable);
-        }
-        //make fully Android Transparent Status bar
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().setNavigationBarColor(Color.parseColor("#1565c0"));
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            systemBarTintManager.setStatusBarTintEnabled(true);
-            systemBarTintManager.setNavigationBarTintEnabled(true);
-            systemBarTintManager.setStatusBarTintResource(R.drawable.gradiente_toolbarstatusbar);
-        }
-    }
-    private void CarregarDados_do_Usuario(){
-        final String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        ChildEventListenerperfil=database.orderByChild("id").equalTo(identificadorUsuario).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Usuario perfil = dataSnapshot.getValue(Usuario.class );
-                assert perfil != null;
-
-
-                String iconeurl = perfil.getFoto();
-                icone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent it = new Intent(MercadoActivity.this, MinhaConta.class);
-                        startActivity(it);
-
-                    }
-                });
-
-                if (!MercadoActivity.this.isFinishing()) {
-                    Glide.with(getApplicationContext())
-                            .load(iconeurl)
-                            .into(icone);
-                }
-
-
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void Dialog_Primeiravez() {
-        LayoutInflater li = getLayoutInflater();
-        View view = li.inflate(R.layout.dialog_informar_click_foto, null);
-        view.findViewById(R.id.botaoentendi).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                //desfaz o dialog_opcao_foto.
-                dialog.dismiss();
-            }
-        });
-        //Dialog de tela
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
-
-    }
-
-    //botao Pesquisar
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
-
-        //Botao Pesquisa
-
-        MenuItem item = menu.findItem(R.id.menuPesquisa);
-        SeachView.setMenuItem(item);
         return super.onCreateOptionsMenu(menu);
     }
+
+
     //Botao Voltar
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.menufiltro:
 
+                SharedPreferences sharedPreferences =getSharedPreferences(OPCAO_PREFERENCIA, 0);
+                final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+
+                final MediaPlayer dialog_music = MediaPlayer.create(MercadoActivity.this,R.raw.navi_veja);
+                dialog_music.start();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MercadoActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(MercadoActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_com_sim_nao, null);
+                TextView mensagem=view.findViewById(R.id.texto_dialog_sim_nao);
+                mensagem.setText("Deseja mostrar qual das opções abaixo?");
+                builder.setView(view);
+                builder.setPositiveButton("COMÉRCIOS", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editor.putString("opcao_comercio", "Comércios");
+                        editor.apply();
+                        RecycleView_itens.setVisibility(GONE);
+                        Toast.makeText(MercadoActivity.this, " Carregadas com Sucesso", Toast.LENGTH_SHORT).show();
+
+                        recyclerViewMercadoPublico.setVisibility(View.VISIBLE);
+                        dialog.cancel();
+                        dialog_music.stop();
+                    }
+                }).setNegativeButton("PRODUTOS", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        editor.putString("opcao_comercio", "Produtos");
+                        editor.apply();
+                        dialog_music.stop();
+                        Toast.makeText(MercadoActivity.this, " Carregadas com Sucesso", Toast.LENGTH_SHORT).show();
+                        recyclerViewMercadoPublico.setVisibility(GONE);
+                        RecycleView_itens.setVisibility(View.VISIBLE);
+                        dialog.cancel();
+                    }
+                });
+                dialog = builder.create();
+                dialog.show();
+                break;
             case android.R.id.home:
 
-                Intent it = new Intent(MercadoActivity.this, MainActivity.class);
-                startActivity(it);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    finishAffinity();
-                }else{
                     finish();
-                }
-                break;
-            case R.id.menufiltro:
-                FiltrarPorEstadoeCategoria();
-            default:
+
                 break;
         }
 
         return true;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Recuperar_Mercado_geral();
+        Recuperar_status_geral();
+         Recuperar_Itens_geral();
+
+        String opcao = dados_opcao.getString("opcao_comercio", "");
+        if(opcao.equals("Comércios")){
+            textToolbar.setText("Comércios");
+            RecycleView_itens.setVisibility(GONE);
+            recyclerViewMercadoPublico.setVisibility(View.VISIBLE);
+        }else{
+            textToolbar.setText("Produtos");
+            recyclerViewMercadoPublico.setVisibility(GONE);
+            RecycleView_itens.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (registration!= null) {
+            registration.remove();
+            registration = null;
+        } if (registration_itens!= null) {
+            registration_itens.remove();
+            registration_itens = null;
+        }
+        if (registration_status!= null) {
+            registration_status.remove();
+            registration_status = null;
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (registration!= null) {
+            registration.remove();
+            registration = null;
+        }
+        if (registration_itens!= null) {
+            registration_itens.remove();
+            registration_itens = null;
+        }
+        if (registration_status!= null) {
+            registration_status.remove();
+            registration_status = null;
+        }
+
+    }
+
+    public void Recuperar_Mercado_geral(){
+        listamercado.clear();
+        Query query= db.collection("Comercio")
+                .whereEqualTo("analizado",true);
+        registration=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("", "listen:error", e);
+                    return;
+                }
+
+                for (DocumentChange change : snapshots.getDocumentChanges()) {
+                    Log.i("sdsdsd",change.getDocument().getId());
+                    Comercio comercio = change.getDocument().toObject(Comercio.class);
+                    switch (change.getType()) {
+                        case ADDED:
+                            listamercado.add(0, comercio);
+
+                            if (listamercado.size() > 0) {
+                                //  linear_nada_cadastrado.setVisibility(View.GONE);
+                            }
+                            adapter.notifyDataSetChanged();
+                            Log.d("ad", "New city: " + change.getDocument().getData());
+                            break;
+                        case MODIFIED:
+                            for (Comercio ct : listamercado) {
+
+                                if(comercio.getId().equals(ct.getId())){
+                                    listamercado.remove(ct);
+                                    break;
+                                }
+                            }
+                            listamercado.add(0, comercio);
+                            if (listamercado.size() > 0) {
+                                //linear_nada_cadastrado.setVisibility(View.GONE);
+                            }
+                            adapter.notifyDataSetChanged();
+                            Log.d("md", "Modified city: " + change.getDocument().getData());
+                            break;
+                        case REMOVED:
+                            for (Comercio ct : listamercado) {
+
+                                if(comercio.getId().equals(ct.getId())){
+
+                                    listamercado.remove(ct);
+                                    break;
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            Log.d("rem", "Removed city: " + change.getDocument().getData());
+                            break;
+                    }
+                }
+            }
+        });
+
+    }
+    public void Recuperar_Itens_geral(){
+        lista_itens.clear();
+        Query query= db.collection("Produtos_Geral")
+                .whereEqualTo("analizado",true);
+        registration_itens=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("", "listen:error", e);
+                    return;
+                }
+
+                for (DocumentChange change : snapshots.getDocumentChanges()) {
+                    Log.i("sdsdsd",change.getDocument().getId());
+                    Item_loja item_loja = change.getDocument().toObject(Item_loja.class);
+                    switch (change.getType()) {
+                        case ADDED:
+                            lista_itens.add(0, item_loja);
+
+                            if (lista_itens.size() > 0) {
+                                //  linear_nada_cadastrado.setVisibility(View.GONE);
+                            }
+                            adapter_item.notifyDataSetChanged();
+                            Log.d("ad", "New city: " + change.getDocument().getData());
+                            break;
+                        case MODIFIED:
+                            for (Item_loja ct : lista_itens) {
+
+                                if(item_loja.getId().equals(ct.getId())){
+                                    lista_itens.remove(ct);
+                                    break;
+                                }
+                            }
+                            lista_itens.add(0, item_loja);
+                            if (lista_itens.size() > 0) {
+                                //linear_nada_cadastrado.setVisibility(View.GONE);
+                            }
+                            adapter_item.notifyDataSetChanged();
+                            Log.d("md", "Modified city: " + change.getDocument().getData());
+                            break;
+                        case REMOVED:
+                            for (Item_loja ct : lista_itens) {
+
+                                if(item_loja.getId().equals(ct.getId())){
+
+                                    lista_itens.remove(ct);
+                                    break;
+                                }
+                            }
+                            adapter_item.notifyDataSetChanged();
+                            Log.d("rem", "Removed city: " + change.getDocument().getData());
+                            break;
+                    }
+                }
+            }
+        });
+
+    }
+    public void Recuperar_status_geral( ){
+        lista_status.clear();
+        Query query= db.collection("Comercio").orderBy("ultima_foto_data", Query.Direction.ASCENDING);
+        registration_status=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("", "listen:error", e);
+                    return;
+                }
+
+                for (DocumentChange change : snapshots.getDocumentChanges()) {
+                    Log.i("sdsdsd", change.getDocument().getId());
+                    Comercio status = change.getDocument().toObject(Comercio.class);
+
+                   //deleta status vencido
+                    Verificar_Status_vencido(status.getId());
+
+                    if (!status.getUrl_img_status().equals("")) {
+                        switch (change.getType()) {
+                            case ADDED:
+
+
+                                lista_status.add(0, status);
+                                if (lista_status.size() > 0) {
+                                    rel_status.setVisibility(View.VISIBLE);
+                                }
+                                adapter_status.notifyDataSetChanged();
+                                Log.d("ad", "New city: " + change.getDocument().getData());
+                                break;
+
+                            case MODIFIED:
+                                for (Comercio ct : lista_status) {
+
+                                    if (status.getId().equals(ct.getId())) {
+                                        lista_status.remove(ct);
+                                        break;
+                                    }
+                                }
+                                lista_status.add(0, status);
+                                if (lista_status.size() > 0) {
+                                    //linear_nada_cadastrado.setVisibility(View.GONE);
+                                }
+                                adapter_status.notifyDataSetChanged();
+                                Log.d("md", "Modified city: " + change.getDocument().getData());
+                                break;
+                            case REMOVED:
+                                for (Comercio ct : lista_status) {
+
+                                    if (status.getId().equals(ct.getId())) {
+                                        lista_status.remove(ct);
+
+                                        break;
+                                    }
+                                }
+                                adapter_status.notifyDataSetChanged();
+                                Log.d("rem", "Removed city: " + change.getDocument().getData());
+                                break;
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void Verificar_Status_vencido(final String id_loja){
+        db.collection("Status_comercio")
+                .document(id_loja)
+                .collection("Status")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        long timecurrent = System.currentTimeMillis();
+                        Status status = document.toObject(Status.class);
+                        if (document.exists()) {
+                        if (status.getId_loja().equals(id_loja) && (timecurrent > status.getData_fim())) {
+                            Log.i("odsfko445", status.getId_loja());
+                            db.collection("Status_comercio").document(status.getId_loja())
+                                    .collection("Status").document(document.getId()).delete();
+                            storageReference = ConfiguracaoFirebase.getFirebaseStorage()
+                                    .child("imagens")
+                                    .child("status")
+                                    .child(status.getId_loja())
+                                    .child(status.getNome_img_storage());
+                            storageReference.delete();
+
+                            db.collection("Comercio").whereEqualTo("id",status.getId_loja())
+                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    for (DocumentSnapshot document : task.getResult()) {
+                                        final Map<String, Object> img_remove = new HashMap<>();
+                                        img_remove.put("url_img_status","");
+                                        db.collection("Comercio").document(document.getId())
+                                                .update(img_remove);
+
+                            adapter_status.notifyDataSetChanged();
+                                    }
+
+                                }
+                            });
+
+                        }
+                    }else{
+
+                        }
+
+                    }
+
+                }
+
+            }
+        });
+
+    }
+
+
 }

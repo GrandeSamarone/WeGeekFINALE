@@ -10,7 +10,7 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="40sp"
             android:layout_height="60sp"
-            android:background="@drawable/gradiente_icone"
+
             android:layout_gravity="center"
             />
 

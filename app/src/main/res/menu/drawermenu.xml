@@ -57,11 +57,12 @@
         <item android:id="@+id/avaliar_dmenu"
             android:title="@string/avalie_nos"
             android:icon="@drawable/ic_avaliacao"/>
-
-        <item android:id="@+id/suport_dmenu"
+        <item android:id="@+id/compartilhar_dmenu"
+            android:title="Compartilhe com os amigos "
+            android:icon="@drawable/ic_share_wegeek"/>
+        <item android:id="@+id/suporte_menu"
                 android:title="@string/drawer_Suporte"
-                android:icon="@drawable/ic_email"/>
-
+                android:icon="@drawable/ic_support"/>
         <item android:id="@+id/minha_privacidade_dmenu"
             android:title="@string/politica_de_privacidade"
             android:icon="@drawable/ic_privacidade"/>

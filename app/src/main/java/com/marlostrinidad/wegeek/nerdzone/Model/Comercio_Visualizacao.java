@@ -29,7 +29,7 @@ public class Comercio_Visualizacao {
 
         DatabaseReference VisuRef=firebaseRef
                 .child("comercio-visualizacao");
-        VisuRef.child(comercio.getIdMercado());
+        VisuRef.child(comercio.getId());
 
 
         //Atualizar quantidade de like
@@ -43,7 +43,7 @@ public class Comercio_Visualizacao {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef=firebaseRef
                 .child("comercio-visualizacao")
-                .child(comercio.getIdMercado())
+                .child(comercio.getId())
                 .child("qtdvisualizacao");
 
         setQtdvisualizacao(getQtdvisualizacao()+valor);
@@ -55,8 +55,8 @@ public class Comercio_Visualizacao {
         DatabaseReference firebaseRef_comercio = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_comercio=firebaseRef_comercio
                 .child("meuscomercio")
-                 .child(comercio.getIdAutor())
-                .child(comercio.getIdMercado())
+                 .child(comercio.getIdauthor())
+                .child(comercio.getId())
                 .child("quantVisualizacao");
         VisuRef_comercio.setValue(getQtdvisualizacao());
 
@@ -65,9 +65,9 @@ public class Comercio_Visualizacao {
         DatabaseReference firebaseRef_comercio = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference VisuRef_comercio=firebaseRef_comercio
                 .child("comercio")
-                 .child(comercio.getEstado())
+             .child(comercio.getEstado())
                 .child(comercio.getCategoria())
-                .child(comercio.getIdMercado())
+                .child(comercio.getId())
                    .child("quantVisualizacao");
         VisuRef_comercio.setValue(getQtdvisualizacao());
     }

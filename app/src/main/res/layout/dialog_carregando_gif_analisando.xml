@@ -6,7 +6,7 @@
     android:background="@drawable/borda_redonda"
     >
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
    android:layout_marginTop="8dp"
     android:id="@+id/gifimage"
     android:layout_width="150dp"
@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/analizando_informa_es_aguarde"
+        android:fontFamily="@font/fontgeek"
         android:textSize="18sp"
         android:textAlignment="center"/>
 

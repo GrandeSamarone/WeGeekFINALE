@@ -1,7 +1,7 @@
 package com.marlostrinidad.wegeek.nerdzone.Helper;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,9 +20,13 @@ public class UsuarioFirebase {
 
     public static String getIdentificadorUsuario(){
         String identificadorUsuario;
+        String email = null;
         FirebaseAuth usuario = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        String email =usuario.getCurrentUser().getEmail();
-             identificadorUsuario= Base64Custom.codificarBase64(email);
+
+        if(usuario.getCurrentUser().getEmail()!=null){
+            email =usuario.getCurrentUser().getEmail();
+        }
+        identificadorUsuario= Base64Custom.codificarBase64(email);
 
         return identificadorUsuario;
     }

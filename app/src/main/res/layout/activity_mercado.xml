@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
    android:id="@+id/refreshmercado"
-    android:background="@color/background">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_geral">
 
 <LinearLayout
+
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,13 +27,45 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
+        <RelativeLayout
+            android:id="@+id/rel_status"
+          android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecycleViewstatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="8dp"
+                android:clipToPadding="false"
+                android:focusableInTouchMode="true"
+                android:focusable="true"/>
+            <FrameLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RecycleViewstatus">
+                <View android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/toolbar_sombra"/>
+            </FrameLayout>
+        </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:layout_below="@+id/rel_status"
         android:id="@+id/recycleviewmercado"
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
     />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/rel_status"
+            android:id="@+id/recycleview_itens"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
         <LinearLayout
             android:id="@+id/linear_nada_cadastrado"
              android:visibility="gone"
@@ -77,7 +112,7 @@
                 android:text="@string/erro_evento_busca_comercio"
                 android:gravity="center"/>
         </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buton_novo_mercado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,4 +125,4 @@
         android:layout_margin="16dp"/>
     </RelativeLayout>
 </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

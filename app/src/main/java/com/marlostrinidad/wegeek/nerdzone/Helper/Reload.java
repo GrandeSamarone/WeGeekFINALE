@@ -1,6 +1,6 @@
 package com.marlostrinidad.wegeek.nerdzone.Helper;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Reload {
 
