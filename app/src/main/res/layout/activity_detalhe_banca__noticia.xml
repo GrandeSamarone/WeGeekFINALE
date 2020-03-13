@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brancofraco"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbarsecundario" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/const_id_notifica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_topo_not"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:elevation="4dp"
+                cardview:cardCornerRadius="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+
+                        android:id="@+id/rel_sup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/icon_not"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/cinzaclaro"
+                            android:src="@drawable/userpic" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginTop="8dp"
+                            android:visibility="gone"
+                            android:layout_below="@+id/icon_not"
+                            android:backgroundTint="@color/laranja"
+                            cardview:cardCornerRadius="4dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:id="@+id/em_analise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_marginRight="4dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:background="@drawable/clock"/>
+
+                                <TextView
+                                    android:layout_marginTop="4dp"
+                                    android:textColor="@color/branco"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="em análise"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <TextView
+
+                            android:id="@+id/nome_not"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/icon_not"
+                            android:fontFamily="@font/fontgeek"
+                            android:text="NOME"
+                            android:textSize="18sp" />
+
+                        <TextView
+
+                            android:id="@+id/desc_not"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/nome_not"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_toRightOf="@+id/icon_not"
+                            android:fontFamily="@font/fontgeek"
+                            android:lines="3"
+                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis elit et enim egestas euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+            Sed pharetra laoreet sem, quis sagittis massa molestie eu. Donec tincidunt eros sed condimentum bibendum"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/line_menu_visitante_not"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_sup"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:visibility="gone"
+                            android:id="@+id/rel_status_detalhe_not_visitante"
+                            android:layout_width="60dp"
+                            android:layout_height="70dp"
+                            android:layout_marginLeft="8dp">
+
+                            <LinearLayout
+                                android:id="@+id/line_click_status_not"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/circleImageViewStatus_visitante_not"
+                                    android:layout_width="36sp"
+                                    android:layout_height="36sp"
+
+                                    android:layout_gravity="center"
+                                    android:src="@color/cinzaclaro"
+                                    app:civ_border_color="@color/cinzaclaro"
+                                    app:civ_border_width="2dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/nome_not_Status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/fontgeek"
+                                    android:gravity="center"
+                                    android:lines="1"
+                                    android:text="Status"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/const_carregando_icon_de_not_visitante"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ProgressBar
+                                    android:id="@+id/img_carregando"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginBottom="26dp"
+                                    android:indeterminateOnly="true"
+                                    android:indeterminateTint="@color/colorPrimary"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="MissingConstraints" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/icon_chat_not"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_gravity="center"
+                                android:id="@+id/circleImage_Loc"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                android:src="@drawable/chat_detalhe_mercado"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <TextView
+                                android:id="@+id/txt_loc"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Contato"
+                                android:ellipsize="end"
+                                android:lines="1"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <com.varunest.sparkbutton.SparkButton
+
+                                android:layout_gravity="center"
+                                android:id="@+id/botao_receber_novidades_not"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                app:sparkbutton_activeImage="@drawable/ic_notificacao_sim"
+                                app:sparkbutton_inActiveImage="@drawable/ic_notificacao_noa"
+                                app:sparkbutton_iconSize="36dp"
+                                app:sparkbutton_primaryColor="@color/primary"
+                                app:sparkbutton_secondaryColor="@color/primary_dark" />
+                            <TextView
+                                android:id="@+id/txt_lossssc"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Receber Novidades"
+                                android:ellipsize="end"
+                                android:lines="1"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/line_menu_admin_not"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_sup"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/rel_status_detalhe_not_admin"
+                            android:layout_width="60dp"
+                            android:layout_height="70dp"
+                            android:layout_marginLeft="8dp">
+
+                            <LinearLayout
+                                android:id="@+id/line_click_status_admin_not"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/circleImageViewStatus_admin"
+                                    android:layout_width="36sp"
+                                    android:layout_height="36sp"
+                                    android:layout_gravity="center"
+                                    android:src="@color/cinzaclaro"
+                                    app:civ_border_color="@color/cinzaclaro"
+                                    app:civ_border_width="2dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/nome_not_Status_admin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/fontgeek"
+                                    android:gravity="center"
+                                    android:lines="1"
+                                    android:text="Status"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/const_carregando_icon_de_not_admin"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ProgressBar
+                                    android:id="@+id/img_carregando_admin"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginBottom="26dp"
+                                    android:indeterminateOnly="true"
+                                    android:indeterminateTint="@color/colorPrimary"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="MissingConstraints" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/line_assinante_not"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_gravity="center"
+                                android:id="@+id/circleImage_Loc_admin"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                android:src="@drawable/ic_notificacao_sim"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <TextView
+                                android:id="@+id/txt_mensagens_admin"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Assinantes"
+                                android:ellipsize="end"
+                                android:lines="1"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/line_vizu_not"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_gravity="center"
+                                android:id="@+id/circleImage_admin"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                android:src="@drawable/ic_quemviu"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <TextView
+                                android:id="@+id/txt_view_admin"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Quem viu?"
+                                android:ellipsize="end"
+                                android:lines="1"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/line_config_not"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_weight="2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_gravity="center"
+                                android:id="@+id/circleImage_conf_admin"
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                app:civ_border_color="@color/cinzaclaro"
+                                app:civ_border_width="2dp"
+                                android:src="@drawable/ic_config"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <TextView
+                                android:id="@+id/txt_confi"
+                                android:fontFamily="@font/fontgeek"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Configurações"
+                                android:ellipsize="end"
+                                android:lines="1"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/botao_minimizar_not"
+                android:layout_width="170dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/card_topo_banca"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:drawableRight="@drawable/ic_seta_subir"
+                android:fontFamily="@font/fontgeek"
+                android:gravity="center"
+                android:text="ESCONDER"
+                android:textSize="18sp"
+                android:theme="@style/botaopadrao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_topo_not" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/const_id_notifica">
+
+
+            <RelativeLayout
+
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/rel_botoes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+
+                    android:id="@+id/line_naotemnada_publicado_not"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/nao_add_nada"
+                        android:layout_width="200sp"
+                        android:layout_height="200sp"
+                        android:background="@drawable/not_news"/>
+                    <LinearLayout
+
+                        android:id="@+id/txt_nao_tem_nada_not"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/line_txt_n_encontrado_not"
+                            android:orientation="vertical"
+                            android:layout_marginRight="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+                            <TextView
+                                android:fontFamily="@font/fontgeek"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="E Agora?"
+                                />
+                            <TextView
+                                android:fontFamily="@font/fontgeek"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Publicar Status"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="60dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/txt_nada_encontrado_inferior_not"
+                                android:fontFamily="@font/fontgeek"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Publicar Notícia"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/RecycleView_noticias"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    tools:listitem="@layout/adapterevento" />
+
+
+
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/bton_permitir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/verde"
+                android:text="PERMITIR"
+                />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/bton_deletar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/vermelho"
+                android:text="DELETAR"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/line_botoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buton_novo_status_not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="normal"
+                app:ico_size="44dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buton_novo_item_not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add_24dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="normal"
+                app:ico_size="44dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.marlostrinidad.wegeek.nerdzone.Evento;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +72,7 @@ public class Evento_Lista extends TrocarFundo {
     private StorageReference storageReference;
     private ListenerRegistration registration,registration_status;
     private String Id_doc_evento;
-
+    SharedPreferences sPreferences = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +130,7 @@ public class Evento_Lista extends TrocarFundo {
                 if (lista_evento.size() > 0) {
                     Evento evento_selecionado = listComercioAtualizado.get(position);
                     Intent it = new Intent(Evento_Lista.this, DetalheEvento.class);
-                      it.putExtra("id",evento_selecionado.getId());
+                    it.putExtra("id",evento_selecionado.getId());
                     startActivity(it);
                 }
             }
@@ -267,13 +268,13 @@ public class Evento_Lista extends TrocarFundo {
                     }
                 }
             }
-            });
+        });
 
 
     }
     public void Recuperar_status_geral( ){
         lista_status.clear();
-            Query query= db.collection("Evento").orderBy("ultima_foto_data", Query.Direction.ASCENDING);
+        Query query= db.collection("Evento").orderBy("ultima_foto_data", Query.Direction.ASCENDING);
         registration_status=query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
@@ -394,9 +395,9 @@ public class Evento_Lista extends TrocarFundo {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                   Intent it = new Intent(Evento_Lista.this, MainActivity.class);
-                   startActivity(it);
-                   finish();
+                Intent it = new Intent(Evento_Lista.this,MainActivity.class);
+                startActivity(it);
+                finish();
                 break;
             case R.id.menufiltro:
 
@@ -408,11 +409,5 @@ public class Evento_Lista extends TrocarFundo {
 
         return true;
     }
-
-
-
-
-
-
 
 }

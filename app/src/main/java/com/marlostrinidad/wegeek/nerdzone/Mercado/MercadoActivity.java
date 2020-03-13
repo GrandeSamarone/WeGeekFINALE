@@ -87,6 +87,7 @@ public class MercadoActivity extends TrocarFundo {
     private  StorageReference storageReference;
     private ListenerRegistration registration,registration_status,registration_itens;
     private SharedPreferences dados_opcao;
+    SharedPreferences sPreferences = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +149,7 @@ public class MercadoActivity extends TrocarFundo {
 
             }
         });
-       //Aplicar Evento click em loja
+        //Aplicar Evento click em loja
         recyclerViewMercadoPublico.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 recyclerViewMercadoPublico, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -158,11 +159,11 @@ public class MercadoActivity extends TrocarFundo {
                 if (listComercioAtualizado.size() > 0) {
                     Comercio mercadoselecionado = listComercioAtualizado.get(position);
                     Intent it = new Intent(MercadoActivity.this, Detalhe_Loja.class);
-                   it.putExtra("id",mercadoselecionado.getId());
-                 //  it.putExtra("icone_loja",mercadoselecionado.getIcone());
-                  //  it.putExtra("token_dono_loja",mercadoselecionado.getToken_author());
-                 //   it.putExtra("id_dono_loja",mercadoselecionado.getIdauthor());
-                  //  it.putExtra("categoria",mercadoselecionado.getCategoria());
+                    it.putExtra("id",mercadoselecionado.getId());
+                    //  it.putExtra("icone_loja",mercadoselecionado.getIcone());
+                    //  it.putExtra("token_dono_loja",mercadoselecionado.getToken_author());
+                    //   it.putExtra("id_dono_loja",mercadoselecionado.getIdauthor());
+                    //  it.putExtra("categoria",mercadoselecionado.getCategoria());
                     startActivity(it);
                 }
             }
@@ -218,10 +219,10 @@ public class MercadoActivity extends TrocarFundo {
                 if (list_status_atualizado.size() > 0) {
                     Comercio status_selecionado = list_status_atualizado.get(position);
                     Intent it = new Intent(MercadoActivity.this, Ver_StatusActivity.class);
-                   it.putExtra("userid",status_selecionado.getIdauthor());
+                    it.putExtra("userid",status_selecionado.getIdauthor());
                     it.putExtra("id_loja",status_selecionado.getId());
                     it.putExtra("nome_loja",status_selecionado.getTitulo());
-                   it.putExtra("icone_loja",status_selecionado.getIcone());
+                    it.putExtra("icone_loja",status_selecionado.getIcone());
                     startActivity(it);
                 }
             }
@@ -237,6 +238,15 @@ public class MercadoActivity extends TrocarFundo {
             }
         }));
 
+        int[] location = new int[2];
+
+
+        //Verifica se é a primeira vez da instalacao
+        sPreferences = getSharedPreferences("primeiravez_Comercio", MODE_PRIVATE);
+        if (sPreferences.getBoolean("primeiravez_Comercio", true)) {
+            sPreferences.edit().putBoolean("primeiravez_Comercio", false).apply();
+            Primeira_Vez();
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -285,7 +295,7 @@ public class MercadoActivity extends TrocarFundo {
                         dialog.cancel();
                         dialog_music.stop();
                     }
-                }).setNegativeButton("PRODUTOS", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("PRODUTOS/SERVIÇOS", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         editor.putString("opcao_comercio", "Produtos");
                         editor.apply();
@@ -301,7 +311,7 @@ public class MercadoActivity extends TrocarFundo {
                 break;
             case android.R.id.home:
 
-                    finish();
+                finish();
 
                 break;
         }
@@ -314,15 +324,14 @@ public class MercadoActivity extends TrocarFundo {
         super.onStart();
         Recuperar_Mercado_geral();
         Recuperar_status_geral();
-         Recuperar_Itens_geral();
-
+        Recuperar_Itens_geral();
         String opcao = dados_opcao.getString("opcao_comercio", "");
         if(opcao.equals("Comércios")){
             textToolbar.setText("Comércios");
             RecycleView_itens.setVisibility(GONE);
             recyclerViewMercadoPublico.setVisibility(View.VISIBLE);
         }else{
-            textToolbar.setText("Produtos");
+            textToolbar.setText("Produtos e Serviços");
             recyclerViewMercadoPublico.setVisibility(GONE);
             RecycleView_itens.setVisibility(View.VISIBLE);
         }
@@ -495,7 +504,7 @@ public class MercadoActivity extends TrocarFundo {
                     Log.i("sdsdsd", change.getDocument().getId());
                     Comercio status = change.getDocument().toObject(Comercio.class);
 
-                   //deleta status vencido
+                    //deleta status vencido
                     Verificar_Status_vencido(status.getId());
 
                     if (!status.getUrl_img_status().equals("")) {
@@ -520,9 +529,6 @@ public class MercadoActivity extends TrocarFundo {
                                     }
                                 }
                                 lista_status.add(0, status);
-                                if (lista_status.size() > 0) {
-                                    //linear_nada_cadastrado.setVisibility(View.GONE);
-                                }
                                 adapter_status.notifyDataSetChanged();
                                 Log.d("md", "Modified city: " + change.getDocument().getData());
                                 break;
@@ -558,35 +564,35 @@ public class MercadoActivity extends TrocarFundo {
                         long timecurrent = System.currentTimeMillis();
                         Status status = document.toObject(Status.class);
                         if (document.exists()) {
-                        if (status.getId_loja().equals(id_loja) && (timecurrent > status.getData_fim())) {
-                            Log.i("odsfko445", status.getId_loja());
-                            db.collection("Status_comercio").document(status.getId_loja())
-                                    .collection("Status").document(document.getId()).delete();
-                            storageReference = ConfiguracaoFirebase.getFirebaseStorage()
-                                    .child("imagens")
-                                    .child("status")
-                                    .child(status.getId_loja())
-                                    .child(status.getNome_img_storage());
-                            storageReference.delete();
+                            if (status.getId_loja().equals(id_loja) && (timecurrent > status.getData_fim())) {
+                                Log.i("odsfko445", status.getId_loja());
+                                db.collection("Status_comercio").document(status.getId_loja())
+                                        .collection("Status").document(document.getId()).delete();
+                                storageReference = ConfiguracaoFirebase.getFirebaseStorage()
+                                        .child("imagens")
+                                        .child("status")
+                                        .child(status.getId_loja())
+                                        .child(status.getNome_img_storage());
+                                storageReference.delete();
 
-                            db.collection("Comercio").whereEqualTo("id",status.getId_loja())
-                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    for (DocumentSnapshot document : task.getResult()) {
-                                        final Map<String, Object> img_remove = new HashMap<>();
-                                        img_remove.put("url_img_status","");
-                                        db.collection("Comercio").document(document.getId())
-                                                .update(img_remove);
+                                db.collection("Comercio").whereEqualTo("id",status.getId_loja())
+                                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        for (DocumentSnapshot document : task.getResult()) {
+                                            final Map<String, Object> img_remove = new HashMap<>();
+                                            img_remove.put("url_img_status","");
+                                            db.collection("Comercio").document(document.getId())
+                                                    .update(img_remove);
 
-                            adapter_status.notifyDataSetChanged();
+                                            adapter_status.notifyDataSetChanged();
+                                        }
+
                                     }
+                                });
 
-                                }
-                            });
-
-                        }
-                    }else{
+                            }
+                        }else{
 
                         }
 
@@ -598,6 +604,23 @@ public class MercadoActivity extends TrocarFundo {
         });
 
     }
+    private void Primeira_Vez() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = LayoutInflater.from(MercadoActivity.this);
+        final View view = layoutInflater.inflate(R.layout.dialog_primeira_vez, null);
+        TextView mensagem=view.findViewById(R.id.texto_dialog_click);
+        mensagem.setText("Para alterar a busca\nCOMÉRCIO \npara\n PRODUTOS/SERVIÇO\n clique no menu\nsuperior\n lado direito.");
+        builder.setView(view);
+        builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
 
+
+    }
 
 }

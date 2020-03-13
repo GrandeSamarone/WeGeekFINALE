@@ -112,7 +112,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
     private AppCompatEditText campotitulo, campodesc, campoendereco;
     private CircleImageView imagem1;
     private StorageReference storageReference;
-    private Button botaosalvar;
+    private Button botaosalvar,Carregar_img;
     private String identificadorUsuario, estadostring, lojastring;
     private Evento evento = new Evento();
     private Toolbar toolbar;
@@ -145,7 +145,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
     private String isChecked;
     private CurrencyEditText campovalor;
     private MediaPlayer dialog_music_publicar;
-   private APIService apiService;
+    private APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +160,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
 
 
         //Configuração Basica
+        Carregar_img=findViewById(R.id.carregar_img_evento);
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         campovalor=findViewById(R.id.desc_valor_item);
         Locale locale = new Locale("pt","BR");
@@ -242,7 +243,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
                                 try {
                                     Date mDate_FIM = simpleDateFormat.parse(date_Fim_Formatted);
                                     Date mDate_inicio = simpleDateFormat.parse(date_Inicio_Formatted);
-                                     time_Fim_InMilliseconds = mDate_FIM.getTime();
+                                    time_Fim_InMilliseconds = mDate_FIM.getTime();
                                     time_inicio_InMilliseconds = mDate_inicio.getTime();
                                     Log.i("oskdoskdko32", String.valueOf(time_Fim_InMilliseconds));
                                 } catch (ParseException e) {
@@ -258,7 +259,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
             }
         });
         imagem1 = findViewById(R.id.imageEventoCadastro1_evento);
-        imagem1.setOnClickListener(this);
+        Carregar_img.setOnClickListener(this);
 
 
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
@@ -439,39 +440,39 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
 
     public void validarDados() {
         evento = configurarEvento();
-       if(time_inicio_InMilliseconds<time_Fim_InMilliseconds) {
+        if(time_inicio_InMilliseconds<time_Fim_InMilliseconds) {
 
-           if (evento.getData_inicio() != null) {
-               if (evento.getCapaevento() != null) {
-                   if (TextUtils.isEmpty(evento.getTitulo())) {
-                       campotitulo.setError(padrao);
-                       return;
-                   }
-                   if (TextUtils.isEmpty(evento.getMensagem())) {
-                       campodesc.setError(padrao);
-                       return;
-                   }
+            if (evento.getData_inicio() != null) {
+                if (evento.getCapaevento() != null) {
+                    if (TextUtils.isEmpty(evento.getTitulo())) {
+                        campotitulo.setError(padrao);
+                        return;
+                    }
+                    if (TextUtils.isEmpty(evento.getMensagem())) {
+                        campodesc.setError(padrao);
+                        return;
+                    }
 
-                   if (TextUtils.isEmpty(evento.getEndereco())) {
-                       campoendereco.setError(padrao);
-                       Toast.makeText(Cadastrar_Novo_Evento.this, "Cadastre o endereço do evento", Toast.LENGTH_SHORT).show();
-                       return;
-                   }
+                    if (TextUtils.isEmpty(evento.getEndereco())) {
+                        campoendereco.setError(padrao);
+                        Toast.makeText(Cadastrar_Novo_Evento.this, "Cadastre o endereço do evento", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                   evento.salvar(point);
-                   sendNotifiaction_admin();
-                   Dialog();
+                    evento.salvar(point);
+                    sendNotifiaction_admin();
+                    Dialog();
 
-               } else {
-                   Toast.makeText(this, "Selecione uma Foto. ", Toast.LENGTH_SHORT).show();
-               }
-           } else {
-               Toast.makeText(this, "Cadastre uma data. ", Toast.LENGTH_SHORT).show();
-           }
-       }else{
-           Toast.makeText(this, "A Data do inicio do evento não está correta." , Toast.LENGTH_LONG).show();
-       }
+                } else {
+                    Toast.makeText(this, "Selecione uma Foto. ", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Cadastre uma data. ", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "A Data do inicio do evento não está correta." , Toast.LENGTH_LONG).show();
         }
+    }
     private void sendNotifiaction_admin( ) {
         Data data = new Data(identificadorUsuario, R.drawable.favicon,
                 "Admin" + " " + "Temos novas publicacoes", "ATENÇÃO","", "WeGeeK_Admin");
@@ -483,7 +484,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
                     public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                         if (response.code() == 200) {
                             if (response.body().success != 1) {
-                                //  Toast.makeText(Detalhe_topico.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                //  Toast.makeText(Detalhe_noticia.this, "Failed!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -501,7 +502,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.imageEventoCadastro1_evento:
+            case R.id.carregar_img_evento:
                 EscolherImagem(1);
                 break;
 
@@ -582,7 +583,7 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
         final View view = layoutInflater.inflate(R.layout.dialog_com_sim_nao, null);
         TextView mensagem = view.findViewById(R.id.texto_dialog_sim_nao);
         mensagem.setText("Sua Publicação foi para análise\n em breve estará disponível\n" +
-                "acompanhe o processo em Minha Conta>Minhas Pubicações.");
+                "acompanhe o processo em Minha Conta>Minhas Publicações.");
         builder.setView(view);
         builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
             @Override
@@ -599,7 +600,6 @@ public class Cadastrar_Novo_Evento extends TrocarFundo implements View.OnClickLi
         dialog_music.start();
     }
 }
-
 
 
 

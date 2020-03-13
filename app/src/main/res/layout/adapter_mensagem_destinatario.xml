@@ -52,6 +52,7 @@
         android:id="@+id/textMensagemtexto"
         android:textSize="16sp"
         android:padding="8dp"
+        android:textColor="@color/pretoescrita"
         android:background="@drawable/background_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_geral"
+    >
+
+
+    <include layout="@layout/toolbarsecundario"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:layout_marginBottom="16dp"
+                android:scrollbars="horizontal"
+                >
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imagebancaCadastro1_conf"
+                    android:layout_width="100dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_add_photo"
+                    />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtlayout_subtitulo"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="40"
+                    >
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/nome_banca_conf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome da empresa"
+                        android:padding="10dp"
+                        android:maxLength="40"
+                        android:background="@drawable/bg_edit_text"
+                        android:textAlignment="center"
+                        android:inputType="textMultiLine"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtlayout_descricao_conf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="400"
+
+                >
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/desc_banca_conf"
+                    android:maxLength="400"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:hint="@string/descricao"
+                    android:background="@drawable/bg_edit_text"
+                    android:textAlignment="center"
+                    android:inputType="textMultiLine"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/botaosalvar_edit_banca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ATUALIZAR"
+                android:theme="@style/botaopadrao"/>
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:id="@+id/botaodeletar_banca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DELETAR"
+                android:theme="@style/botaodeletar"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

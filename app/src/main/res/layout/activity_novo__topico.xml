@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".Forum.Grupo.Novo_Grupo_Forum">
+    tools:context=".Noticia.Banca.Novo_Grupo_Forum">
 <include layout="@layout/toolbarsecundario_sem_foto"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

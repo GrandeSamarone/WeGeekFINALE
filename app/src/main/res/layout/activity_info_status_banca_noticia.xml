@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+    android:background="@color/brancofraco"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    tools:context=".Mercado.Status.Info_Status">
+
+    <include layout="@layout/toolbarsecundario"
+        android:id="@+id/toolbar"/>
+    <TextView
+        android:id="@+id/nao_assinantes"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="24dp"
+        android:fontFamily="@font/fontgeek"
+        android:gravity="center"
+        android:text="Publique um Status."/>
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_status_viu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</RelativeLayout>

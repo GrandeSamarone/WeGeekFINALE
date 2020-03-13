@@ -19,30 +19,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MinhaConta.MinhaConta"></activity>
-        <activity android:name=".HQ.Editar_HQ" />
-        <activity android:name=".HQ.Configuracao_banca" />
+        <activity android:name=".Noticia.Banca.Info_status_banca_noticia"></activity>
+        <activity android:name=".Noticia.Banca.Configuracao_banca_noticia" />
+        <activity android:name=".Noticia.Noticia.LerNoticia" />
+        <activity android:name=".Noticia.Banca.Ver_status_banca_noticia" />
+        <activity android:name=".Noticia.Noticia.Editar_noticia" />
+        <activity android:name=".Noticia.Noticia.Nova_noticia" />
+        <activity android:name=".Noticia.Noticia.Detalhe_noticia" />
+        <activity android:name=".Noticia.Banca.Detalhe_banca_Noticia" />
+        <activity android:name=".Noticia.Banca.Nova_banca_noticia" />
+        <activity android:name=".MinhaConta.MinhaConta" />
+        <activity android:name=".HQ.HQ.Editar_HQ" />
+        <activity android:name=".HQ.Banca.Configuracao_banca" />
         <activity android:name=".Meus_dados_pendentes.Meus_Dados_Pendentes" />
         <activity android:name=".secao_Adm.Main_adm_Activity" />
-        <activity android:name=".HQ.Ver_Status_Banca" />
-        <activity android:name=".HQ.Detalhe_banca" />
-        <activity android:name=".HQ.Cadastrar_Nova_Banca" />
+        <activity android:name=".HQ.Banca.Ver_Status_Banca" />
+        <activity android:name=".HQ.Banca.Detalhe_banca" />
+        <activity android:name=".HQ.Banca.Cadastrar_Nova_Banca" />
         <activity android:name=".Evento.Configuracao_evento" />
         <activity android:name=".Evento.Status.Info_Status_Evento" />
         <activity android:name=".Evento.Status.VerStatusEvento" />
-        <activity android:name=".Forum.Topico.Editar_Topico" />
+        <activity android:name=".Noticia.Noticia.Editar_Topico" />
         <activity android:name=".Mercado.Editar_item_loja" />
         <activity android:name=".Assinantes.MeusAssinantes" />
-        <activity android:name=".Forum.Forum_principal" />
+        <activity android:name=".Noticia.Forum_principal" />
         <activity
             android:name=".MinhaConta.Gameover"
             android:theme="@style/AppCompat.TelaCheia" />
         <activity android:name=".Conversa.ChatActivity_pessoal" />
         <activity android:name=".Conversa.Lista_conversas" />
-        <activity android:name=".Forum.Topico.Detalhe_topico" />
-        <activity android:name=".Forum.Topico.Novo_Topico_forum" />
-        <activity android:name=".HQ.Detalhe_hq" />
-        <activity android:name=".HQ.Cadastra_novo_HQ" />
+        <activity android:name=".Noticia.Noticia.Detalhe_topico" />
+        <activity android:name=".Noticia.Noticia.Novo_Topico_forum" />
+        <activity android:name=".HQ.HQ.Detalhe_hq" />
+        <activity android:name=".HQ.HQ.Cadastra_novo_HQ" />
         <activity android:name=".Mercado.Status.Info_Status" />
         <activity android:name=".Mercado.Configuracao_Mercado" />
         <activity android:name=".Mercado.Status.Ver_StatusActivity" />
@@ -62,16 +71,16 @@
                 android:value="com.marlostrinidad.wegeek.nerdzone.Activits.MainActivity" />
         </activity>
         <activity
-            android:name=".Forum.Grupo.Configuracao_Grupo_Activity"
+            android:name=".Noticia.Banca.Configuracao_Grupo_Activity"
             android:label="@string/title_activity_configuracao__grupo_"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Forum.Convite_Activity"
+            android:name=".Noticia.Convite_Activity"
             android:label="@string/title_activity_convite_"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HQ.Pag_producao_hq" />
-        <activity android:name=".HQ.Lista_geral_hq" />
-        <activity android:name=".Forum.Grupo.Page_Info_Grupo" />
+        <activity android:name=".HQ.HQ.Pag_producao_hq" />
+        <activity android:name=".HQ.HQ.Lista_geral_hq" />
+        <activity android:name=".Noticia.Banca.Page_Info_Grupo" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -118,7 +127,6 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Activits.MainActivity" />
         <activity android:name=".Autenticacao.LoginActivity" />
-
         <activity android:name=".Conversa.ChatActivity_loja" />
         <activity android:name=".Abrir_Imagem.AbrirImagemHQ" />
         <activity android:name=".Evento.Cadastrar_Novo_Evento" />
@@ -130,13 +138,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Abrir_Imagem.AbrirImagemComercio" />
         <activity android:name=".Evento.Evento_Lista" />
-
-        <activity android:name=".Forum.Grupo.Novo_Grupo_Forum" />
-        <activity android:name=".Forum.Grupo.Page_Chat_grupo" />
+        <activity android:name=".Noticia.Banca.Novo_Grupo_Forum" />
+        <activity android:name=".Noticia.Banca.Page_Chat_grupo" />
         <activity android:name=".Abrir_Imagem.AbrirImagem" />
-
         <activity android:name=".Politica_Privacidade.Politica_PrivacidadeActivity" />
-
         <activity android:name="com.tangxiaolv.telegramgallery.GalleryActivity" />
         <activity
             android:name=".Splash.TelaSplash"
@@ -147,7 +152,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Suporte.SuporteActivity" />
     </application>
 

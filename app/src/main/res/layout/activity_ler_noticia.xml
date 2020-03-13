@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:fitsSystemWindows="true"
+    tools:context=".Noticia.Noticia.LerNoticia">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/barlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_detalhe_topico"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/gradiente_toolbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Wegeek"
+                android:id="@+id/textViewtitulo_topico"
+                android:textSize="20sp"
+                android:lines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/fontgeek"
+                android:textColor="@color/branco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="8dp"
+            >
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:background="@color/cinzaclaro"
+                android:visibility="gone"
+                android:scaleType="centerCrop"
+                android:id="@+id/img_detalhe_noticia_ler"
+                android:layout_width="match_parent"
+                android:layout_height="200sp" />
+
+            <TextView
+                android:textColor="@color/pretoescrita"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:id="@+id/titulo_noticia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fontgeek"
+                android:textSize="18sp" />
+            <TextView
+                android:textAlignment="textStart"
+                android:layout_marginTop="4dp"
+                android:id="@+id/descricao_noticia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fontgeek"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

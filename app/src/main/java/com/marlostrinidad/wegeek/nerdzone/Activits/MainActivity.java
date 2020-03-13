@@ -59,40 +59,40 @@ public class MainActivity extends AppCompatActivity {
         //Configuraçoes Originais
         dados_usuario = getSharedPreferences(ARQUIVO_PREFERENCIA, MODE_PRIVATE);
         String tipo_user=dados_usuario.getString("tipo_usuario", "");
-       // viewPager=findViewById(R.id.view_pager);
+        // viewPager=findViewById(R.id.view_pager);
         db = FirebaseFirestore.getInstance();
 
 
-         secao_adm=findViewById(R.id.buton_secao_adm);
-         if(tipo_user.equals("admin")){
-             secao_adm.setVisibility(View.VISIBLE);
-             secao_adm.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     Intent it = new Intent(MainActivity.this, Main_adm_Activity.class);
-                     startActivity(it);
-                 }
-             });
+        secao_adm=findViewById(R.id.buton_secao_adm);
+        if(tipo_user.equals("admin")){
+            secao_adm.setVisibility(View.VISIBLE);
+            secao_adm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(MainActivity.this, Main_adm_Activity.class);
+                    startActivity(it);
+                }
+            });
 
-             FirebaseMessaging.getInstance().subscribeToTopic("WeGeeK_Admin")
-                     .addOnCompleteListener(new OnCompleteListener<Void>() {
-                         @Override
-                         public void onComplete(@NonNull Task<Void> task) {
-                           //  Toast.makeText(MainActivity.this, "dey certi", Toast.LENGTH_SHORT).show();
-                             if (!task.isSuccessful()) {
-                             }
+            FirebaseMessaging.getInstance().subscribeToTopic("WeGeeK_Admin")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //  Toast.makeText(MainActivity.this, "dey certi", Toast.LENGTH_SHORT).show();
+                            if (!task.isSuccessful()) {
+                            }
 
-                         }
-                     });
+                        }
+                    });
 
-         }else{
-             secao_adm.setVisibility(View.GONE);
-         }
+        }else{
+            secao_adm.setVisibility(View.GONE);
+        }
 
         //escondendo navegação
-      //  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
-       //         navigation.getLayoutParams();
-       // layoutParams.setBehavior(new BottomNavigationBehavior());
+        //  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
+        //         navigation.getLayoutParams();
+        // layoutParams.setBehavior(new BottomNavigationBehavior());
 
 
 
@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 //        firebaseAuth.addAuthStateListener(authStateListener);
-      //atualiza as informacoes
+        //atualiza as informacoes
         SharedPreference();
-      //  ViewPage();
+        //  ViewPage();
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                             selectedfragment = new Chat_Fragment();
                             break;
                         case R.id.navigation_perfil:
-                           Intent it = new Intent(getApplicationContext(), MinhaConta.class);
-                           startActivity(it);
+                            Intent it = new Intent(getApplicationContext(), MinhaConta.class);
+                            startActivity(it);
 
                             // selectedfragment = new Minha_Conta_Fragment();
                             break;
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("token", usuario.getToken());
                     editor.putString("tipo_usuario", usuario.getTipousuario());
 
-                   //  Toast.makeText(MainActivity.this, usuario.getNome() + " pegou"+ usuario.getTipousuario(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(MainActivity.this, usuario.getNome() + " pegou"+ usuario.getTipousuario(), Toast.LENGTH_SHORT).show();
                     editor.apply();
                 }
             }
@@ -214,4 +214,5 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
 
