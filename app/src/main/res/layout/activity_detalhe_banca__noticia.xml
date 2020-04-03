@@ -355,7 +355,7 @@
                                 android:textSize="14sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Quem viu?"
+                                android:text="Views"
                                 android:ellipsize="end"
                                 android:lines="1"/>
                         </LinearLayout>

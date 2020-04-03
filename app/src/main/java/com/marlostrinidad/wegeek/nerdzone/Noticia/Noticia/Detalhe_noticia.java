@@ -146,7 +146,7 @@ public class Detalhe_noticia extends TrocarFundo implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhe_topico);
+        setContentView(R.layout.activity_detalhe_noticia);
 
         //COnfiguracoes originais
         line_icon=findViewById(R.id.rel_nome);
