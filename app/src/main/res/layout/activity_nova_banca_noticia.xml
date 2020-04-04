@@ -35,23 +35,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageLojaCadastro1_banca_noticia"
-                        android:layout_width="100dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_add_photo"
-                        />
-                    <Button
-                        android:id="@+id/carregar_img_banca_banca_noti"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="46dp"
-                        android:text="Carregar "
-                        android:textSize="18sp"
-                        android:fontFamily="@font/fontgeek"
-                        android:drawableRight="@drawable/ic_add_a_photo"
-                        android:theme="@style/botaopadrao"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageLojaCadastro1_banca_noticia"
+                    android:layout_width="100dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_add_photo"
+                    />
+                <Button
+                    android:id="@+id/carregar_img_banca_banca_noti"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:text="Carregar "
+                    android:textSize="18sp"
+                    android:fontFamily="@font/fontgeek"
+                    android:drawableRight="@drawable/ic_add_a_photo"
+                    android:theme="@style/botaopadrao"/>
                 </LinearLayout>
                 <androidx.cardview.widget.CardView
                     android:layout_marginTop="16dp"

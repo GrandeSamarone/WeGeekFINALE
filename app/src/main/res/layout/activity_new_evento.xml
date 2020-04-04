@@ -35,23 +35,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageEventoCadastro1_evento"
-                        android:layout_width="100dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_add_photo"
-                        />
-                    <Button
-                        android:id="@+id/carregar_img_evento"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="46dp"
-                        android:text="Carregar "
-                        android:textSize="18sp"
-                        android:fontFamily="@font/fontgeek"
-                        android:drawableRight="@drawable/ic_add_a_photo"
-                        android:theme="@style/botaopadrao"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageEventoCadastro1_evento"
+                    android:layout_width="100dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_add_photo"
+                    />
+                <Button
+                    android:id="@+id/carregar_img_evento"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:text="Carregar "
+                    android:textSize="18sp"
+                    android:fontFamily="@font/fontgeek"
+                    android:drawableRight="@drawable/ic_add_a_photo"
+                    android:theme="@style/botaopadrao"/>
                 </LinearLayout>
                 <androidx.cardview.widget.CardView
                     android:layout_marginTop="16dp"
@@ -165,13 +165,13 @@
                     android:textAlignment="center"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Data do Evento:"
-                android:textSize="18dp"
-                android:textAlignment="center"
-                android:fontFamily="@font/fontgeek"/>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Data do Evento:"
+    android:textSize="18dp"
+    android:textAlignment="center"
+    android:fontFamily="@font/fontgeek"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -180,65 +180,65 @@
                 cardview:cardCornerRadius="4dp"
                 android:clickable="true"
                 >
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+           <LinearLayout
+              android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:gravity="center"
+               android:layout_height="wrap_content">
 
-                    <Button
+               <Button
 
-                        android:id="@+id/botao_data_evento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Clique aqui e selecione uma data"
-                        android:theme="@style/botaopadrao2"
-                        android:drawableRight="@drawable/ic_today_black_24dp"
-                        />
-                    <RelativeLayout
-                        android:layout_below="@+id/botao_data_evento"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/txt_inicio"
+                android:id="@+id/botao_data_evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clique aqui e selecione uma data"
+                android:theme="@style/botaopadrao2"
+                android:drawableRight="@drawable/ic_today_black_24dp"
+                />
+              <RelativeLayout
+                  android:layout_below="@+id/botao_data_evento"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_inicio"
 
-                            android:layout_margin="8dp"
-                            android:text="INICIO:"
-                            android:fontFamily="@font/fontgeek"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/txt_fim"
-                            android:layout_below="@+id/txt_inicio"
+                    android:layout_margin="8dp"
+                    android:text="INICIO:"
+                    android:fontFamily="@font/fontgeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+               <TextView
+                   android:id="@+id/txt_fim"
+                   android:layout_below="@+id/txt_inicio"
 
-                            android:layout_marginLeft="8dp"
-                            android:text="FIM:"
-                            android:fontFamily="@font/fontgeek"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                  android:layout_marginLeft="8dp"
+                   android:text="FIM:"
+                   android:fontFamily="@font/fontgeek"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
 
-                        <TextView
-                            android:layout_marginTop="8dp"
-                            android:layout_toRightOf="@+id/txt_inicio"
-                            android:id="@+id/data_selecionada_evento_inicio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/fontgeek"
-                            android:textSize="16sp"
-                            android:textAlignment="center"/>
-                        <TextView
-                            android:layout_below="@+id/data_selecionada_evento_inicio"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_toRightOf="@+id/txt_fim"
-                            android:id="@+id/data_selecionada_evento_fim"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/fontgeek"
-                            android:textSize="16sp"
-                            android:textAlignment="center"/>
-                    </RelativeLayout>
-                </LinearLayout>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/txt_inicio"
+                android:id="@+id/data_selecionada_evento_inicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fontgeek"
+                android:textSize="16sp"
+                android:textAlignment="center"/>
+               <TextView
+                   android:layout_below="@+id/data_selecionada_evento_inicio"
+                   android:layout_marginTop="8dp"
+                   android:layout_marginLeft="16dp"
+                   android:layout_toRightOf="@+id/txt_fim"
+                   android:id="@+id/data_selecionada_evento_fim"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/fontgeek"
+                   android:textSize="16sp"
+                   android:textAlignment="center"/>
+              </RelativeLayout>
+           </LinearLayout>
             </androidx.cardview.widget.CardView>
             <TextView
                 android:layout_marginTop="4dp"
@@ -261,53 +261,53 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <RadioGroup
-                        android:layout_marginTop="8dp"
-                        android:id="@+id/radio_group_evento"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+            <RadioGroup
+              android:layout_marginTop="8dp"
+                android:id="@+id/radio_group_evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                        <RadioButton
-                            android:fontFamily="@font/fontgeek"
-                            android:id="@+id/radio_evento_Gratuita"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:textSize="16sp"
-                            android:textColor="@color/pretoescrita"
-                            android:text="Entrada Gratuita"/>
-                        <RadioButton
-                            android:textColor="@color/pretoescrita"
-                            android:fontFamily="@font/fontgeek"
-                            android:textSize="16sp"
-                            android:id="@+id/radiogrupo_Paga"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:text="Entrada Paga"/>
-                    </RadioGroup>
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:id="@+id/cash_ingresso"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_marginLeft="4dp"
-                            android:textColor="@color/pretoescrita"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/fontgeek"
-                            android:textSize="18dp"
-                            android:text="Valor de cada ingresso:"/>
-                        <com.blackcat.currencyedittext.CurrencyEditText
-                            android:id="@+id/desc_valor_item"
-                            android:layout_marginLeft="8dp"
-                            android:padding="10dp"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint="R$ 20,50"/>
-                    </LinearLayout>
+                <RadioButton
+                    android:fontFamily="@font/fontgeek"
+                    android:id="@+id/radio_evento_Gratuita"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/pretoescrita"
+                    android:text="Entrada Gratuita"/>
+                <RadioButton
+                    android:textColor="@color/pretoescrita"
+                    android:fontFamily="@font/fontgeek"
+                    android:textSize="16sp"
+                    android:id="@+id/radiogrupo_Paga"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Entrada Paga"/>
+            </RadioGroup>
+            <LinearLayout
+             android:visibility="gone"
+                android:id="@+id/cash_ingresso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/pretoescrita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fontgeek"
+                android:textSize="18dp"
+                android:text="Valor de cada ingresso:"/>
+                <com.blackcat.currencyedittext.CurrencyEditText
+                android:id="@+id/desc_valor_item"
+                android:layout_marginLeft="8dp"
+                android:padding="10dp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="R$ 20,50"/>
+            </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <Button

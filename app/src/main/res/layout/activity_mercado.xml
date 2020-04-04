@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/refreshmercado"
+   android:id="@+id/refreshmercado"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@color/background_geral">
@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/rel_status"
-            android:visibility="gone"
+          android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -42,14 +42,14 @@
                     android:background="@drawable/toolbar_sombra"/>
             </FrameLayout>
         </RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
-            android:layout_below="@+id/rel_status"
-            android:id="@+id/recycleviewmercado"
-            android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:layout_below="@+id/rel_status"
+        android:id="@+id/recycleviewmercado"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/rel_status"
             android:id="@+id/recycleview_itens"
@@ -59,17 +59,17 @@
             />
         <LinearLayout
             android:id="@+id/linear_nada_cadastrado"
-            android:visibility="gone"
+             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
-            <ImageView
+       <ImageView
 
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:background="@drawable/fundocomercioback"
-                />
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:background="@drawable/fundocomercioback"
+           />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,17 +103,17 @@
                 android:text="@string/erro_evento_busca_comercio"
                 android:gravity="center"/>
         </LinearLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buton_novo_mercado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_add_24dp"
-            app:fabSize="normal"
-            app:ico_size ="44dp"
-            app:backgroundTint="@color/colorPrimary"
-            android:layout_margin="16dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buton_novo_mercado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_24dp"
+        app:fabSize="normal"
+        app:ico_size ="44dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_margin="16dp"/>
     </RelativeLayout>
 
 </LinearLayout>

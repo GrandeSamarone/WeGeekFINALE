@@ -705,11 +705,10 @@ public class DetalheEvento extends TrocarFundo {
         receber_novidades.setChecked(true);
 
         HashMap<String, Object> membrosMap = new HashMap<>();
-        membrosMap.put("id","");
-        membrosMap.put("id_usuario", identificadorUsuario);
-        membrosMap.put("nome_usuario", nomedousuario);
+        membrosMap.put("id", identificadorUsuario);
+        membrosMap.put("nome", dados_usuario.getString("nome", ""));
         membrosMap.put("foto_usuario", dados_usuario.getString("foto_usuario", ""));
-        membrosMap.put("bloqueio", false);
+        membrosMap.put("vizu", true);
         db.collection("Assinantes").document(id_evento)
                 .collection("Usuarios").document(identificadorUsuario).set(membrosMap);
 
@@ -720,13 +719,15 @@ public class DetalheEvento extends TrocarFundo {
 
     }
     private void desinscreverUsuario(){
-        //remove
         receber_novidades.setChecked(false);
-
-        //deleta
+        HashMap<String, Object> membrosMap = new HashMap<>();
+        membrosMap.put("id", identificadorUsuario);
+        membrosMap.put("nome", dados_usuario.getString("nome", ""));
+        membrosMap.put("foto_usuario", dados_usuario.getString("foto_usuario", ""));
         db.collection("Assinantes").document(id_evento)
                 .collection("Usuarios").document(identificadorUsuario).delete();
 
+        Toast.makeText(DetalheEvento.this, "Você não receberá informações sobre esse tópico.", Toast.LENGTH_SHORT).show();
     }
     private void Dialog(String texto){
         final MediaPlayer dialog_music = MediaPlayer.create(DetalheEvento.this,R.raw.navi_veja);

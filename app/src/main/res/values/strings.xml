@@ -1,9 +1,6 @@
 <resources>
-    <string name="Api_key">
-       AAAANqMaf_0:APA91bG71b1DhsrTcvpqHAaCCL81OSlhr
-        HUMiF1snxMPCFbWq8UInKHcjsaPLP4-Ezfekh6YwMKG7ltBA0Gs
-        -l5eoqzlnakYRfabk9LeQwh9nBpZGIjqA1xdrGBoxTXp6FtTM_S9ciYY</string>
-    <string name="app_name">WeGeek</string>
+    <string name="Api_key">AAAAMEqj1oY:APA91bG47NzoJ-7JTvnv5aIa1EVRyJXBJ2wOGIGZ2RbrRfIstDsZWK7NX7r6FEQYW8yKCAe9HIWj6mQQkIATgROKGuMHE8Qm74zQ9GEFLQML710Y3FQCFxEGt9g8X7YhDm1fR6RGouqD</string>
+    <string name="app_name">WeGeek Teste</string>
     <string name="notification_channel_id">default</string>
     <string name="buscar_usuario">Ei %1$s, nemhum Usuario Foi encontrado.</string>
     <string name="title_activity_cadastrar_icon_nome_">Cadastrar_icon_nome_Activity</string>
@@ -64,7 +61,7 @@
     <string name="novocomercio">Novo Comércio</string>
     <string name="legenda_nvo_comercio">Legenda Ex: Games e muito mais..</string>
     <string name="descricao">Descrição.</string>
-    <string name="descricao_produto">Descrição(Opcional)</string>
+    <string name="descricao_produto">Descrição</string>
     <string name="_0_n_perfil">0</string>
     <string name="fans_perfil">Seguidores</string>
     <string name="drawer_contos">Contos</string>
