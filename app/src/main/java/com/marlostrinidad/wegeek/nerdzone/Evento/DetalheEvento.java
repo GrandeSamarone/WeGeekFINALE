@@ -706,7 +706,7 @@ public class DetalheEvento extends TrocarFundo {
 
         HashMap<String, Object> membrosMap = new HashMap<>();
         membrosMap.put("id", identificadorUsuario);
-        membrosMap.put("nome", dados_usuario.getString("nome", ""));
+        membrosMap.put("nome_usuario", dados_usuario.getString("nome", ""));
         membrosMap.put("foto_usuario", dados_usuario.getString("foto_usuario", ""));
         membrosMap.put("vizu", true);
         db.collection("Assinantes").document(id_evento)
@@ -846,8 +846,8 @@ public class DetalheEvento extends TrocarFundo {
                          //"\nAté \n"+data_dia_fim+","+data_dia_mes_fim+" de "+data_mes_fim+"\n às "+data_hora_fim
                             data_inicio.setText(data_dia+","+data_dia_mes+" de "+data_mes+" às "+data_hora);
                             data_fim.setText(data_dia_fim+","+data_dia_mes_fim+" de "+data_mes_fim+" às "+data_hora_fim);
-                            if(evento_atual.getPreco_ingresso().equals("R$0,00")){
-                                 txt_valor_entrada.setText("Entrada Gratuita");
+                            if(evento_atual.getGratis_pago().equals("evento_free")){
+                                txt_valor_entrada.setText("Entrada Gratuita");
                             }else {
                                 txt_valor_entrada.setText(evento_atual.getPreco_ingresso());
                             }

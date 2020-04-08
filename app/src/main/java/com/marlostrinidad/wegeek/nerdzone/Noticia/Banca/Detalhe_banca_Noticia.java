@@ -62,6 +62,7 @@ import com.marlostrinidad.wegeek.nerdzone.Abrir_Imagem.AbrirImagem;
 import com.marlostrinidad.wegeek.nerdzone.Assinantes.MeusAssinantes;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Conversa.ChatActivity_loja;
+import com.marlostrinidad.wegeek.nerdzone.Conversa.ChatActivity_pessoal;
 import com.marlostrinidad.wegeek.nerdzone.Helper.CircleProgressDrawable;
 import com.marlostrinidad.wegeek.nerdzone.Helper.MySpannable;
 import com.marlostrinidad.wegeek.nerdzone.Helper.RecyclerItemClickListener;
@@ -574,8 +575,13 @@ public class Detalhe_banca_Noticia extends TrocarFundo {
                 db.collection("Banca_Noticia").document(id_doc)
                         .update(atualizar);
                 Toast.makeText(Detalhe_banca_Noticia.this, " AuTORIZADA COM SUCESSO", Toast.LENGTH_LONG).show();
+
+                sendNotifiaction_Cliente(banca.getNome_autor(),banca.getToken_autor());
+
+
             }
         });
+
         textToolbar.setText(banca.getNome_banca());
         nome_loja.setText(banca.getNome_banca());
         nome_loja_string=banca.getNome_banca();
@@ -738,7 +744,6 @@ public class Detalhe_banca_Noticia extends TrocarFundo {
 
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -836,6 +841,32 @@ public class Detalhe_banca_Noticia extends TrocarFundo {
         }
         return ssb;
 
+    }
+
+    private void sendNotifiaction_Cliente( String nome,String token_destinatario) {
+        Log.i("oskdosdkok32",token_destinatario+" "+""+"  "+ "não perca tempo"+" ");
+        Data data = new Data(identificadorUsuario, R.drawable.favicon,nome + " " + "não perca tempo!",
+                "Sua Banca foi Publicada.", "", "auto_cliente");
+        Sender sender = new Sender(data, token_destinatario);
+
+        apiService.sendNotification(sender)
+                .enqueue(new retrofit2.Callback<MyResponse>() {
+                    @Override
+                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                        Log.i("oskdsokdw27",response.message());
+                        if (response.code() == 200) {
+                            if (response.body().success != 1) {
+                                Toast.makeText(Detalhe_banca_Noticia.this, "Failed!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                    }
+                });
     }
 }
 
