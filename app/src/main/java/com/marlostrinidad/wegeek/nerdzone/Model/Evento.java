@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,8 @@ public class Evento implements Serializable {
     private String url_img_status;
     private long data_fim_min;
     private long data_inicio_min;
-
+    public ArrayList<String> status_ids;
+    private Boolean url_status_boolean;
 
 
     public Evento() {
@@ -69,6 +71,7 @@ public class Evento implements Serializable {
         Map<String, Object> newEvento = new HashMap<>();
         newEvento.put("id",getId());
         newEvento.put("analizado",false);
+        newEvento.put("url_status_boolean", false);
         newEvento.put("titulo", getTitulo());
         newEvento.put("gratis_pago", getGratis_pago());
         newEvento.put("mensagem", getMensagem());
@@ -132,6 +135,22 @@ public class Evento implements Serializable {
         db.collection("Evento")
                .document(id_doc).update(atualizar_Evento);
 
+    }
+
+    public ArrayList<String> getStatus_ids() {
+        return status_ids;
+    }
+
+    public void setStatus_ids(ArrayList<String> status_ids) {
+        this.status_ids = status_ids;
+    }
+
+    public Boolean getUrl_status_boolean() {
+        return url_status_boolean;
+    }
+
+    public void setUrl_status_boolean(Boolean url_status_boolean) {
+        this.url_status_boolean = url_status_boolean;
     }
 
     public Boolean getAnalizado() {

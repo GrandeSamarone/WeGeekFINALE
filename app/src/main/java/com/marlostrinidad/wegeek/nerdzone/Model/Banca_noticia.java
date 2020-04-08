@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ServerTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,8 @@ public class Banca_noticia {
     Date data;
     private @ServerTimestamp
     Date ultima_atualizacao,ultima_foto_data;
-
+    public ArrayList<String> status_ids;
+    private Boolean url_status_boolean;
 
     public Banca_noticia(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -45,6 +47,7 @@ public class Banca_noticia {
         newBanca.put("ultima_foto_data", FieldValue.serverTimestamp());
         newBanca.put("url_img_status", "");
         newBanca.put("analizado", false);
+        newBanca.put("url_status_boolean", false);
         newBanca.put("desc_banca", getDesc_banca());
         newBanca.put("icone_banca", getIcone_banca());
         newBanca.put("id_autor", getId_autor());
@@ -80,6 +83,22 @@ public class Banca_noticia {
 // Add a new document with a generated ID
         db.collection("Banca_Noticia")
                 .document(id_doc).update(Atualizar_banca);
+    }
+
+    public ArrayList<String> getStatus_ids() {
+        return status_ids;
+    }
+
+    public void setStatus_ids(ArrayList<String> status_ids) {
+        this.status_ids = status_ids;
+    }
+
+    public Boolean getUrl_status_boolean() {
+        return url_status_boolean;
+    }
+
+    public void setUrl_status_boolean(Boolean url_status_boolean) {
+        this.url_status_boolean = url_status_boolean;
     }
 
     public Boolean getAnalizado() {

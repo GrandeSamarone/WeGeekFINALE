@@ -1,4 +1,4 @@
-package com.marlostrinidad.wegeek.nerdzone.Noticia.Banca;
+package com.marlostrinidad.wegeek.nerdzone.HQ.Banca;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +21,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_Status_view_Banca_HQ;
 import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_Status_viu;
-import com.marlostrinidad.wegeek.nerdzone.Adapter.Adapter_Status_viu_Noticia;
 import com.marlostrinidad.wegeek.nerdzone.Config.ConfiguracaoFirebase;
 import com.marlostrinidad.wegeek.nerdzone.Helper.TrocarFundo;
 import com.marlostrinidad.wegeek.nerdzone.Model.Status;
@@ -30,20 +30,24 @@ import com.marlostrinidad.wegeek.nerdzone.R;
 
 import java.util.ArrayList;
 
-public class Info_status_banca_noticia extends TrocarFundo {
+public class Info_Status_Banca extends TrocarFundo {
+
+
     private RecyclerView rec_status_viu;
     private Toolbar toolbar;
     private TextView textToolbar,nao_assinantes;
-    private Adapter_Status_viu_Noticia adapter_status;
+    private Adapter_Status_view_Banca_HQ adapter_status;
     private ArrayList<Status> lista_status = new ArrayList<>();
     private ListenerRegistration registration_status;
     private StorageReference storageReference;
     private FirebaseFirestore db;
     private String id_loja_status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_status_banca_noticia);
+        setContentView(R.layout.activity_info__status__banca);
+
         toolbar = findViewById(R.id.toolbarsecundario);
         toolbar.setTitle("");
         textToolbar = findViewById(R.id.app_toolbar_title_secundario);
@@ -58,9 +62,9 @@ public class Info_status_banca_noticia extends TrocarFundo {
         //    identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
         rec_status_viu = findViewById(R.id.rec_status_viu);
         @SuppressLint("WrongConstant") RecyclerView.LayoutManager layoutManager_status =
-                new LinearLayoutManager(Info_status_banca_noticia.this, LinearLayoutManager.VERTICAL, false);
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rec_status_viu.setLayoutManager(layoutManager_status);
-        adapter_status = new Adapter_Status_viu_Noticia(lista_status, this);
+        adapter_status = new Adapter_Status_view_Banca_HQ(lista_status, this);
         rec_status_viu.setAdapter(adapter_status);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,7 +86,7 @@ public class Info_status_banca_noticia extends TrocarFundo {
     public void Recuperar_status_geral() {
         Log.i("sodksodksokd32",id_loja_status);
         lista_status.clear();
-        Query query = db.collection("Status_banca_noticia")
+        Query query = db.collection("Status_banca")
                 .document(id_loja_status)
                 .collection("Status")
                 .orderBy("data", Query.Direction.ASCENDING);

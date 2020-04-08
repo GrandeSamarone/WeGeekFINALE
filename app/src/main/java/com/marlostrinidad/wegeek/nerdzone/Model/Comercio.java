@@ -18,6 +18,7 @@ import com.google.firebase.storage.StorageReference;
 import com.marlostrinidad.wegeek.nerdzone.Helper.UsuarioFirebase;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,8 @@ public class Comercio implements Serializable {
     private @ServerTimestamp
     Date ultima_atualizacao;
     @JsonIgnore
-    private String key;
+    public ArrayList<String> status_ids;
+    private Boolean url_status_boolean;
     public Comercio() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String idBefore = db.collection("Comercio").document().getId();
@@ -69,6 +71,7 @@ public class Comercio implements Serializable {
         newComercio.put("id",getId());
         newComercio.put("titulo", getTitulo());
         newComercio.put("analizado",false);
+        newComercio.put("url_status_boolean", false);
         newComercio.put("descricao", getDescricao());
         newComercio.put("endereco", getEndereco());
         newComercio.put("nome_img", getNome_img());
@@ -122,6 +125,22 @@ public class Comercio implements Serializable {
         db.collection("Comercio").document(id_doc).update(atualizar);
 
 
+    }
+
+    public ArrayList<String> getStatus_ids() {
+        return status_ids;
+    }
+
+    public void setStatus_ids(ArrayList<String> status_ids) {
+        this.status_ids = status_ids;
+    }
+
+    public Boolean getUrl_status_boolean() {
+        return url_status_boolean;
+    }
+
+    public void setUrl_status_boolean(Boolean url_status_boolean) {
+        this.url_status_boolean = url_status_boolean;
     }
 
     public Boolean getAnalizado() {

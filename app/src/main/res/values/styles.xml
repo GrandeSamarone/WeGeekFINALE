@@ -29,6 +29,12 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColor">@color/branco</item>
     </style>
+    <style name="hint_line_edit_status" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#00bff9</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorAccent">@color/branco</item>
+        <item name="android:textColor">@color/branco</item>
+    </style>
     <style name="botaodeletar" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#FD4949</item>
         <item name="colorButtonNormal">#FF1919</item>

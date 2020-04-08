@@ -507,43 +507,45 @@ public class MercadoActivity extends TrocarFundo {
                     //deleta status vencido
                     Verificar_Status_vencido(status.getId());
 
-                    if (!status.getUrl_img_status().equals("")) {
-                        switch (change.getType()) {
-                            case ADDED:
+                    if (status.getUrl_status_boolean()) {
+                        if (status.getStatus_ids().size() > 0) {
+                            switch (change.getType()) {
+                                case ADDED:
 
 
-                                lista_status.add(0, status);
-                                if (lista_status.size() > 0) {
-                                    rel_status.setVisibility(View.VISIBLE);
-                                }
-                                adapter_status.notifyDataSetChanged();
-                                Log.d("ad", "New city: " + change.getDocument().getData());
-                                break;
-
-                            case MODIFIED:
-                                for (Comercio ct : lista_status) {
-
-                                    if (status.getId().equals(ct.getId())) {
-                                        lista_status.remove(ct);
-                                        break;
+                                    lista_status.add(0, status);
+                                    if (lista_status.size() > 0) {
+                                        rel_status.setVisibility(View.VISIBLE);
                                     }
-                                }
-                                lista_status.add(0, status);
-                                adapter_status.notifyDataSetChanged();
-                                Log.d("md", "Modified city: " + change.getDocument().getData());
-                                break;
-                            case REMOVED:
-                                for (Comercio ct : lista_status) {
+                                    adapter_status.notifyDataSetChanged();
+                                    Log.d("ad", "New city: " + change.getDocument().getData());
+                                    break;
 
-                                    if (status.getId().equals(ct.getId())) {
-                                        lista_status.remove(ct);
+                                case MODIFIED:
+                                    for (Comercio ct : lista_status) {
 
-                                        break;
+                                        if (status.getId().equals(ct.getId())) {
+                                            lista_status.remove(ct);
+                                            break;
+                                        }
                                     }
-                                }
-                                adapter_status.notifyDataSetChanged();
-                                Log.d("rem", "Removed city: " + change.getDocument().getData());
-                                break;
+                                    lista_status.add(0, status);
+                                    adapter_status.notifyDataSetChanged();
+                                    Log.d("md", "Modified city: " + change.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    for (Comercio ct : lista_status) {
+
+                                        if (status.getId().equals(ct.getId())) {
+                                            lista_status.remove(ct);
+
+                                            break;
+                                        }
+                                    }
+                                    adapter_status.notifyDataSetChanged();
+                                    Log.d("rem", "Removed city: " + change.getDocument().getData());
+                                    break;
+                            }
                         }
                     }
                 }
@@ -562,7 +564,7 @@ public class MercadoActivity extends TrocarFundo {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
                         long timecurrent = System.currentTimeMillis();
-                        Status status = document.toObject(Status.class);
+                        final Status status = document.toObject(Status.class);
                         if (document.exists()) {
                             if (status.getId_loja().equals(id_loja) && (timecurrent > status.getData_fim())) {
                                 Log.i("odsfko445", status.getId_loja());
@@ -580,10 +582,10 @@ public class MercadoActivity extends TrocarFundo {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         for (DocumentSnapshot document : task.getResult()) {
-                                            final Map<String, Object> img_remove = new HashMap<>();
-                                            img_remove.put("url_img_status","");
+                                            final Map<String, Object> DeleteIdToArrayMap = new HashMap<>();
+                                            DeleteIdToArrayMap.put("status_ids", FieldValue.arrayRemove(status.getId()));
                                             db.collection("Comercio").document(document.getId())
-                                                    .update(img_remove);
+                                                    .update(DeleteIdToArrayMap);
 
                                             adapter_status.notifyDataSetChanged();
                                         }

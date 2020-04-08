@@ -14,14 +14,13 @@
     <application
         android:name=".Helper.App"
         android:allowBackup="true"
-        android:icon="@drawable/favicon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Noticia.Banca.Info_status_banca_noticia"></activity>
+        <activity android:name=".HQ.Banca.Info_Status_Banca"></activity>
+        <activity android:name=".Noticia.Banca.Info_status_banca_noticia" />
         <activity android:name=".Noticia.Banca.Configuracao_banca_noticia" />
         <activity android:name=".Noticia.Noticia.LerNoticia" />
         <activity android:name=".Noticia.Banca.Ver_status_banca_noticia" />
