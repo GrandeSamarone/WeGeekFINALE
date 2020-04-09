@@ -165,6 +165,7 @@ public class MercadoActivity extends TrocarFundo {
                     //   it.putExtra("id_dono_loja",mercadoselecionado.getIdauthor());
                     //  it.putExtra("categoria",mercadoselecionado.getCategoria());
                     startActivity(it);
+                    finish();
                 }
             }
 

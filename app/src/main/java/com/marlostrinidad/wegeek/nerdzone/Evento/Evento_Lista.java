@@ -159,6 +159,7 @@ public class Evento_Lista extends TrocarFundo {
                     it.putExtra("id_loja",status_selecionado.getId());
                     it.putExtra("nome_loja",status_selecionado.getTitulo());
                     startActivity(it);
+                finish();
                 }
             }
 

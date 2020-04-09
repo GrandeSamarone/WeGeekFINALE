@@ -1187,6 +1187,9 @@ public class DetalheEvento extends TrocarFundo {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent it = new Intent(DetalheEvento.this,Evento_Lista.class);
+        startActivity(it);
+        finish();
     }
 
 
@@ -1197,7 +1200,9 @@ public class DetalheEvento extends TrocarFundo {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                finish();
+               Intent it = new Intent(DetalheEvento.this,Evento_Lista.class);
+               startActivity(it);
+               finish();
 
 
                 break;
